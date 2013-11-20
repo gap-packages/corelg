@@ -1,0 +1,26 @@
+\begin{thebibliography}{DFG13}
+
+\bibitem[DFG13]{dfg12}
+H.~Dietrich, P.~Faccin, and W.~A.~de Graaf.
+\newblock Computing with real lie algebras: real forms, cartan decompositions,
+  and cartan subalgebras.
+\newblock {\em Journal of Symbolic Computation}, 56:27--45, 2013.
+
+\bibitem[DG13]{hdwdg12}
+H.~Dietrich and W.~A.~de Graaf.
+\newblock A computational approach to the {K}ostant-{S}ekiguchi correspondence.
+\newblock {\em Pacific Journal of Mathematics}, 265:349--379, 2013.
+
+\bibitem[Gra12]{sla}
+W.~A.~de Graaf.
+\newblock {\sf SLA} - computing with {S}imple {L}ie {A}lgebras.
+\newblock a {\sf GAP} package, 2012.
+\newblock {\tt http://science.unitn.it/~degraaf/sla.html}, version 0.12.
+
+\bibitem[Kna02]{knapp}
+A.~W. Knapp.
+\newblock {\em Lie groups beyond an introduction}, volume 140 of {\em Progress
+  in Mathematics}.
+\newblock Birkh\"auser Boston Inc., Boston, MA, second edition, 2002.
+
+\end{thebibliography}

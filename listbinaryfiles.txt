@@ -1,0 +1,16 @@
+corelg/copying
+corelg/gap/realTriples.db
+corelg/gap/carrierAlg.db
+corelg/doc/manual.log
+corelg/doc/manual.bbl
+corelg/doc/manual.pdf
+corelg/doc/manual.blg
+corelg/doc/manual.aux
+corelg/doc/manual.toc
+corelg/doc/manual.pnr
+corelg/doc/manual.brf
+corelg/doc/manual.six
+corelg/doc/manual.ind
+corelg/doc/manual.ilg
+corelg/doc/manual.out
+corelg/doc/manual.idx

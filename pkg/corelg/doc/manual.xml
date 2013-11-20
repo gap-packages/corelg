@@ -1,0 +1,897 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+
+<!DOCTYPE Book SYSTEM "gapdoc.dtd"
+[<!ENTITY FpLieRing "<Package>corelg</Package>">] >
+
+
+
+
+<Book Name="CoReLG">
+
+<TitlePage>
+  <Title>CoReLG</Title>
+  <Subtitle>Computing with real Lie Algebras</Subtitle>
+  <Version>Version 0.1</Version>
+
+<Author>
+  Heiko Dietrich
+  <Email>heiko.dietrich@monash.edu</Email>
+  <Homepage>http://users.monash.edu.au/~heikod/</Homepage><Address>
+ School of Mathematical Sciences<Br/>
+ Monash University<Br/>
+Wellington Road 1<Br/>
+VIC 3800, Melbourne, Australia<Br/>
+       </Address> 
+  </Author>
+<Author>
+ Paolo Faccin
+  <Email>paolofaccin86@gmail.com</Email>
+<Address>
+    	    Dipartimento di Matematica<Br/>
+Via Sommarive 14<Br/>
+I-38050 Povo (Trento), Italy<Br/>
+       </Address> 
+  </Author>
+<Author>
+ Willem de Graaf  
+<Email>degraaf@science.unitn.it</Email>
+  <Homepage>http://www.science.unitn.it/~degraaf/</Homepage>
+          <Address>
+    	    Dipartimento di Matematica<Br/>
+Via Sommarive 14<Br/>
+I-38050 Povo (Trento), Italy<Br/>
+       </Address> 
+  </Author>
+
+  <Date>October 2013
+</Date>
+
+
+
+<Abstract>
+This package provides functions for computing with various aspects of
+the theory of real simple Lie algebras.
+</Abstract>
+
+<Acknowledgements>
+The research leading to this package has received funding from the European Union's Seventh Framework Program FP7/2007-2013 under grant agreement no 271712. 
+</Acknowledgements>
+
+<Copyright>
+  &copyright; 2013 Heiko Dietrich, Paolo Faccin, and Willem de Graaf 
+</Copyright>
+  
+
+</TitlePage>
+
+<TableOfContents/>
+
+<Body>
+
+
+<!-------------------------------------------------------------------------->
+<Chapter> <Heading>Introduction</Heading>
+
+<Package>CoReLG</Package> (Computing with Real Lie Groups) is a &GAP; package for
+computing with (semi-)simple real Lie algebras. Various capabilities of the package have
+to do with the action of the adjoint group of a real Lie algebra (such as the nilpotent
+orbits, and non-conjugate Cartan subalgebras). CoReLG is also the acronym of the EU funded 
+Marie Curie project carried out by the first author of the package at the University of Trento. 
+<P/>
+The simple real Lie algebras have been classified, and this classification is the main 
+theoretical tool that we use, as it determines the objects that we work with. In Section
+<Ref Sect="srl"/> we give a brief account of this classification. We refer to
+the standard works in the literature (e.g., <Cite Key="knapp"/>) for an in-depth discussion. The algorithms of this package are described in  <Cite Key="hdwdg12"/> and  <Cite Key="dfg12"/>.
+<P/>
+We remark that the package  still is under development, and its functionality is continuously extended. The package <Package>SLA</Package>, <Cite Key="sla"/>, is required.
+
+
+
+<Section Label="srl"> <Heading>The simple real Lie algebras</Heading>
+
+Let <M>\mathfrak{g}^c</M> denote a complex simple Lie algebra. Then there are two types
+of simple real Lie algebras associated to <M>\mathfrak{g}^c</M>: the <E>realification</E> of
+<M>\mathfrak{g}^c</M> (this means that <M>\mathfrak{g}^c</M> is viewed as an algebra over <M>\mathbb{R}</M>,
+of dimension <M>2\dim \mathfrak{g}^c</M>), and the <E>real forms</E> <M>\mathfrak{g}</M> of 
+<M>\mathfrak{g}^c</M> (this means that <M>\mathfrak{g}\otimes_\mathbb{R}\mathbb{C}</M> is isomorphic to 
+<M>\mathfrak{g}^c</M>). It is straightforward to construct the realification of <M>\mathfrak{g}^c</M>;
+so in the rest of this section we concentrate on the real forms of <M>\mathfrak{g}^c</M>.
+<P/>
+A Lie algebra is said to be <E>compact</E> if its Killing form is negative definite. 
+The complex Lie algebra <M>\mathfrak{g}^c</M> has a unique (up to isomorphism) compact real form
+<M>\mathfrak{u}</M>. In the sequel we fix the compact form <M>\mathfrak{u}</M>. Then
+<M>\mathfrak{g}^c = \mathfrak{u} +  \imath \mathfrak{u}</M>, where <M>\imath</M> is the complex unit; so we get an antilinear map 
+<M>\tau : \mathfrak{g}^c\to \mathfrak{g}^c</M> by <M>\tau(x+ \imath y) = x- \imath y</M>, where 
+<M>x,y\in \mathfrak{u}</M>. This is called the <E>conjugation</E> of <M>\mathfrak{g}^c</M>
+with respect to <M>\mathfrak{u}</M>.
+<P/>
+Now let <M>\theta</M> be an automorphism of <M>\mathfrak{g}^c</M> of order 2, commuting with
+<M>\tau</M>. Then <M>\theta</M> stabilises <M>\mathfrak{u}</M>, so the latter is the direct
+sum of the <M>\pm 1</M>-eigenspaces of <M>\theta</M>, say <M>\mathfrak{u} = \mathfrak{u}_1 \oplus
+\mathfrak{u}_{-1}</M>. Set <M>\mathfrak{k} = \mathfrak{u}_1</M> and <M>\mathfrak{p} = 
+i\mathfrak{u}_{-1}</M>. Then <M>\mathfrak{g} =\mathfrak{g}(\theta)= \mathfrak{k}
+\oplus \mathfrak{p}</M> is a real form of <M>\mathfrak{g}^c</M>. Regarding this construction
+we remark the following:
+
+<List>
+<Item> <M>\mathfrak{g} = \mathfrak{k}\oplus \mathfrak{p}</M> is called a 
+<E>Cartan decomposition</E>. It is unique up to inner automorphisms of <M>\mathfrak{g}</M>.
+</Item>
+<Item> The map <M>\theta</M>  is a <E>Cartan involution</E>; it is the identity on <M>\mathfrak{k}</M> and acts
+as multiplication by <M>-1</M> on <M>\mathfrak{p}</M>) </Item>
+<Item>  <M>\mathfrak{k}</M> is compact, and it is a maximal compact subalgebra of 
+<M>\mathfrak{g}</M>. </Item>
+<Item> Two real forms are isomorphic if and only if the corresponding Cartan involutions
+are conjugate in the automorphism group of <M>\mathfrak{g}^c</M>. </Item>
+<Item> The automorphism <M>\theta</M> is described by two pieces of data: a list of signs
+<M>(s_1,\ldots,s_r)</M> of length equal to the rank <M>r</M> of <M>\mathfrak{g}</M>, 
+and a permutation <M>\pi</M> of <M>1,\ldots, r</M>, leaving the list of signs invariant. 
+Let <M>\alpha_1,\ldots,
+\alpha_r</M> denote the simple roots of <M>\mathfrak{g}^c</M> with corresponding canonical
+generators <M>x_i, y_i, h_i</M>. Then <M>\theta(x_i) = s_i x_{\pi(i)}</M>, 
+<M>\theta(y_i) = s_i y_{\pi(i)}</M>, <M>\theta(h_i) = h_{\pi(i)}</M>. </Item>
+</List>
+
+</Section>
+
+
+<Section> <Heading>Cartan subalgebras and more</Heading>
+
+Let <M>\mathfrak{g}</M> be a real form of the complex Lie algebra <M>\mathfrak{g}^c</M>,
+with Cartan decomposition <M>\mathfrak{g} = \mathfrak{k}\oplus \mathfrak{p}</M>.
+A Cartan subalgebra <M>\mathfrak{h}</M> of <M>\mathfrak{g}</M> is  <E>standard</E> (with respect to this Cartan decomposition)
+if <M>\mathfrak{h} = (\mathfrak{h}\cap \mathfrak{k})\oplus (\mathfrak{h}\cap\mathfrak{p})</M>,
+or, equivalently, when <M>\mathfrak{h}</M> is stable under the Cartan involution <M>\theta</M>.
+<P/>
+It is a fact that every Cartan subalgebra of <M>\mathfrak{g}</M> is conjugate by an inner
+automorphism to a standard one (<Cite Key="knapp"/>, Proposition 6.59). Moreover, there is a 
+finite number of non-conjugate (by inner automorphisms) Cartan subalgebras of <M>\mathfrak{g}</M>
+(<Cite Key="knapp"/>, Proposition 6.64). A standard Cartan subalgebra <M>\mathfrak{h}</M>
+is said to be <E>maximally
+compact</E> if the dimension of <M>\mathfrak{h}\cap \mathfrak{k}</M> is maximal (among all
+standard Cartan subalgebras). It is called <E>maximally non-compact</E> if the dimension of 
+<M>\mathfrak{h}\cap \mathfrak{p}</M> is maximal. We have that all maximally compact Cartan
+subalgebras are conjugate via the inner automorphism group. The same holds for all
+maximally non-compact Cartan subalgebras (<Cite Key="knapp"/>, Proposition 6.61). 
+<P/>
+A subspace of <M>\mathfrak{p}</M> is said to be a <E>Cartan subspace</E>
+if it consists of commuting elements. If <M>\mathfrak{h}</M> is a maximally non-compact
+standard Cartan subalgebra, then <M>\mathfrak{c} = \mathfrak{h}\cap \mathfrak{p}</M> is
+a Cartan subspace. The other Cartan subalgebras (i.e., representatives of the conjugacy classes
+of the Cartan subalgebras under the inner automorphism group) can be constructed such that
+their intersection with <M>\mathfrak{p}</M> is contained in <M>\mathfrak{c}</M>.
+<P/>
+Every standard Cartan subalgebra <M>\mathfrak{h}</M> of <M>\mathfrak{g}</M> yields a corresponding
+root system <M>\Phi</M> of <M>\mathfrak{g}^c</M>. Let <M>\alpha\in\Phi</M>, then a short
+argument shows that <M>\alpha\circ\theta</M> (where <M>\alpha\circ\theta (h) = 
+\alpha(\theta(h))</M> for <M>h\in \mathfrak{h}</M>) is also a root (i.e., lies in <M>\Phi</M>).
+This way we get an automorphism of order 2 of the root system <M>\Phi</M>. 
+<P/>
+Now let <M>\mathfrak{h}</M> be a maximally compact standard Cartan subalgebra 
+of <M>\mathfrak{g}</M>, with root system <M>\Phi</M>. Then it can be shown that there is
+a basis of simple roots <M>\Delta\subset\Phi</M> which is <M>\theta</M>-stable.
+Write <M>\Delta = \{\alpha_1,\ldots,\alpha_r\}</M>, and let <M>x_i,y_i,h_i</M> be a corresponding set of canonical
+generators. Then there is a sequence of signs <M>(s_1,\ldots,s_r)</M> and a permutation
+<M>\pi</M> of <M>1,\ldots,r</M> such that <M>\theta(x_i) = s_i x_{\pi(i)}</M>.
+Now we encode this information in the Dynkin diagram of <M>\Phi</M>. If <M>s_i=-1</M> then
+we paint the node corresponding to <M>\alpha_i</M> black. Also, if <M>\pi(i)=j \neq i</M>
+then the nodes corresponding to <M>\alpha_i</M>, <M>\alpha_j</M> are connected by an arrow.
+The resulting diagram is called a <E>Vogan diagram</E> of <M>\mathfrak{g}</M>. It
+determines the real form <M>\mathfrak{g}</M> up to isomorphism. The signs <M>s_i</M>
+are not uniquely determined. However, it is possible to make a ``canonical'' choice
+for the signs so that the Vogan diagram is uniquely determined.
+<P/>
+Now let <M>\mathfrak{h}</M> be a maximally non-compact standard Cartan subalgebra 
+of <M>\mathfrak{g}</M>, with root system <M>\Phi</M>. Then, in general, there is no
+basis of simple roots which is stable under <M>\theta</M>. However we can still define
+a diagram, in the following way. Let <M>\mathfrak{c} = \mathfrak{h}\cap \mathfrak{p}</M>
+be the Cartan subspace contained in <M>\mathfrak{h}</M>. Let <M>\Phi_c = \{ \alpha\in \Phi \mid
+\alpha\circ\theta = \alpha\} = \{ \alpha\in \Phi \mid \alpha(\mathfrak{c}) = 0\}</M> be the
+set of <E>compact roots </E>. Then there is a choice of positive roots <M>\Phi^+</M> such that
+<M>\alpha\circ\theta \in \Phi^-</M> for all <E>non-compact</E> positive roots <M>\alpha\in
+\Phi^+</M>. Let <M>\Delta</M> denote the basis of simple roots corresponding to <M>\Phi^+</M>.
+A theorem due to Satake says that there is a bijection <M>\tau : \Delta\to \Delta</M>
+such that <M>\tau(\alpha) = \alpha</M> if <M>\alpha\in \Phi_c</M>, and for non-compact 
+<M>\alpha\in\Delta</M> we have <M>\alpha\circ\theta = -\tau(\alpha) - \sum_{\gamma\in\Delta_c}
+c_{\alpha,\gamma} \gamma</M>, where <M>\Delta_c = \Delta \cap \Phi_c</M> and the 
+<M>c_{\alpha,\gamma}</M> are non-negative integers. Now we take the Dynkin diagram corresponding
+to <M>\Delta</M>, where the nodes corresponding to the compact roots are painted black, and
+the nodes corresponding to a pair <M>\alpha,\tau(\alpha)</M>, if they are unequal, are joined
+by arrows. The resulting diagram is called the <E>Satake diagram</E> of <M>\mathfrak{g}</M>.
+It determines the real form <M>\mathfrak{g}</M> up to isomorphism.
+
+</Section>
+
+<Section> <Heading>Nilpotent orbits</Heading>
+
+By <M>G^c</M>, <M>G</M> we denote the adjoint groups of <M>\mathfrak{g}^c</M> and
+<M>\mathfrak{g}</M> respectively. The nilpotent <M>G^c</M>-orbits in <M>\mathfrak{g}^c</M>
+have been classified by so-called weighted Dynkin diagrams. A nilpotent <M>G^c</M>-orbit
+in <M>\mathfrak{g}^c</M> may have no intersection with the real form  <M>\mathfrak{g}</M>.
+On the other hand, when it does have an intersection, then this may split into several
+<M>G</M>-orbits. 
+<P/>
+Let <M>e</M> be an element of a nilpotent <M>G</M>-orbit in  <M>\mathfrak{g}</M>.
+By the Jacobson-Morozov theorem, <M>e</M> lies in an <M>\mathfrak{sl}_2</M>-triple
+<M>(e,h,f)</M>; here this means that <M>[h,e]=2e</M>, <M>[h,f]=-2f</M>, and <M>[e,f]=h</M>. The triple
+is called a <E>real Cayley triple</E> if <M>\theta(e) = -f</M>, <M>\theta(f)=-e</M> and
+<M>\theta(h) = -h</M>, where <M>\theta</M> is the Cartan involution of <M>\mathfrak{g}</M>.
+Every nilpotent orbit has a representative lying in a real Cayley triple. 
+
+
+</Section>
+
+<Section> <Heading>On base fields</Heading>
+
+In order to define a Lie algebra by a multiplication table over the reals, it usually suffices
+to take a subfield of the real field as base field. However, the algorithms contained
+in this package very often need a Chevalley basis of the Lie algebra at hand, which is defined
+only over the complex field. Computations with such a Chevalley basis take place behind
+the scenes, and the result is again defined over the reals. However, the computations would
+not be possible if the Lie algebra is just defined over (a subfield of) the reals. For this
+reason, we require that the base field contains the imaginary unit <A>E(4)</A>.
+<P/>
+Furthermore, in many algorithms it is necessary to take square roots of elements of the
+base field. So the ideal base field would contain the imaginary unit, as well as being
+closed under taking square roots. However, such a field is difficult to construct and  to work
+with on a computer. For this reason we have provided the field <A>SqrtField</A> (see Chapter
+<Ref Chap="sqrt"/>), containing the square roots of all rational numbers. Although it is
+possible to try most functions of the package using the base field <A>CF(4)</A>, for example,
+it is likely that many computations will result in an error, because of the lack of square
+roots in that field. Many more computations are possible over <A>SqrtField</A>, but also in
+that case, of course, a computation may result in an error because we cannot construct a
+particular square root. Also, computations over <A>SqrtField</A> tend to be significantly slower
+than over, say, <A>CF(4)</A>; see the next example. But that is a price we have to pay 
+(at least, in order to be able to do some computations).
+
+<Example>
+gap> L:=RealFormById("E",8,2);
+&lt;Lie algebra of dimension 248 over SqrtField>
+gap> allCSA := CartanSubalgebras(L);;time;
+67224
+gap> L:=RealFormById("E",8,2,CF(4));
+&lt;Lie algebra of dimension 248 over GaussianRationals>
+gap> allCSA := CartanSubalgebras(L);;time;
+7301
+# We remark that both computations are exactly the same; 
+# the difference in timing is caused by the fact that 
+# arithmetic over SqrtField is slower.
+</Example>
+
+</Section>
+
+
+</Chapter>
+
+
+
+
+<!-------------------------------------------------------------------------->
+<Chapter Label="sqrt"> <Heading>The field <A>SqrtField</A></Heading>
+
+<Section> <Heading> Definition of the field </Heading>
+
+The field <M>\mathbb{Q}^{\sqrt{}}(\imath)</M> with <M>\mathbb{Q}^{\sqrt{}}=\mathbb{Q}(\{\sqrt{p}\mid p\textrm{ a prime}\})</M> and <M>\imath=\sqrt{-1}\in\mathbb{C}</M> is realised as <A>SqrtField</A>. A few functions print some information on what they are doing to the info class <A>InfoSqrtField</A>; this can be turned off by setting <A>SetInfoLevel( InfoSqrtField, 0 );</A>.
+
+<ManSection>
+<Func Name="SqrtFieldIsGaussRat" Arg="q"
+      Comm="sqrt"/>
+<Description>
+Here <A>q</A> is an element of <A>SqrtField</A>; this function returns <A>true</A> if and only if <A>q</A> is the product of <A>One(SqrtField)</A> and a Gaussian rational. 
+<Example>
+gap> F := SqrtField;
+SqrtField
+gap> IsField( F ); LeftActingDomain( F ); Size( F ); Characteristic( F );
+true
+GaussianRationals
+infinity
+0
+gap> one := One( F );
+1
+gap> 2 in F; 2*one in F; 2*E(4)*one in F;
+false
+true
+true
+gap> a := 2/3*E(4)*one;; 
+gap> a in SqrtField; a in GaussianRationals; SqrtFieldIsGaussRat( a );
+true
+false
+true
+</Example>
+</Description>
+</ManSection>
+</Section>
+
+
+<Section> <Heading> Construction of elements </Heading>
+
+Every <M>f</M> in <A>SqrtField</A> can be uniquely written as <M>f=\sum_{j=1}^m r_i \sqrt{k_j}</M> for Gaussian rationals <M>r_i\in\mathbb{Q}(\imath)</M> and pairwise distinct squarefree positive integers <M>k_1,\ldots,k_m</M>. Thus, <M>f</M> can be described efficiently by its coefficient vector <M>[[r_1,k_1],\ldots,[r_j,k_j]]</M>.
+
+<ManSection>
+<Func Name="sqrt" Arg="q"
+      Comm="sqrt"/>
+<Description>
+Here <A>q</A> is a rational number and <A>sqrt(q)</A> is the element <M>\sqrt{q}</M> as an element of <A>SqrtField</A>. If <M>q=(-1)^\epsilon a/b</M> with coprime integers <M> a,b\geq 0</M> and <M>\epsilon\in\{0,1\}</M>, then <A>sqrt(q)</A> is represented as the element <A>E(4)</A><M>^\varepsilon</M><A>*b*sqrt(ab)</A> of <A>SqrtField</A>.
+</Description>
+</ManSection>
+<ManSection>
+<Func Name="SqrtFieldEltCoefficients" Arg="f"
+      Comm="sqrt"/>
+<Description>
+If <A>f</A> is an element in <A>SqrtField</A>, then <A>SqrtFieldEltCoefficients(f)</A> returns its coefficient vector   <M>[[r_1,k_1],\ldots,[r_m,k_m]]</M> as described above, that is, <M>r_1,\ldots,r_m\in\mathbb{Q}(\imath)</M> and <M>k_1,\ldots,k_m</M> are pairwise distinct positive squarefree integers such that <M>f=\sum_{j=1}^m r_j\sqrt{k_j}</M>.
+</Description>
+</ManSection>
+<ManSection>
+<Func Name="SqrtFieldEltByCoefficients" Arg="l"
+      Comm="sqrt"/>
+<Description>
+If <A>l</A> is a list <M>[[r_1,k_1],\ldots,[r_m,k_m]]</M> with Gaussian rationals <M>r_j</M> and rationals <M>k_j</M>, then <A>SqrtFieldEltByCoeffiients(l)</A> returns the element <M>\sum_{j=1}^m r_j\sqrt{k_j}</M> as an element of <A>SqrtField</A>. Note that here <M>k_1,\ldots,k_m</M> need not to be positive, squarefree, or pairwise distinct.
+<Example>
+gap> sqrt(-(2*3*4)/(11*13)); sqrt(245/15); sqrt(16/9);
+2/143*E(4)*sqrt(858)
+7/3*sqrt(3)
+4/3
+gap> a := 2+sqrt(7)+sqrt(99);
+2 + sqrt(7) + 3*sqrt(11)
+gap> SqrtFieldEltCoefficients(a);
+[ [ 2, 1 ], [ 1, 7 ], [ 3, 11 ] ]
+gap> SqrtFieldEltByCoefficients([[2,9],[1,7],[E(4),13]]);
+6 + sqrt(7) + E(4)*sqrt(13)
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Func Name="SqrtFieldEltToCyclotomic" Arg="f"
+      Comm="sqrt"/>
+<Description>
+If <A>f</A> lies in <A>SqrtField</A> with coefficient vector <M>[[r_1,k_1],\ldots,[r_m,k_m]]</M>, then <A>SqrtFieldEltToCyclotomic(f)</A> returns <M>\sum_{j=1}^m r_j\sqrt{k_j}</M> lying in a suitable cyclotomic field <A>CF(n)</A>. The degree <M>n</M> can easily become too large, hence this function should be used with caution.
+</Description>
+</ManSection>
+<ManSection>
+<Func Name="SqrtFieldEltByCyclotomic" Arg="c"
+      Comm="sqrt"/>
+<Description>
+If <A>c</A> is an element of <M>\mathbb{Q}^{\sqrt{}}(\imath)</M> represented as an element of a cyclotomic field <A>CF(n)</A>, then <A>SqrtFieldEltByCyclotomic(c)</A> returns the corresponding element in <A>SqrtField</A>. Our algorithm for doing this is described in <Cite Key="hdwdg12"/>.
+<Example>
+gap> SqrtFieldEltToCyclotomic( sqrt(2) );
+E(8)-E(8)^3
+gap> SqrtFieldEltToCyclotomic( sqrt(2)+E(4)*sqrt(7) );
+E(56)^5+E(56)^8+E(56)^13-E(56)^15+E(56)^16-E(56)^23-E(56)^24+E(56)^29-E(56)^31+
+E(56)^32+E(56)^37-E(56)^39-E(56)^40+E(56)^45-E(56)^47-E(56)^48+E(56)^53-E(56)^55
+gap> SqrtFieldEltByCyclotomic( E(8)-E(8)^3 );
+sqrt(2)
+gap> SqrtFieldEltByCyclotomic( 3*E(4)*Sqrt(11)-2/4*Sqrt(-13/7) );
+3*E(4)*sqrt(11) + (-1/14*E(4))*sqrt(91)
+</Example>
+</Description>
+</ManSection>
+</Section>
+
+<Section> <Heading> Basic operations </Heading>
+
+All basic field operations are available. The inverse of an element <M>f</M> in <A>SqrtField</A> as follows: We first compute the minimal polynomial <M>p(X)</M> of <M>f</M> over <M>\mathbb{Q}(\imath)</M>, that is, a non-trivial linear combination <M>0=p(f)=a_0+a_1 f+\ldots a_{i-1}f^{i-1}+f^i</M>. Then <M>f^{-1}=-(a_1+a_2f+\ldots+a_{i-1}f^{i-2}+f^{i-1})/a_0</M>. Although the inverse of <M>f</M> can be computed with linear algebra methods only, the degree of the minimal polynomial of <M>f</M> can become rather large. For example, if <M>f=\sum_{j=1}^m r_i \sqrt{k_j}</M> for rational <M>r_i</M> and pairwise distinct positive squarefree integers <M>k_1,\ldots,k_m</M>, then <M>f</M> is a primitive element of the number field <M>\mathbb{Q}(\sqrt{k_1},\ldots,\sqrt{k_m})</M>, see for example  Lemma A.5 in <Cite Key="hdwdg12"/>. For larger degree, the progress of the computation of the inverse is printed via the InfoClass <A>InfoSqrtField</A>. We remark that the method <A>Random</A> simply returns a sum of a few terms <M>a\sqrt{b}</M> where <M>a,b</M> are random rationals constructed with <A>Random(Rationals)</A>.
+<Example>
+gap> a := sqrt( 2 ) + 3 * sqrt( 3/7 ); b := sqrt( 21 ) - sqrt( 2 );
+sqrt(2) + 3/7*sqrt(21)
+(-1)*sqrt(2) + sqrt(21)
+gap> a + b; a * b; a - b;
+10/7*sqrt(21)
+7 + 4/7*sqrt(42)
+2*sqrt(2) + (-4/7)*sqrt(21)
+gap> c := ( a - b )^-2;
+91/8 + 7/4*sqrt(42)
+gap> a := Sum( List( [2,3,5,7], x -> sqrt( x ) ) );
+sqrt(2) + sqrt(3) + sqrt(5) + sqrt(7)
+gap> b := a^-1; a*b;                                  
+#I    InfoSqrtField: (inverses) computed 10 powers
+37/43*sqrt(2) + (-29/43)*sqrt(3) + (-133/215)*sqrt(5) + 27/43*sqrt(7) + 
+62/215*sqrt(30) + (-10/43)*sqrt(42) + (-34/215)*sqrt(70) + 22/215*sqrt(105)
+1
+gap> ComplexConjugate(sqrt(17)+sqrt(-7));
+(-E(4))*sqrt(7) + sqrt(17)
+gap> Random( SqrtField );
+-1 + 1/4*sqrt(3) + 1/9*sqrt(6)
+</Example>
+
+Most methods for list, matrices, and polynomials also work over <A>SqrtField</A>.
+<Example>
+gap> m:=[[sqrt(2),sqrt(3)],[sqrt(2),sqrt(5)],[1,0]]*One(SqrtField);
+[ [ sqrt(2), sqrt(3) ], [ sqrt(2), sqrt(5) ], [ 1, 0 ] ]
+gap> NullspaceMat(m);
+[ [ (-5/4)*sqrt(2) + (-1/4)*sqrt(30), 3/4*sqrt(2) + 1/4*sqrt(30), 1 ] ]
+gap> RankMat(m);
+2
+gap> m := [[sqrt(2),sqrt(3)],[sqrt(2),sqrt(5)]];  
+[ [ sqrt(2), sqrt(3) ], [ sqrt(2), sqrt(5) ] ]
+gap> Determinant( m );  DefaultFieldOfMatrix( m );
+(-1)*sqrt(6) + sqrt(10)
+SqrtField
+gap> x := Indeterminate( SqrtField, "x" );; f := x^2+x+1;
+x^2+x+1
+</Example>
+
+<ManSection>
+<Func Name="SqrtFieldMakeRational" Arg="m"
+      Comm="sqrt"/>
+<Description>
+If <A>m</A> is an element of <A>SqrtField</A>, or a list or a matrix over <A>SqrtField</A>, defined over the Gaussian rationals, then <A>SqrtFieldMakeRational( m )</A> returns the corresponding element in <M>\mathbb{Q}(\imath)</M> or defined over <M>\mathbb{Q}(\imath)</M>, respectively. This function is used internally, for example, to compute the determinant or rank of a rational matrix over <A>SqrtField</A> more efficiently. It is also used in the following three functions.
+</Description>
+</ManSection>
+
+<ManSection>
+<Func Name="SqrtFieldPolynomialToRationalPolynomial" Arg="f"
+      Comm="sqrt"/>
+<Description>
+Here <A>f</A> is a polynomial over <A>SqrtField</A> but with coefficients in the Gaussian rationals. The function returns the corresponding polynomial defined over the Gaussian rationals.
+</Description>
+</ManSection>
+
+<ManSection>
+<Func Name="SqrtFieldRationalPolynomialToSqrtFieldPolynomial" Arg="f"
+      Comm="sqrt"/>
+<Description>
+If <A>f</A> is a polynomial over the Gaussian rationals, then the function returns the corresponding polynomial defined over <A>SqrtField</A>. 
+</Description>
+</ManSection>
+<ManSection>
+<Oper Name="Factors" Arg="f"
+      Comm="sqrt"/>
+<Description>
+If <A>f</A> is a rational polynomial defined over <A>SqrtField</A>, then the previous two functions are used to obtain its factorisation over <M>\mathbb{Q}</M>. 
+<Example>
+gap> F := SqrtField;; one := One( SqrtField );;                 
+gap> x := Indeterminate( F, "x" );; f := x^5 + 4*x^3 + E(4)*one*x;
+x^5+4*x^3+E(4)*x
+gap> SqrtFieldPolynomialToRationalPolynomial(f);
+x_1^5+4*x_1^3+E(4)*x_1
+gap> SqrtFieldRationalPolynomialToSqrtFieldPolynomial(last);
+x^5+4*x^3+E(4)*x
+gap> f := x^2-1;; Factors(f);
+[ x-1, x+1 ]
+gap> f := x^2+1;; Factors(f);
+[ x^2+1 ]
+</Example>
+</Description>
+</ManSection>
+
+
+
+
+</Section>
+
+
+</Chapter>
+
+
+
+
+<!-------------------------------------------------------------------------->
+<Chapter> <Heading>Real Lie Algebras</Heading>
+
+
+
+<Section> <Heading> Construction of simple real Lie algebras </Heading>
+
+A few functions print some information on what they are doing to the info class <A>InfoCorelg</A>.
+
+<ManSection>
+
+<Func Name="RealFormsInformation" Arg="type, rank"/>
+<Description>
+This function displays information regarding the simple real Lie algebras
+that can be constructed from the complex Lie algebra of type <A>type</A> (which is a string)
+and rank <A>rank</A> (a positive integer). 
+Each Lie algebra is given an index which is an integer, 
+and for each index some information
+is given on the Lie algebra, such as a commonly used name. In all cases the index 0
+refers to the realification of the complex Lie algebra.
+
+<Example>
+gap> RealFormsInformation( "A", 4 );
+
+  There are 4 simple real forms with complexification A4
+    1 is of type su(5), compact form
+    2 - 3 are of type su(p,5-p) with 1 &lt;= p &lt;= 2
+    4 is of type sl(5,R)
+  Index '0' returns the realification of A4
+
+gap> RealFormsInformation( "E", 6 );
+ 
+  There are 5 simple real forms with complexification E6
+    1 is the compact form
+    2 is EI   = E6(6), with k_0 of type sp(4) (C4)
+    3 is EII  = E6(2), with k_0 of type su(6)+su(2) (A5+A1)
+    4 is EIII = E6(-14), with k_0 of type so(10)+R (D5+R)
+    5 is EIV  = E6(-26), with k_0 of type f_4 (F4)
+  Index '0' returns the realification of E6
+
+gap> NumberRealForms("D",10);
+12
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+
+<Func Name="NumberRealForms" Arg="type, rank"
+      Comm="real forms"/>
+<Description>
+This function returns the number of (isomorphism types of) all real forms of the simple complex Lie algebras of type <A>type</A> and 
+rank <A>rank</A>.
+</Description>
+
+</ManSection>
+<ManSection>
+
+<Func Name="RealFormById" Arg="type, rank, id"/>
+<Func Name="RealFormById" Arg="type, rank, id, F"/>
+<Description>
+Let <M>L</M> be the complex Lie algebra of type <A>type</A> and rank <A>rank</A>.
+This function constructs the real form of <M>L</M> with index <A>id</A> (see
+<Ref Func="RealFormsInformation"/>). 
+By default this Lie algebra is constructed over the field <A>SqrtField</A>.
+However, by adding as an optional fourth argument the field <A>F</A>, it is possible
+to construct the Lie algebra output by this function over <A>F</A>. It is required
+that the complex unit <A>E(4)</A> is contained in <A>F</A>.
+
+If the index <A>ind</A> is 0, then the realification of <M>L</M> is constructed,
+which, strictly speaking is not a real form of <M>L</M>. 
+<Example>
+gap> RealFormById( "A", 4, 2 );
+&lt;Lie algebra of dimension 24 over SqrtField>
+gap> RealFormById( "A", 4, 2, CF(4) );
+&lt;Lie algebra of dimension 24 over GaussianRationals>
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+
+<Func Name="AllRealForms" Arg="type, rank"
+      Comm="real forms"/>
+<Description>
+This function returns all real forms of the simple complex Lie algebras of type <A>type</A> and 
+rank <A>rank</A> up to isomorphism. In the same way as with <Ref Func="RealFormById"/> it is
+possible to add the base field as an optional third argument.
+</Description>
+
+</ManSection>
+
+<Ignore>
+
+<ManSection>
+<Func Name="ParametersOfNonCompactRealForm" Arg="type, rank"
+      Comm="parameters of real forms"/>
+<Description>
+This function returns all lists <A>[type, rank, signs, perm]</A> parametrising the real 
+forms of simple complex Lie algebras of type <A>type</A> and rank <A>rank</A> up to isomorphism.
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Func Name="NonCompactRealFormsOfSimpleLieAlgebra" Arg="type, rank"
+      Comm="non compact real forms"/>
+<Func Name="NonCompactRealFormsOfSimpleLieAlgebra" Arg="param"
+      Comm="non compact real forms"/>
+<Description>
+Returns, up to isomorphism, all real forms of the simple complex Lie algebra of type <A>type</A> and rank <A>rank</A> or, in the second version, the single real form determined by the parameters <A>param</A> as given by  <A>ParametersOfNonCompactRealForm</A>. The output is a list of records, each having the following entries: <A>liealg</A>, the real form defined over the Gaussian rationals;  <A>liealgSF</A>, the same real form defined over <A>SqrtField</A>; <A>writeToSF</A>, a function mapping a rational element of <A>liealg</A> into <A>liealgSF</A>, and <A>rank</A> and <A>type</A>. The attributes <A>RootSystem</A>, <A>CartanSubalgebra</A>, and <A>CartanDecomposition</A> are stored in each real form.
+</Description>
+</ManSection>
+</Ignore>
+
+
+<ManSection>
+
+<Attr Name="RealFormParameters" Arg="L"
+      Comm="real forms"/>
+<Description>
+For a real Lie algebra <A>L</A> constructed by the function <Ref Func="RealFormById"/>,
+this function returns a list of the parameters defining <A>L</A> as a real form of its
+complexification. The first element of the list is the type of <A>L</A> (given by a string),
+the second element is its rank, the third and fourth elements are the list of signs and
+the permutation defining the Cartan involution (see Section <Ref Sect="srl"/>).
+</Description>
+</ManSection>
+
+<Ignore>
+<ManSection>
+
+<Prop Name="IsCompactForm" Arg="L"
+      Comm="real forms"/>
+<Description>
+Returns <A>true</A> if the real form <A>L</A> is a compact real form and has this information 
+stored as a property.
+</Description>
+</ManSection>
+</Ignore>
+
+<ManSection>
+
+<Prop Name="IsRealFormOfInnerType" Arg="L"
+      Comm="real forms"/>
+<Description>
+Returns <A>true</A> if and only if the real form <A>L</A> is a defined by an inner 
+involutive automorphism.
+</Description>
+</ManSection>
+
+<ManSection>
+
+<Prop Name="IsRealification" Arg="L"
+      Comm="real forms"/>
+<Description>
+Returns <A>true</A> if and only if the real form <A>L</A> is the realification of a complex simple Lie algebra.
+</Description>
+</ManSection>
+
+<ManSection>
+<Attr Name="CartanDecomposition" Arg="L"
+      Comm="real forms"/>
+<Description>
+The Cartan decomposition of <A>L</A> as a record with entries <A>K</A>, <A>P</A>, and 
+<A>CartanInv</A>, such that <M>L=K\oplus P</M> is the Cartan decomposition with corresponding 
+Cartan involution <A>CartanInv</A>, which is defined as a function on <A>L</A>.
+<P/>
+The Lie algebras constructed by <Ref Func="RealFormById"/> have this attribute stored.
+For other semisimple real Lie algebras it is computed. However, we do remark that the
+in the computation the root system is computed with respect to a Cartan subalgebra.
+If the program does not succeed in splitting the Cartan subalgebra over the base field
+of <A>L</A>, then the computation will not succeed.
+</Description>
+</ManSection>
+<Example>
+gap> L:= RealFormById( "A", 5, 3 );
+&lt;Lie algebra of dimension 35 over SqrtField>
+gap> H := CartanSubalgebra(L);;
+gap> K:= LieCentralizer( L, Subalgebra( L, [Basis( H )[1]] ) );
+&lt;Lie algebra of dimension 17 over SqrtField>
+gap> DK:= LieDerivedSubalgebra( K );
+&lt;Lie algebra of dimension 15 over SqrtField>
+gap> CartanDecomposition( DK );
+rec( CartanInv := function( v ) ... end, 
+K := &lt;Lie algebra of dimension 15 over SqrtField>, 
+P := &lt;vector space over SqrtField, with 0 generators> )
+# We see that the semisimple subalgebra DK is compact. 
+</Example>
+<ManSection>
+<Attr Name="RealStructure" Arg="L"
+      Comm="real forms"/>
+<Attr Name="RealStructure" Arg="L:basis:=B"
+      Comm="real forms"/>
+<Description>
+The real structure of the real form <A>L</A> is the (complex) conjugation with respect to <A>L</A>, that is, the function which maps an element in <A>L</A> to the element constructed as follows: write it as a linear combination of the basis elements of <A>L</A> and replace each coefficient by its complex conjugate. If the optional argument <A>basis:=B</A> is given, then <A>B</A> has to be a basis whose span contains <A>L</A> (which is not checked by the code); in this case the linear combination is done with respect to <A>B</A>. The latter construction is important when one considers a subalgebra <A>M</A> of a real form <A>L</A>; here one could either do <A>Realstructure(M:basis:=Basis(L))</A> or <A>SetRealStructure(M,RealStructure(L))</A>.  
+</Description>
+</ManSection>
+
+</Section>
+
+
+<Section> <Heading> Isomorphisms</Heading>
+
+<ManSection>
+<Func Name="IsomorphismOfRealSemisimpleLieAlgebras" Arg="K, L"
+      Comm="isom"/>
+<Description>
+Here <A>K</A>, <A>L</A> are two real forms of a semisimple complex Lie algebra.
+This function returns an isomorphism if one exists. Otherwise <A>false</A> is returned. 
+<Example>
+gap> L:=RealFormById("E",6,3);;                            
+gap> H:=CartanSubalgebra(L);;
+gap> K:=LieCentralizer(L,Subalgebra(L,Basis(H){[1,2,4]}));;
+gap> DK:=LieDerivedSubalgebra(K);
+&lt;Lie algebra of dimension 8 over SqrtField>
+gap> IdRealForm(DK);          
+[ "A", 2, 2 ]
+gap> M:=RealFormById("A",2,2);
+&lt;Lie algebra of dimension 8 over SqrtField>
+gap> IsomorphismOfRealSemisimpleLieAlgebras(DK,M);
+&lt;Lie algebra isomorphism between Lie algebras of dimension 8 over SqrtField>
+</Example>
+</Description>
+</ManSection>
+
+
+</Section>
+
+<Section> <Heading>Cartan subalgebras and root systems</Heading>
+
+<ManSection>
+<Attr Name="MaximallyCompactCartanSubalgebra" Arg="L"/>
+<Description>
+Here <A>L</A> is a real semisimple Lie algebra. This function returns a maximally
+compact Cartan subalgebra of <A>L</A>.
+</Description>
+</ManSection>
+
+<ManSection>
+<Attr Name="MaximallyNonCompactCartanSubalgebra" Arg="L"/>
+<Description>
+Here <A>L</A> is a real semisimple Lie algebra. This function returns a maximally
+non-compact Cartan subalgebra of <A>L</A>.
+</Description>
+</ManSection>
+
+<ManSection>
+<Func Name="CompactDegreeOfCartanSubalgebra" Arg="L"/>
+<Func Name="CompactDegreeOfCartanSubalgebra" Arg="L, H"/>
+<Description>
+Here <A>L</A> is a real semisimple Lie algebra. This function returns the compact dimension of the Cartan subalgebra <A>H</A>. If <A>H</A> is not given, then <A>CartanSubalgebra(L)</A> will be taken. The compact dimension will be stored in the Cartan subalgebra, so that a new call to this function, with the same input, will return the compact dimension immediately.
+</Description>
+</ManSection>
+
+<ManSection>
+<Attr Name="CartanSubalgebras" Arg="L"/>
+<Description>
+Here <A>L</A> is a real form of a complex semisimple Lie algebra. This function returns 
+a list of Cartan subalgebras of <A>L</A>. They are representatives of all classes of 
+conjugate (by the adjoint group) Cartan subalgebras of <A>L</A>.
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Attr Name="CartanSubspace" Arg="L"/>
+<Description>
+Here <A>L</A> is a real semisimple Lie algebra. This function returns a Cartan 
+subspace of <A>L</A>. That is a maximal abelian subspace of the subspace <A>P</A> 
+given in the <Ref Attr="CartanDecomposition"/> of <A>L</A>.
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Oper Name="RootsystemOfCartanSubalgebra" Arg="L"/>
+<Oper Name="RootsystemOfCartanSubalgebra" Arg="L, H"/>
+<Description>
+Here <A>L</A> is a semisimple Lie algebra, and <A>H</A> is a Cartan subalgebra. (If <A>H</A> is not given, then <A>CartanSubalgebra(L)</A> will be taken.)
+This function returns the root system of <A>L</A> with respect to <A>H</A>.
+It is necessary that the eigenvalues of the adjoint maps corresponding to all elements
+of <A>H</A> lie in the ground field of <A>L</A>. However, even if they do, it is not
+guaranteed that this function succeeds, as it may happen that &GAP; has no polynomial 
+factorisation algorithm over the ground field. 
+<P/>
+The root system is stored in <A>H</A>, so that a new call to this function, with the same input, 
+will return the same root system.
+</Description>
+</ManSection>
+
+<ManSection>
+<Attr Name="ChevalleyBasis" Arg="R"/>
+<Description>
+Here <A>R</A> is a root system of a semisimple Lie algebra <A>L</A>.
+This function returns a Chevalley basis of <A>L</A>, consisting of root vectors
+of <A>R</A>.
+</Description>
+</ManSection>
+
+
+</Section>
+
+<Section> <Heading>Diagrams</Heading>
+
+In this section we document the functionality for computing the Satake and Vogan diagrams
+of a real semisimple Lie algebra. In both cases the relevant function computes an object,
+which, when printed, does not reveal much information. However, <A>Display</A> with as
+input such an object, displays the diagram. Here we use the convention that every node is
+represented by an integer; nodes that are painted black are represented by integers in
+brackets; and the involution (i.e., the arrows in the diagram) are represented by a permutation
+of the nodes, printed on a line below the diagram.
+
+<ManSection>
+<Attr Name="VoganDiagram" Arg="L"/>
+<Description>
+Here <A>L</A> is a real semisimple Lie algebra. This function returns 
+the Vogan diagram of <A>L</A>.
+<Example>
+gap> L:= RealFormById( "E", 6, 3 );;
+gap> K:= LieCentralizer( L, Subalgebra( L, Basis( CartanSubalgebra(L) ){[1]} ) );
+&lt;Lie algebra of dimension 36 over SqrtField>
+gap> DK:= LieDerivedSubalgebra( K );
+&lt;Lie algebra of dimension 35 over SqrtField>
+gap> vd:= VoganDiagram(DK);
+&lt;Vogan diagram in Lie algebra of type A5>
+gap> Display( vd );
+A5:  1---(2)---3---4---5
+Involution: ()
+
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Attr Name="SatakeDiagram" Arg="L"/>
+<Description>
+Here <A>L</A> is a real semisimple Lie algebra. This function returns 
+the Satake diagram of <A>L</A>.
+<Example>
+gap> L:= RealFormById( "E", 6, 3 );;
+gap> K:= LieCentralizer( L, Subalgebra( L, Basis( CartanSubalgebra(L) ){[1]} ) );
+&lt;Lie algebra of dimension 36 over SqrtField>
+gap> DK:= LieDerivedSubalgebra( K );
+&lt;Lie algebra of dimension 35 over SqrtField>
+gap> sd:= SatakeDiagram( DK );
+&lt;Satake diagram in Lie algebra of type A5>
+gap> Display( sd );
+A5:  1---2---(3)---4---5
+Involution:  (1,5)(2,4)
+</Example>
+</Description>
+</ManSection>
+
+
+
+</Section>
+
+<Section> <Heading>Nilpotent orbits</Heading>
+
+<Package>CoReLG</Package> has a database of the nilpotent orbits of the real forms of the 
+simple Lie algebras of ranks up to 8. When called the first time in a GAP session, <Package>CoReLG</Package> will first read the database of nilpotent orbits.
+
+<ManSection>
+<Attr Name="NilpotentOrbitsOfRealForm" Arg="L"/>
+<Description>
+Here <A>L</A> is a real form of a complex simple Lie algebra of rank up to 8.
+This function returns the list of nilpotent orbits (under the action of the adjoint
+group) of <A>L</A>. For this function to work, <A>L</A> must be defined over 
+<A>SqrtField</A>.
+<Example>
+gap> L:= RealFormById( "F", 4, 3 );;
+gap> no:= NilpotentOrbitsOfRealForm( L );;
+#I CoReLG: read database of real triples ... done
+gap> no[1];
+&lt;nilpotent orbit in Lie algebra>
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Attr Name="RealCayleyTriple" Arg="o"/>
+<Description>
+Here <A>o</A> is a nilpotent orbit constructed by  <Ref Attr="NilpotentOrbitsOfRealForm"/>
+of a simple real Lie algebra. This function returns a real Cayley triple <A>[ f, h, e ]</A>
+corresponding to the orbit <A>o</A>. The third element <A>e</A> is a representative of the orbit.
+<Example>
+gap> L:= RealFormById( "F", 4, 2 );;
+gap> no:= NilpotentOrbitsOfRealForm( L );;
+gap> o:= no[10];
+&lt;nilpotent orbit in Lie algebra>
+gap> t:=RealCayleyTriple(o);;
+gap> theta:= CartanDecomposition(L).CartanInv;
+function( v ) ... end
+gap> theta(t[1]) = -t[3];
+true
+gap> theta(t[2]) = -t[2];
+true
+gap> t[3]*t[1] = t[2];
+true
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Attr Name="WeightedDynkinDiagram" Arg="o"/>
+<Description>
+Here <A>o</A> is a nilpotent orbit constructed by  <Ref Attr="NilpotentOrbitsOfRealForm"/>
+of a simple real Lie algebra. This function returns the weighted Dynkin diagram of the orbit,
+which identifies its orbit in the complexification of the real Lie algebra in which 
+<A>o</A> lies.
+</Description>
+</ManSection>
+
+</Section>
+
+</Chapter>
+
+
+
+</Body>
+
+<Bibliography Databases="corelg" />
+
+<TheIndex/>
+
+
+</Book>

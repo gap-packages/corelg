@@ -1,0 +1,23 @@
+  
+  
+  [1XReferences[101X
+  
+  [[20XDFG13[120X]  [16XDietrich,  H.,  Faccin, P. and Graaf, W. A. d.[116X, [17XComputing with real
+  Lie  algebras:  real  forms,  Cartan decompositions, and Cartan subalgebras[117X,
+  [18XJournal of Symbolic Computation[118X, [19X56[119X (2013), 27--45.
+  
+  [[20XDG13[120X]  [16XDietrich,  H.  and  Graaf, W. A. d.[116X, [17XA computational approach to the
+  Kostant-Sekiguchi   correspondence[117X,  [18XPacific  Journal  of  Mathematics[118X,  [19X265[119X
+  (2013), 349--379.
+  
+  [[20XGra12[120X]  [16XGraaf,  W.  A.  d.[116X,  [17X\sf  SLA  - computing with Simple Lie Algebras[117X
+  (2012), (({\tt http://science.unitn.it/~degraaf/sla.html}, version 0.12)), a
+  {\sf GAP} package.
+  
+  [[20XKna02[120X] [16XKnapp, A. W.[116X, [17XLie groups beyond an introduction[117X, Birkh\"auser Boston
+  Inc.,  Second  edition,  Progress  in  Mathematics,  [19X140[119X, Boston, MA (2002),
+  xviii+812 pages.
+  
+  
+  
+  [32X

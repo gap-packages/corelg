@@ -1,0 +1,120 @@
+  
+  
+                                     [1XCoReLG[101X
+  
+  
+                        [1XComputing with real Lie Algebras[101X
+  
+  
+                                  Version 0.1
+  
+  
+                                  October 2013
+  
+  
+                                 Heiko Dietrich
+  
+                                  Paolo Faccin
+  
+                                Willem de Graaf
+  
+  
+  
+  Heiko Dietrich
+      Email:    [7Xmailto:heiko.dietrich@monash.edu[107X
+      Homepage: [7Xhttp://users.monash.edu.au/~heikod/[107X
+      Address:  [33X[0;14YSchool of Mathematical Sciences[133X
+                [33X[0;14YMonash University[133X
+                [33X[0;14YWellington Road 1[133X
+                [33X[0;14YVIC 3800, Melbourne, Australia[133X
+  
+  
+  Paolo Faccin
+      Email:    [7Xmailto:paolofaccin86@gmail.com[107X
+      Address:  [33X[0;14YDipartimento di Matematica[133X
+                [33X[0;14YVia Sommarive 14[133X
+                [33X[0;14YI-38050 Povo (Trento), Italy[133X
+  
+  
+  Willem de Graaf
+      Email:    [7Xmailto:degraaf@science.unitn.it[107X
+      Homepage: [7Xhttp://www.science.unitn.it/~degraaf/[107X
+      Address:  [33X[0;14YDipartimento di Matematica[133X
+                [33X[0;14YVia Sommarive 14[133X
+                [33X[0;14YI-38050 Povo (Trento), Italy[133X
+  
+  
+  
+  -------------------------------------------------------
+  [1XAbstract[101X
+  [33X[0;0YThis  package  provides  functions for computing with various aspects of the
+  theory of real simple Lie algebras.[133X
+  
+  
+  -------------------------------------------------------
+  [1XCopyright[101X
+  [33X[0;0Y© 2013 Heiko Dietrich, Paolo Faccin, and Willem de Graaf[133X
+  
+  
+  -------------------------------------------------------
+  [1XAcknowledgements[101X
+  [33X[0;0YThe  research leading to this package has received funding from the European
+  Union's  Seventh  Framework  Program  FP7/2007-2013 under grant agreement no
+  271712.[133X
+  
+  
+  -------------------------------------------------------
+  
+  
+  [1XContents (CoReLG)[101X
+  
+  1 [33X[0;0YIntroduction[133X
+    1.1 [33X[0;0YThe simple real Lie algebras[133X
+    1.2 [33X[0;0YCartan subalgebras and more[133X
+    1.3 [33X[0;0YNilpotent orbits[133X
+    1.4 [33X[0;0YOn base fields[133X
+  2 [33X[0;0YThe field [3XSqrtField[103X[133X
+    2.1 [33X[0;0YDefinition of the field[133X
+      2.1-1 SqrtFieldIsGaussRat
+    2.2 [33X[0;0YConstruction of elements[133X
+      2.2-1 sqrt
+      2.2-2 SqrtFieldEltCoefficients
+      2.2-3 SqrtFieldEltByCoefficients
+      2.2-4 SqrtFieldEltToCyclotomic
+      2.2-5 SqrtFieldEltByCyclotomic
+    2.3 [33X[0;0YBasic operations[133X
+      2.3-1 SqrtFieldMakeRational
+      2.3-2 SqrtFieldPolynomialToRationalPolynomial
+      2.3-3 SqrtFieldRationalPolynomialToSqrtFieldPolynomial
+      2.3-4 Factors
+  3 [33X[0;0YReal Lie Algebras[133X
+    3.1 [33X[0;0YConstruction of simple real Lie algebras[133X
+      3.1-1 RealFormsInformation
+      3.1-2 NumberRealForms
+      3.1-3 RealFormById
+      3.1-4 AllRealForms
+      3.1-5 RealFormParameters
+      3.1-6 IsRealFormOfInnerType
+      3.1-7 IsRealification
+      3.1-8 CartanDecomposition
+      3.1-9 RealStructure
+    3.2 [33X[0;0YIsomorphisms[133X
+      3.2-1 IsomorphismOfRealSemisimpleLieAlgebras
+    3.3 [33X[0;0YCartan subalgebras and root systems[133X
+      3.3-1 MaximallyCompactCartanSubalgebra
+      3.3-2 MaximallyNonCompactCartanSubalgebra
+      3.3-3 CompactDegreeOfCartanSubalgebra
+      3.3-4 CartanSubalgebras
+      3.3-5 CartanSubspace
+      3.3-6 RootsystemOfCartanSubalgebra
+      3.3-7 ChevalleyBasis
+    3.4 [33X[0;0YDiagrams[133X
+      3.4-1 VoganDiagram
+      3.4-2 SatakeDiagram
+    3.5 [33X[0;0YNilpotent orbits[133X
+      3.5-1 NilpotentOrbitsOfRealForm
+      3.5-2 RealCayleyTriple
+      3.5-3 WeightedDynkinDiagram
+  
+  
+  [32X

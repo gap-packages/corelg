@@ -1,0 +1,130 @@
+  
+  [1X4 [33X[0;0YReal Forms[133X[101X
+  
+  [33X[0;0Y(Paolo? ... something on real forms... we also define them over sqrtField or
+  Gaussian rationals... )[133X
+  
+  
+  [1X4.1 [33X[0;0YReal Forms[133X[101X
+  
+  [1X4.1-1 RealFormsOfSimpleLieAlgebra[101X
+  
+  [29X[2XRealFormsOfSimpleLieAlgebra[102X( [3Xtype[103X, [3Xrank[103X ) [32X function
+  
+  [33X[0;0YThis  function  returns all real forms of the simple complex Lie algebras of
+  type  [3Xtype[103X  and  rank  [3Xrank[103X up to isomorphism. The attributes [3XRootSystem[103X and
+  [3XCartanSubalgebra[103X are yet not stored for the real forms.[133X
+  
+  [1X4.1-2 ParametersOfNonCompactRealForm[101X
+  
+  [29X[2XParametersOfNonCompactRealForm[102X( [3Xtype[103X, [3Xrank[103X ) [32X function
+  
+  [33X[0;0YThis  function returns all lists [3X[type, rank, signs, perm][103X parametrising the
+  real  forms  of simple complex Lie algebras of type [3Xtype[103X and rank [3Xrank[103X up to
+  isomorphism.[133X
+  
+  [1X4.1-3 NonCompactRealFormsOfSimpleLieAlgebra[101X
+  
+  [29X[2XNonCompactRealFormsOfSimpleLieAlgebra[102X( [3Xtype[103X, [3Xrank[103X ) [32X function
+  [29X[2XNonCompactRealFormsOfSimpleLieAlgebra[102X( [3Xparam[103X ) [32X function
+  
+  [33X[0;0YReturns, up to isomorphism, all real forms of the simple complex Lie algebra
+  of  type  [3Xtype[103X and rank [3Xrank[103X or, in the second version, the single real form
+  determined      by      the     parameters     [3Xparam[103X     as     given     by
+  [3XParametersOfNonCompactRealForm[103X. The output is a list of records, each having
+  the  following  entries:  [3Xliealg[103X,  the  real  form defined over the Gaussian
+  rationals; [3XliealgSF[103X, the same real form defined over [3XSqrtField[103X; [3XwriteToSF[103X, a
+  function  mapping  a  rational element of [3Xliealg[103X into [3XliealgSF[103X, and [3Xrank[103X and
+  [3Xtype[103X.  The  attributes [3XRootSystem[103X, [3XCartanSubalgebra[103X, and [3XCartanDecomposition[103X
+  are stored in each real form.[133X
+  
+  [1X4.1-4 RealFormParameters[101X
+  
+  [29X[2XRealFormParameters[102X( [3XL[103X ) [32X attribute
+  
+  [33X[0;0YThe parameters defining [3XL[103X, see [3XParametersOfNonCompactRealForm[103X.[133X
+  
+  [1X4.1-5 IsCompactForm[101X
+  
+  [29X[2XIsCompactForm[102X( [3XL[103X ) [32X property
+  
+  [33X[0;0YReturns  [3Xtrue[103X  if  the  real  form  [3XL[103X  is  a  compact real form and has this
+  information stored as a property.[133X
+  
+  [1X4.1-6 IsRealFormOfInnerType[101X
+  
+  [29X[2XIsRealFormOfInnerType[102X( [3XL[103X ) [32X property
+  
+  [33X[0;0YReturns  [3Xtrue[103X  if  and  only  if  the  real  form [3XL[103X is a defined by an inner
+  involutive automorphism.[133X
+  
+  [1X4.1-7 CartanDecomposition[101X
+  
+  [29X[2XCartanDecomposition[102X( [3XL[103X ) [32X attribute
+  
+  [33X[0;0YThe  Cartan decomposition of [3XL[103X as a record with entries [3XK[103X, [3XP[103X, and [3XCartanInv[103X,
+  such  that  [22XL=K⊕  P[122X  is  the  Cartan decomposition with corresponding Cartan
+  involution [3XCartanInv[103X, which is defined as a function on [3XL[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xrf := RealFormsOfSimpleLieAlgebra( "F", 4 );[127X[104X
+    [4X[28X[ <Lie algebra of dimension 52 over Rationals>, [128X[104X
+    [4X[28X<Lie algebra of dimension 52 over Rationals>, [128X[104X
+    [4X[28X<Lie algebra of dimension 52 over Rationals> ][128X[104X
+    [4X[25Xgap>[125X [27XIsCompactForm(rf[1]); IsCompactForm(rf[2]);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XParametersOfNonCompactRealForm("F",4);[127X[104X
+    [4X[28X[ [ "F", 4, [ -1, 1, 1, 1 ], () ], [ "F", 4, [ 1, -1, 1, 1 ], () ] ][128X[104X
+    [4X[25Xgap>[125X [27XL:=NonCompactRealFormsOfSimpleLieAlgebra( [ "F", 4, [ 1, -1, 1, 1 ], () ] );[127X[104X
+    [4X[28Xrec( liealg := <Lie algebra of dimension 52 over GaussianRationals>, [128X[104X
+    [4X[28XliealgSF := <Lie algebra of dimension 52 over SqrtField>, [128X[104X
+    [4X[28Xrank := 4, [128X[104X
+    [4X[28Xtype := "F", [128X[104X
+    [4X[28XwriteToSF := function( v ) ... end )[128X[104X
+    [4X[25Xgap>[125X [27XLSF := L.liealgSF;[127X[104X
+    [4X[28X<Lie algebra of dimension 52 over SqrtField>[128X[104X
+    [4X[25Xgap>[125X [27XRealFormParameters(LSF);[127X[104X
+    [4X[28X[ "F", 4, [ 1, -1, 1, 1 ], () ][128X[104X
+    [4X[25Xgap>[125X [27Xcd := CartanDecomposition(LSF);; K:=cd.K; P:=cd.P; theta:=cd.CartanInv;[127X[104X
+    [4X[28X<Lie algebra of dimension 24 over SqrtField>[128X[104X
+    [4X[28X<vector space of dimension 28 over SqrtField>[128X[104X
+    [4X[28Xfunction( v ) ... end[128X[104X
+    [4X[25Xgap>[125X [27Xk:=Random(K);;p:=Random(P);; theta(k+p)=k-p;[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.2 [33X[0;0YIsomorphisms[133X[101X
+  
+  [1X4.2-1 IsomorphismOfRealFormsInnerType[101X
+  
+  [29X[2XIsomorphismOfRealFormsInnerType[102X( [3XLL[103X ) [32X function
+  
+  [33X[0;0YHere [3XLL[103X is a list of real forms of the same complex simple Lie algebra, each
+  defined    over    the    Gaussian    rationals,   with   stored   attribute
+  [3XCartanDecomposition[103X.  For each isomorphism type of [22XZ_2[122X-graded Lie algebra in
+  the  list  [3XLL[103X  it  returns  a  record  with  the following entries: [3Xpos[103X, the
+  position  of  elements  in  [3XLL[103X  which  are all of the same isomorphism type;
+  [3Xliealgs[103X,  the  corresponding lie algebras; [3Xisos[103X, a list such that [3Xisos[i][103X is
+  an  isomorphism  between  [3XLL[pos[1]][103X and [3XLL[pos[i]][103X. It can also happen that
+  [3Xisos[i][103X is the string [3X"isom but over SqrtField"[103X in which case an isomorphism
+  would have to be defined over [3XSqrtField[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xrf := NonCompactRealFormsOfSimpleLieAlgebra("D",4);;[127X[104X
+    [4X[25Xgap>[125X [27XL:=rf[1].liealg;; K:=rf[2].liealg;; M:=rf[3].liealg;; LL:=[L,K,L,M,M,L,K];;[127X[104X
+    [4X[25Xgap>[125X [27Xiso:=IsomorphismOfRealFormsInnerType(LL);;[127X[104X
+    [4X[25Xgap>[125X [27XList(iso,x->x.pos);[127X[104X
+    [4X[28X[ [ 1, 3, 6 ], [ 2, 7 ], [ 4, 5 ] ][128X[104X
+    [4X[28X#LL[1],LL[3],LL[6] are isomorphic, [128X[104X
+    [4X[28X#LL[2], LL[7] are isomorphic, and [128X[104X
+    [4X[28X#LL[4], LL[5] are isomorphic[128X[104X
+    [4X[25Xgap>[125X [27Xpsi := iso[1].isos[3];;[127X[104X
+    [4X[28X#isomorphism from iso[1].liealg[1] to iso[1].liealgs[3][128X[104X
+    [4X[25Xgap>[125X [27XSource(psi)=LL[iso[1].pos[1]] and Source(psi)=iso[1].liealgs[1];[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XImage(psi)=LL[iso[1].pos[3]] and Image(psi)=iso[1].liealgs[3];[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  

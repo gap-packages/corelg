@@ -1,0 +1,353 @@
+  
+  [1X3 [33X[0;0YReal Lie Algebras[133X[101X
+  
+  
+  [1X3.1 [33X[0;0YConstruction of simple real Lie algebras[133X[101X
+  
+  [33X[0;0YA  few  functions  print some information on what they are doing to the info
+  class [3XInfoCorelg[103X.[133X
+  
+  [1X3.1-1 RealFormsInformation[101X
+  
+  [29X[2XRealFormsInformation[102X( [3Xtype[103X, [3Xrank[103X ) [32X function
+  
+  [33X[0;0YThis  function  displays  information regarding the simple real Lie algebras
+  that  can be constructed from the complex Lie algebra of type [3Xtype[103X (which is
+  a  string)  and rank [3Xrank[103X (a positive integer). Each Lie algebra is given an
+  index  which  is an integer, and for each index some information is given on
+  the  Lie  algebra,  such  as  a commonly used name. In all cases the index 0
+  refers to the realification of the complex Lie algebra.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XRealFormsInformation( "A", 4 );[127X[104X
+    [4X[28X[128X[104X
+    [4X[28X  There are 4 simple real forms with complexification A4[128X[104X
+    [4X[28X    1 is of type su(5), compact form[128X[104X
+    [4X[28X    2 - 3 are of type su(p,5-p) with 1 <= p <= 2[128X[104X
+    [4X[28X    4 is of type sl(5,R)[128X[104X
+    [4X[28X  Index '0' returns the realification of A4[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XRealFormsInformation( "E", 6 );[127X[104X
+    [4X[28X [128X[104X
+    [4X[28X  There are 5 simple real forms with complexification E6[128X[104X
+    [4X[28X    1 is the compact form[128X[104X
+    [4X[28X    2 is EI   = E6(6), with k_0 of type sp(4) (C4)[128X[104X
+    [4X[28X    3 is EII  = E6(2), with k_0 of type su(6)+su(2) (A5+A1)[128X[104X
+    [4X[28X    4 is EIII = E6(-14), with k_0 of type so(10)+R (D5+R)[128X[104X
+    [4X[28X    5 is EIV  = E6(-26), with k_0 of type f_4 (F4)[128X[104X
+    [4X[28X  Index '0' returns the realification of E6[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XNumberRealForms("D",10);[127X[104X
+    [4X[28X12[128X[104X
+  [4X[32X[104X
+  
+  [1X3.1-2 NumberRealForms[101X
+  
+  [29X[2XNumberRealForms[102X( [3Xtype[103X, [3Xrank[103X ) [32X function
+  
+  [33X[0;0YThis function returns the number of (isomorphism types of) all real forms of
+  the simple complex Lie algebras of type [3Xtype[103X and rank [3Xrank[103X.[133X
+  
+  [1X3.1-3 RealFormById[101X
+  
+  [29X[2XRealFormById[102X( [3Xtype[103X, [3Xrank[103X, [3Xid[103X ) [32X function
+  [29X[2XRealFormById[102X( [3Xtype[103X, [3Xrank[103X, [3Xid[103X, [3XF[103X ) [32X function
+  
+  [33X[0;0YLet  [22XL[122X  be the complex Lie algebra of type [3Xtype[103X and rank [3Xrank[103X. This function
+  constructs  the  real  form  of  [22XL[122X  with  index [3Xid[103X (see [2XRealFormsInformation[102X
+  ([14X3.1-1[114X)).  By  default  this  Lie  algebra  is  constructed  over  the field
+  [3XSqrtField[103X. However, by adding as an optional fourth argument the field [3XF[103X, it
+  is  possible to construct the Lie algebra output by this function over [3XF[103X. It
+  is  required  that the complex unit [3XE(4)[103X is contained in [3XF[103X. If the index [3Xind[103X
+  is  0,  then the realification of [22XL[122X is constructed, which, strictly speaking
+  is not a real form of [22XL[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XRealFormById( "A", 4, 2 );[127X[104X
+    [4X[28X<Lie algebra of dimension 24 over SqrtField>[128X[104X
+    [4X[25Xgap>[125X [27XRealFormById( "A", 4, 2, CF(4) );[127X[104X
+    [4X[28X<Lie algebra of dimension 24 over GaussianRationals>[128X[104X
+  [4X[32X[104X
+  
+  [1X3.1-4 AllRealForms[101X
+  
+  [29X[2XAllRealForms[102X( [3Xtype[103X, [3Xrank[103X ) [32X function
+  
+  [33X[0;0YThis  function  returns all real forms of the simple complex Lie algebras of
+  type  [3Xtype[103X  and  rank  [3Xrank[103X  up  to  isomorphism.  In  the  same way as with
+  [2XRealFormById[102X  ([14X3.1-3[114X)  it  is  possible to add the base field as an optional
+  third argument.[133X
+  
+  [1X3.1-5 RealFormParameters[101X
+  
+  [29X[2XRealFormParameters[102X( [3XL[103X ) [32X attribute
+  
+  [33X[0;0YFor  a  real Lie algebra [3XL[103X constructed by the function [2XRealFormById[102X ([14X3.1-3[114X),
+  this  function returns a list of the parameters defining [3XL[103X as a real form of
+  its  complexification. The first element of the list is the type of [3XL[103X (given
+  by  a string), the second element is its rank, the third and fourth elements
+  are  the  list  of  signs and the permutation defining the Cartan involution
+  (see Section [14X1.1[114X).[133X
+  
+  [1X3.1-6 IsRealFormOfInnerType[101X
+  
+  [29X[2XIsRealFormOfInnerType[102X( [3XL[103X ) [32X property
+  
+  [33X[0;0YReturns  [3Xtrue[103X  if  and  only  if  the  real  form [3XL[103X is a defined by an inner
+  involutive automorphism.[133X
+  
+  [1X3.1-7 IsRealification[101X
+  
+  [29X[2XIsRealification[102X( [3XL[103X ) [32X property
+  
+  [33X[0;0YReturns  [3Xtrue[103X  if  and  only  if  the  real form [3XL[103X is the realification of a
+  complex simple Lie algebra.[133X
+  
+  [1X3.1-8 CartanDecomposition[101X
+  
+  [29X[2XCartanDecomposition[102X( [3XL[103X ) [32X attribute
+  
+  [33X[0;0YThe  Cartan decomposition of [3XL[103X as a record with entries [3XK[103X, [3XP[103X, and [3XCartanInv[103X,
+  such  that  [22XL=K⊕  P[122X  is  the  Cartan decomposition with corresponding Cartan
+  involution [3XCartanInv[103X, which is defined as a function on [3XL[103X.[133X
+  
+  [33X[0;0YThe  Lie  algebras  constructed  by [2XRealFormById[102X ([14X3.1-3[114X) have this attribute
+  stored.  For  other semisimple real Lie algebras it is computed. However, we
+  do  remark  that  the  in  the  computation the root system is computed with
+  respect to a Cartan subalgebra. If the program does not succeed in splitting
+  the  Cartan  subalgebra  over the base field of [3XL[103X, then the computation will
+  not succeed.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XL:= RealFormById( "A", 5, 3 );[127X[104X
+    [4X[28X<Lie algebra of dimension 35 over SqrtField>[128X[104X
+    [4X[25Xgap>[125X [27XH := CartanSubalgebra(L);;[127X[104X
+    [4X[25Xgap>[125X [27XK:= LieCentralizer( L, Subalgebra( L, [Basis( H )[1]] ) );[127X[104X
+    [4X[28X<Lie algebra of dimension 17 over SqrtField>[128X[104X
+    [4X[25Xgap>[125X [27XDK:= LieDerivedSubalgebra( K );[127X[104X
+    [4X[28X<Lie algebra of dimension 15 over SqrtField>[128X[104X
+    [4X[25Xgap>[125X [27XCartanDecomposition( DK );[127X[104X
+    [4X[28Xrec( CartanInv := function( v ) ... end, [128X[104X
+    [4X[28XK := <Lie algebra of dimension 15 over SqrtField>, [128X[104X
+    [4X[28XP := <vector space over SqrtField, with 0 generators> )[128X[104X
+    [4X[28X# We see that the semisimple subalgebra DK is compact. [128X[104X
+  [4X[32X[104X
+  
+  [1X3.1-9 RealStructure[101X
+  
+  [29X[2XRealStructure[102X( [3XL[103X ) [32X attribute
+  [29X[2XRealStructure[102X( [3XL:[103X [3Xbasis[103X [3X:=[103X [3XB[103X ) [32X attribute
+  
+  [33X[0;0YThe  real  structure  of  the  real form [3XL[103X is the (complex) conjugation with
+  respect  to  [3XL[103X,  that  is,  the  function  which maps an element in [3XL[103X to the
+  element  constructed  as  follows:  write  it as a linear combination of the
+  basis  elements  of [3XL[103X and replace each coefficient by its complex conjugate.
+  If  the  optional argument [3Xbasis:=B[103X is given, then [3XB[103X has to be a basis whose
+  span  contains [3XL[103X (which is not checked by the code); in this case the linear
+  combination  is done with respect to [3XB[103X. The latter construction is important
+  when one considers a subalgebra [3XM[103X of a real form [3XL[103X; here one could either do
+  [3XRealstructure(M:basis:=Basis(L))[103X or [3XSetRealStructure(M,RealStructure(L))[103X.[133X
+  
+  
+  [1X3.2 [33X[0;0YIsomorphisms[133X[101X
+  
+  [1X3.2-1 IsomorphismOfRealSemisimpleLieAlgebras[101X
+  
+  [29X[2XIsomorphismOfRealSemisimpleLieAlgebras[102X( [3XK[103X, [3XL[103X ) [32X function
+  
+  [33X[0;0YHere  [3XK[103X,  [3XL[103X  are  two  real  forms of a semisimple complex Lie algebra. This
+  function returns an isomorphism if one exists. Otherwise [3Xfalse[103X is returned.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XL:=RealFormById("E",6,3);;                            [127X[104X
+    [4X[25Xgap>[125X [27XH:=CartanSubalgebra(L);;[127X[104X
+    [4X[25Xgap>[125X [27XK:=LieCentralizer(L,Subalgebra(L,Basis(H){[1,2,4]}));;[127X[104X
+    [4X[25Xgap>[125X [27XDK:=LieDerivedSubalgebra(K);[127X[104X
+    [4X[28X<Lie algebra of dimension 8 over SqrtField>[128X[104X
+    [4X[25Xgap>[125X [27XIdRealForm(DK);          [127X[104X
+    [4X[28X[ "A", 2, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XM:=RealFormById("A",2,2);[127X[104X
+    [4X[28X<Lie algebra of dimension 8 over SqrtField>[128X[104X
+    [4X[25Xgap>[125X [27XIsomorphismOfRealSemisimpleLieAlgebras(DK,M);[127X[104X
+    [4X[28X<Lie algebra isomorphism between Lie algebras of dimension 8 over SqrtField>[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.3 [33X[0;0YCartan subalgebras and root systems[133X[101X
+  
+  [1X3.3-1 MaximallyCompactCartanSubalgebra[101X
+  
+  [29X[2XMaximallyCompactCartanSubalgebra[102X( [3XL[103X ) [32X attribute
+  
+  [33X[0;0YHere  [3XL[103X  is a real semisimple Lie algebra. This function returns a maximally
+  compact Cartan subalgebra of [3XL[103X.[133X
+  
+  [1X3.3-2 MaximallyNonCompactCartanSubalgebra[101X
+  
+  [29X[2XMaximallyNonCompactCartanSubalgebra[102X( [3XL[103X ) [32X attribute
+  
+  [33X[0;0YHere  [3XL[103X  is a real semisimple Lie algebra. This function returns a maximally
+  non-compact Cartan subalgebra of [3XL[103X.[133X
+  
+  [1X3.3-3 CompactDegreeOfCartanSubalgebra[101X
+  
+  [29X[2XCompactDegreeOfCartanSubalgebra[102X( [3XL[103X ) [32X function
+  [29X[2XCompactDegreeOfCartanSubalgebra[102X( [3XL[103X, [3XH[103X ) [32X function
+  
+  [33X[0;0YHere  [3XL[103X  is a real semisimple Lie algebra. This function returns the compact
+  dimension   of   the   Cartan   subalgebra  [3XH[103X.  If  [3XH[103X  is  not  given,  then
+  [3XCartanSubalgebra(L)[103X  will  be taken. The compact dimension will be stored in
+  the  Cartan  subalgebra,  so that a new call to this function, with the same
+  input, will return the compact dimension immediately.[133X
+  
+  [1X3.3-4 CartanSubalgebras[101X
+  
+  [29X[2XCartanSubalgebras[102X( [3XL[103X ) [32X attribute
+  
+  [33X[0;0YHere  [3XL[103X  is  a  real form of a complex semisimple Lie algebra. This function
+  returns  a  list of Cartan subalgebras of [3XL[103X. They are representatives of all
+  classes of conjugate (by the adjoint group) Cartan subalgebras of [3XL[103X.[133X
+  
+  [1X3.3-5 CartanSubspace[101X
+  
+  [29X[2XCartanSubspace[102X( [3XL[103X ) [32X attribute
+  
+  [33X[0;0YHere  [3XL[103X  is  a  real  semisimple Lie algebra. This function returns a Cartan
+  subspace of [3XL[103X. That is a maximal abelian subspace of the subspace [3XP[103X given in
+  the [2XCartanDecomposition[102X ([14X3.1-8[114X) of [3XL[103X.[133X
+  
+  [1X3.3-6 RootsystemOfCartanSubalgebra[101X
+  
+  [29X[2XRootsystemOfCartanSubalgebra[102X( [3XL[103X ) [32X operation
+  [29X[2XRootsystemOfCartanSubalgebra[102X( [3XL[103X, [3XH[103X ) [32X operation
+  
+  [33X[0;0YHere  [3XL[103X  is a semisimple Lie algebra, and [3XH[103X is a Cartan subalgebra. (If [3XH[103X is
+  not  given,  then  [3XCartanSubalgebra(L)[103X will be taken.) This function returns
+  the root system of [3XL[103X with respect to [3XH[103X. It is necessary that the eigenvalues
+  of  the  adjoint  maps  corresponding to all elements of [3XH[103X lie in the ground
+  field  of  [3XL[103X.  However,  even  if  they  do,  it is not guaranteed that this
+  function succeeds, as it may happen that [5XGAP[105X has no polynomial factorisation
+  algorithm over the ground field.[133X
+  
+  [33X[0;0YThe  root  system  is stored in [3XH[103X, so that a new call to this function, with
+  the same input, will return the same root system.[133X
+  
+  [1X3.3-7 ChevalleyBasis[101X
+  
+  [29X[2XChevalleyBasis[102X( [3XR[103X ) [32X attribute
+  
+  [33X[0;0YHere [3XR[103X is a root system of a semisimple Lie algebra [3XL[103X. This function returns
+  a Chevalley basis of [3XL[103X, consisting of root vectors of [3XR[103X.[133X
+  
+  
+  [1X3.4 [33X[0;0YDiagrams[133X[101X
+  
+  [33X[0;0YIn  this  section we document the functionality for computing the Satake and
+  Vogan  diagrams of a real semisimple Lie algebra. In both cases the relevant
+  function  computes  an  object,  which,  when  printed, does not reveal much
+  information.  However,  [3XDisplay[103X  with  as input such an object, displays the
+  diagram.  Here  we  use  the convention that every node is represented by an
+  integer;  nodes  that  are  painted  black  are  represented  by integers in
+  brackets;  and  the  involution  (i.e.,  the  arrows  in  the  diagram)  are
+  represented  by  a  permutation  of  the  nodes, printed on a line below the
+  diagram.[133X
+  
+  [1X3.4-1 VoganDiagram[101X
+  
+  [29X[2XVoganDiagram[102X( [3XL[103X ) [32X attribute
+  
+  [33X[0;0YHere  [3XL[103X  is  a  real semisimple Lie algebra. This function returns the Vogan
+  diagram of [3XL[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XL:= RealFormById( "E", 6, 3 );;[127X[104X
+    [4X[25Xgap>[125X [27XK:= LieCentralizer( L, Subalgebra( L, Basis( CartanSubalgebra(L) ){[1]} ) );[127X[104X
+    [4X[28X<Lie algebra of dimension 36 over SqrtField>[128X[104X
+    [4X[25Xgap>[125X [27XDK:= LieDerivedSubalgebra( K );[127X[104X
+    [4X[28X<Lie algebra of dimension 35 over SqrtField>[128X[104X
+    [4X[25Xgap>[125X [27Xvd:= VoganDiagram(DK);[127X[104X
+    [4X[28X<Vogan diagram in Lie algebra of type A5>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( vd );[127X[104X
+    [4X[28XA5:  1---(2)---3---4---5[128X[104X
+    [4X[28XInvolution: ()[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X3.4-2 SatakeDiagram[101X
+  
+  [29X[2XSatakeDiagram[102X( [3XL[103X ) [32X attribute
+  
+  [33X[0;0YHere  [3XL[103X  is  a real semisimple Lie algebra. This function returns the Satake
+  diagram of [3XL[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XL:= RealFormById( "E", 6, 3 );;[127X[104X
+    [4X[25Xgap>[125X [27XK:= LieCentralizer( L, Subalgebra( L, Basis( CartanSubalgebra(L) ){[1]} ) );[127X[104X
+    [4X[28X<Lie algebra of dimension 36 over SqrtField>[128X[104X
+    [4X[25Xgap>[125X [27XDK:= LieDerivedSubalgebra( K );[127X[104X
+    [4X[28X<Lie algebra of dimension 35 over SqrtField>[128X[104X
+    [4X[25Xgap>[125X [27Xsd:= SatakeDiagram( DK );[127X[104X
+    [4X[28X<Satake diagram in Lie algebra of type A5>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( sd );[127X[104X
+    [4X[28XA5:  1---2---(3)---4---5[128X[104X
+    [4X[28XInvolution:  (1,5)(2,4)[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.5 [33X[0;0YNilpotent orbits[133X[101X
+  
+  [33X[0;0Y[5XCoReLG[105X  has  a  database  of  the  nilpotent orbits of the real forms of the
+  simple  Lie  algebras  of ranks up to 8. When called the first time in a GAP
+  session, [5XCoReLG[105X will first read the database of nilpotent orbits.[133X
+  
+  [1X3.5-1 NilpotentOrbitsOfRealForm[101X
+  
+  [29X[2XNilpotentOrbitsOfRealForm[102X( [3XL[103X ) [32X attribute
+  
+  [33X[0;0YHere  [3XL[103X is a real form of a complex simple Lie algebra of rank up to 8. This
+  function  returns  the  list  of  nilpotent  orbits (under the action of the
+  adjoint  group)  of  [3XL[103X.  For  this  function to work, [3XL[103X must be defined over
+  [3XSqrtField[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XL:= RealFormById( "F", 4, 3 );;[127X[104X
+    [4X[25Xgap>[125X [27Xno:= NilpotentOrbitsOfRealForm( L );;[127X[104X
+    [4X[28X#I CoReLG: read database of real triples ... done[128X[104X
+    [4X[25Xgap>[125X [27Xno[1];[127X[104X
+    [4X[28X<nilpotent orbit in Lie algebra>[128X[104X
+  [4X[32X[104X
+  
+  [1X3.5-2 RealCayleyTriple[101X
+  
+  [29X[2XRealCayleyTriple[102X( [3Xo[103X ) [32X attribute
+  
+  [33X[0;0YHere [3Xo[103X is a nilpotent orbit constructed by [2XNilpotentOrbitsOfRealForm[102X ([14X3.5-1[114X)
+  of  a  simple real Lie algebra. This function returns a real Cayley triple [3X[
+  f,  h,  e  ][103X  corresponding  to  the  orbit  [3Xo[103X.  The  third  element  [3Xe[103X is a
+  representative of the orbit.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XL:= RealFormById( "F", 4, 2 );;[127X[104X
+    [4X[25Xgap>[125X [27Xno:= NilpotentOrbitsOfRealForm( L );;[127X[104X
+    [4X[25Xgap>[125X [27Xo:= no[10];[127X[104X
+    [4X[28X<nilpotent orbit in Lie algebra>[128X[104X
+    [4X[25Xgap>[125X [27Xt:=RealCayleyTriple(o);;[127X[104X
+    [4X[25Xgap>[125X [27Xtheta:= CartanDecomposition(L).CartanInv;[127X[104X
+    [4X[28Xfunction( v ) ... end[128X[104X
+    [4X[25Xgap>[125X [27Xtheta(t[1]) = -t[3];[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xtheta(t[2]) = -t[2];[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xt[3]*t[1] = t[2];[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X3.5-3 WeightedDynkinDiagram[101X
+  
+  [29X[2XWeightedDynkinDiagram[102X( [3Xo[103X ) [32X attribute
+  
+  [33X[0;0YHere [3Xo[103X is a nilpotent orbit constructed by [2XNilpotentOrbitsOfRealForm[102X ([14X3.5-1[114X)
+  of  a  simple  real  Lie  algebra. This function returns the weighted Dynkin
+  diagram  of the orbit, which identifies its orbit in the complexification of
+  the real Lie algebra in which [3Xo[103X lies.[133X
+  
