@@ -17,13 +17,6 @@ DeclareAttribute( "RealCayleyTriple", IsNilpotentOrbit);
 ##   returns certain invariants of the real nilpotent orbits <O>
 DeclareAttribute( "Invariants", IsNilpotentOrbit);             
 
-##############################################################################
-##
-#F  RealNilpotentOrbitsFromDatabase( <L> )
-##  reads and returns all real nilpotent orbits in the real form L;
-##  at the moment, the database contains A2-A8, B2-B10, C2-C10, D4-D8, F4, G2, E6-E8
-##  
-DeclareGlobalFunction( "RealNilpotentOrbitsFromDatabase" );
 
 ##############################################################################
 ##

@@ -34,13 +34,13 @@ end );
 #########################################################################
 
 
-InstallGlobalFunction(sqrt, function(q)
+InstallGlobalFunction(Sqroot, function(q)
 local d, n, fc, cf, ps, i, m, sgn;
 
    if not IsRat(q) then 
       if IsSqrtFieldElement(q) and LEN_LIST(q![1]) = 1 
          and IsRat(q![1][1][1]) and q![1][1][2] = [] then
-         return sqrt(q![1][1][1]);
+         return Sqroot(q![1][1][1]);
       else
          Error("<q> must be a rational, or rational SqrtField elt"); 
       fi;
@@ -72,8 +72,8 @@ end);
 
 #########################################################################
 
-SetOne( SqrtField, sqrt(1) );
-SetZero( SqrtField, sqrt(0) );
+SetOne( SqrtField, Sqroot(1) );
+SetZero( SqrtField, Sqroot(0) );
 SetZero( SqrtFieldFam, Zero(SqrtField) );
 SetOne( SqrtFieldFam, One(SqrtField) );
 SetIsUFDFamily(SqrtFieldFam,true);
@@ -90,12 +90,12 @@ local elt, l, i, printmon, printcf;
    l   := LEN_LIST(elt);
    printmon := function(mon)
       if mon[1] = 1 then 
-         Print( "sqrt(",Product(mon[2]),")");
+         Print( "Sqroot(",Product(mon[2]),")");
       elif mon[1]<0 or not (IsRat(mon[1]) or IsRat(E(4)*mon[1])) 
                     or (IsRat(E(4)*mon[1]) and E(4)*mon[1]>0) then
-         Print( "(",mon[1],")*","sqrt(",Product(mon[2]),")");
+         Print( "(",mon[1],")*","Sqroot(",Product(mon[2]),")");
       else 
-         Print( mon[1],"*","sqrt(",Product(mon[2]),")");
+         Print( mon[1],"*","Sqroot(",Product(mon[2]),")");
       fi;
    end;
    if l=1 then
@@ -123,12 +123,12 @@ local elt, l, i, printmon;
    l   := LEN_LIST(elt);
    printmon := function(mon)
       if mon[1] = 1 then 
-         Print( "sqrt(",Product(mon[2]),")");
+         Print( "Sqroot(",Product(mon[2]),")");
       elif mon[1]<0  or not (IsRat(mon[1]) or IsRat(E(4)*mon[1]))  
                      or (IsRat(E(4)*mon[1]) and E(4)*mon[1]>0) then
-         Print( "(",mon[1],")*","sqrt(",Product(mon[2]),")");
+         Print( "(",mon[1],")*","Sqroot(",Product(mon[2]),")");
       else 
-         Print( mon[1],"*","sqrt(",Product(mon[2]),")");
+         Print( mon[1],"*","Sqroot(",Product(mon[2]),")");
       fi;
    end;
    if l=1 then
@@ -608,9 +608,9 @@ end);
 
 InstallGlobalFunction(SqrtFieldEltByRationalSqrt, function(e)
 local sgn;
-   if not IsRat(e^2) then Error("input has to be sqrt of a rational"); fi;
+   if not IsRat(e^2) then Error("input has to be Sqroot of a rational"); fi;
    if not e-Sqrt(e^2) = 0 then sgn := -1; else sgn := 1; fi;
-   return sgn*sqrt(e^2);
+   return sgn*Sqroot(e^2);
 end); 
 
 ##########################################################################
@@ -629,7 +629,7 @@ local real, imag, i, makecf, cf, r;
    real := Zero(SqrtField);
    imag := Zero(SqrtField);
    for i in e![1] do
-      r  := sqrt(Product(i[2]));
+      r  := Sqroot(Product(i[2]));
       cf := makecf(i[1]);
       real := real+cf[1]*r;
       imag := imag+cf[2]*r;
@@ -670,7 +670,7 @@ local elt, i;
       if not IsGaussRat(i[1]) and IsRat(i[2]) then 
           Error("wrong format of coefficients vector"); 
       fi;
-      elt := elt + i[1]*sqrt(i[2]);
+      elt := elt + i[1]*Sqroot(i[2]);
    od;
    return elt;
 end); 
@@ -695,7 +695,7 @@ end);
 ##########################################################################
 
 InstallMethod( DefaultFieldOfMatrix,
-    "method for a matrix over sqrt field",
+    "method for a matrix over SqrtField",
     [ IsMatrix and IsSqrtFieldElementCollColl ],
 function( mat )
    return SqrtField;
@@ -704,7 +704,7 @@ end );
 ##########################################################################
 
 InstallMethod( DefaultFieldByGenerators,
-    "method for a list over sqrt field",
+    "method for a list over SqrtField",
     [ IsList and IsSqrtFieldElementCollection ],
 function( mat )
    return SqrtField;
@@ -733,7 +733,7 @@ local x, i;
    if not (LEN_LIST(x) = 1 and x[1][2] = [] and IsRat(x[1][1])) then
       Error("input has to be rational SqrtFieldElt");
    fi;
-   return  sqrt(x[1][1]);
+   return  Sqroot(x[1][1]);
 end );
 
 ##########################################################################
@@ -742,7 +742,7 @@ InstallMethod( Random,
     "not real-random method for SqrtField ",
     [ IsSqrtField ],
 function( el )
-   return Sum(List([1..15],x-> Random(Rationals)*sqrt(Random(Rationals))));
+   return Sum(List([1..15],x-> Random(Rationals)*Sqroot(Random(Rationals))));
    
 end );
 
@@ -764,7 +764,7 @@ end );
 ##########################################################################
 
 InstallMethod( String,
-    "for sqrt field element",
+    "for SqrtField element",
     [ IsSqrtFieldElement ],
 function( el )
 local elt, l, i, printmon, printcf, str;
@@ -773,19 +773,19 @@ local elt, l, i, printmon, printcf, str;
    l   := LEN_LIST(elt);
    printmon := function(mon)
       if mon[1] = 1 then 
-         Append(str, "sqrt("); 
+         Append(str, "Sqroot("); 
          Append(str,String(Product(mon[2])));
          Append(str,")");
       elif mon[1]<0 or not (IsRat(mon[1]) or IsRat(E(4)*mon[1])) 
                     or (IsRat(E(4)*mon[1]) and E(4)*mon[1]>0) then
          Append(str,"(");
          Append(str,String(mon[1]));
-         Append(str,")*sqrt(");
+         Append(str,")*Sqroot(");
          Append(str,String(Product(mon[2])));
          Append(str,")");
       else 
          Append(str, String(mon[1]));
-         Append(str,"*sqrt(");
+         Append(str,"*Sqroot(");
          Append(str,String(Product(mon[2])));
          Append(str,")");
       fi;
@@ -809,7 +809,7 @@ end );
 ##########################################################################
 
 InstallMethod( String,
-    "for sqrt field",
+    "for SqrtField",
     [ IsSqrtField ],
 function( el )
    return "SqrtField";
@@ -864,7 +864,7 @@ local e, cj, re, im, solvereal, res, r1, r2,
       mat   := List(prsq,x->Coefficients(bas,x));
       ns    := SolutionMat(mat,Coefficients(bas,r));
       if ns = fail then return fail; fi;
-      return Sum(List([1..LEN_LIST(pr)],i->ns[i]*sqrt(pr[i])));
+      return Sum(List([1..LEN_LIST(pr)],i->ns[i]*Sqroot(pr[i])));
    end;
 
   #try to solve real and complex part
@@ -906,7 +906,7 @@ end);
 ##########################################################################
 
 InstallOtherMethod( Factors,
-    "for sqrt field",
+    "for SqrtField",
     [ IsPolynomialRing, IsUnivariatePolynomial ],
 function( R, f )
 local rf;

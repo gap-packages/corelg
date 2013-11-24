@@ -270,7 +270,7 @@ local rs, cgen, cf1, cf2, cf, im, pv, nv, hs, i, fstCB, sndCB, cgen2;
                x->First(Coefficients(Basis(calg),x),y->not y=0*y));
    
    if IsSqrtField(LeftActingDomain(calg)) then
-      cf  := List([1..Length(cf1)],i->sqrt(AbsoluteValue(cf1[i]^-1*cf2[i])));
+      cf  := List([1..Length(cf1)],i->Sqroot(AbsoluteValue(cf1[i]^-1*cf2[i])));
    else
       cf  := List([1..Length(cf1)],i->Sqrt(AbsoluteValue(cf1[i]^-1*cf2[i])));
    fi;   
@@ -457,7 +457,7 @@ local res, L, K, P, sl2, sigma, tr, f, h, e, calg, cs, writeToSF,
          mat  := List(Concatenation(cs.chevSys[3]{r},[-h]),
                       x->Coefficients(Basis(L),x));
          ns   := NullspaceMat(mat)[1];
-         cf   := List(ns{[1..Length(r)]}, x->sqrt(x));
+         cf   := List(ns{[1..Length(r)]}, x->Sqroot(x));
          x    := Sum(List([1..Length(r)], i-> cf[i]*(writeToSF(Flat(cs.chevSys)[r[i]])))); 
          csl2 := [sigmaSF(x),writeToSF(h),x];
          rsl2 := corelg.CayleyTransform(csl2,SqrtField); 
@@ -598,7 +598,7 @@ local L, sigma, ca, grad, rs, cm, pos, ct, cg, salgs, sl2, i, j, t,enum, F,
          cand   := corelg.carrierAlgDB[pos[1]];
          dbenum := cand.enum;
          dbcf   := cand.cfImage;   #coefficient of sigma(xi) wrt yi   
-         csl2   := cand.cfCsl2*sqrt(1);    #cayley sl2 triple
+         csl2   := cand.cfCsl2*Sqroot(1);    #cayley sl2 triple
         
         #adjust ordering wrt enum
          perm := MappingPermListList(myenum,dbenum);
@@ -618,7 +618,7 @@ local L, sigma, ca, grad, rs, cm, pos, ct, cg, salgs, sl2, i, j, t,enum, F,
          myenum := List(myenum,x->x^perm);
          mycg   := mycg2;
          mycf   := mycf2;
-         cf     := List([1..l],x->sqrt(dbcf[x]/mycf[x]));
+         cf     := List([1..l],x->Sqroot(dbcf[x]/mycf[x]));
          mycgSF := [[],[],[]];
          for j in [1..l] do
              mycgSF[1][j] := cf[j]*writeToSF(mycg[1][j]);
@@ -641,7 +641,7 @@ local L, sigma, ca, grad, rs, cm, pos, ct, cg, salgs, sl2, i, j, t,enum, F,
             h    := salgs[i].h;
             cf   := Coefficients(Basis(VectorSpace(CF(4),[h],"basis"),
                                [h]),x*sigma(x))[1];
-            x    := sqrt(1/cf)*writeToSF(x);
+            x    := Sqroot(1/cf)*writeToSF(x);
             csl2 := [sigmaSF(x),writeToSF(h),x];
          else
             tr := rec(g0 := BasisVectors(Basis(mygr[1][1])),
@@ -657,7 +657,7 @@ local L, sigma, ca, grad, rs, cm, pos, ct, cg, salgs, sl2, i, j, t,enum, F,
             mat  := List(Concatenation(cs[3]{r},[-salgs[i].h]),
                      x->Coefficients(Basis(L),x));
             ns   := NullspaceMat(mat)[1];
-            cf   := List(ns{[1..Length(r)]}, x->sqrt(x));
+            cf   := List(ns{[1..Length(r)]}, x->Sqroot(x));
             x    := Sum(List([1..Length(r)], i-> cf[i]*(writeToSF(Flat(cs)[r[i]])))); 
             csl2 :=  [sigmaSF(x),writeToSF(salgs[i].h),x]; 
          fi;
@@ -805,8 +805,8 @@ local out, eqs, ok, notok, isgood,j,jj ,isgood2, ok2, notok2,
         Print("corelg.attachSolution(res,",String(i),",[");
         for jj in [1..Length(ok)] do
            j := ok[jj];
-           Append(str,Concatenation("[",String(j[3][1]),",sqrt(",String(-j[2]),")]"));
-           Print("[",String(j[3][1]),",sqrt(",String(-j[2]),")]");
+           Append(str,Concatenation("[",String(j[3][1]),",Sqroot(",String(-j[2]),")]"));
+           Print("[",String(j[3][1]),",Sqroot(",String(-j[2]),")]");
            if not jj = Length(ok) or not notok=[] then Append(str,","); Print(","); fi;
         od;
         if notok=[] then
@@ -826,8 +826,8 @@ local out, eqs, ok, notok, isgood,j,jj ,isgood2, ok2, notok2,
            od;
            for jj in [1..Length(ok2)] do
               j := ok2[jj];
-              Append(str, Concatenation("[",String(j[1][1]),",",String(-j[4]),"*sqrt(" ));
-              Print("[",j[1][1],",",-j[4],"*sqrt(");
+              Append(str, Concatenation("[",String(j[1][1]),",",String(-j[4]),"*Sqroot(" ));
+              Print("[",j[1][1],",",-j[4],"*Sqroot(");
               for k in [1..Length(j[3])/2] do
                  var := j[3][2*k-1];
                  var := Filtered(ok,x->x[3][1] = var)[1];
@@ -887,7 +887,7 @@ local csl2,j,w,tmp, out, bas, realsl2, L, sigmaSF, calg,  enum, form,
    fi;
   
   #make sure everything is over SqrtField
-   for i in [1..Length(v)] do v[i][2] := v[i][2]*sqrt(1); od;
+   for i in [1..Length(v)] do v[i][2] := v[i][2]*Sqroot(1); od;
 
   #make solution
    csl2          := out.makeSol(v);
@@ -1249,7 +1249,7 @@ end;
 corelg.RealNilpotentOrbitsFromDatabase := function(LL)
 local type, rank, pars,param, i,  res, kacs, L, LSF, form, new, dim,orb, neworb,
       K, P, ff, ee, hh, tmp, sigma, theta, n, k, makeVec, o, forms, iso, cd,cg, H,
-      h,e,f,cf;
+      h,e,f,cf, db;
 
    Info(InfoCorelg,1,"start RealNilpotentOrbitsFromDatabase");
    if Length(corelg.realtriplesDB)=0 then

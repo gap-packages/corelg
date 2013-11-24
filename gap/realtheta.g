@@ -1,4 +1,4 @@
-isom:= function( L, H1, H2, grad )
+corelg.isom:= function( L, H1, H2, grad )
 
     # MUST have f that respects grading!!!
     # For Z-gradings, take in both cases pos roots that have pos degree...
@@ -268,7 +268,7 @@ carrAlgs:= function( L, H1, H2, rc, car )
          
  
 
-    f:= isom(L, H1, H2, rc.grading );
+    f:= corelg.isom(L, H1, H2, rc.grading );
     sb:= SubWeylGens( L, H2, rc.K0 );
     W0:= Group(sb.W0);
     S:= Centralizer(W0,sb.th);
