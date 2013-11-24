@@ -98,8 +98,8 @@
 {\Huge \textbf{Computing with real Lie Algebras\mbox{}}}\\
 \vfill
 
-{\Huge Version 0.1\mbox{}}\\[1cm]
-{October 2013 \mbox{}}\\[1cm]
+{\Huge Version 0.2\mbox{}}\\[1cm]
+{November 2013 \mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\Large \textbf{ Heiko Dietrich   \mbox{}}}\\
 {\Large \textbf{ Paolo Faccin   \mbox{}}}\\
@@ -325,15 +325,15 @@ class \mbox{\texttt{\mdseries\slshape InfoSqrtField}}; this can be turned off by
 {
   Every $f$ in \mbox{\texttt{\mdseries\slshape SqrtField}} can be uniquely written as $f=\sum_{j=1}^m r_i \sqrt{k_j}$ for Gaussian rationals $r_i\in\mathbb{Q}(\imath)$ and pairwise distinct squarefree positive integers $k_1,\ldots,k_m$. Thus, $f$ can be described efficiently by its coefficient vector $[[r_1,k_1],\ldots,[r_j,k_j]]$. 
 
-\subsection{\textcolor{Chapter }{sqrt}}
+\subsection{\textcolor{Chapter }{Sqroot}}
 \logpage{[ 2, 2, 1 ]}\nobreak
-\hyperdef{L}{X7E8F1FB87C229BB0}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{sqrt({\mdseries\slshape q})\index{sqrt@\texttt{sqrt}}
-\label{sqrt}
+\hyperdef{L}{X84E7D3D787000313}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Sqroot({\mdseries\slshape q})\index{Sqroot@\texttt{Sqroot}}
+\label{Sqroot}
 }\hfill{\scriptsize (function)}}\\
 
 
- Here \mbox{\texttt{\mdseries\slshape q}} is a rational number and \mbox{\texttt{\mdseries\slshape sqrt(q)}} is the element $\sqrt{q}$ as an element of \mbox{\texttt{\mdseries\slshape SqrtField}}. If $q=(-1)^\epsilon a/b$ with coprime integers $ a,b\geq 0$ and $\epsilon\in\{0,1\}$, then \mbox{\texttt{\mdseries\slshape sqrt(q)}} is represented as the element \mbox{\texttt{\mdseries\slshape E(4)}}$^\varepsilon$\mbox{\texttt{\mdseries\slshape *b*sqrt(ab)}} of \mbox{\texttt{\mdseries\slshape SqrtField}}. }
+ Here \mbox{\texttt{\mdseries\slshape q}} is a rational number and \mbox{\texttt{\mdseries\slshape Sqroot(q)}} is the element $\sqrt{q}$ as an element of \mbox{\texttt{\mdseries\slshape SqrtField}}. If $q=(-1)^\epsilon a/b$ with coprime integers $ a,b\geq 0$ and $\epsilon\in\{0,1\}$, then \mbox{\texttt{\mdseries\slshape Sqroot(q)}} is represented as the element \mbox{\texttt{\mdseries\slshape E(4)}}$^\varepsilon$\mbox{\texttt{\mdseries\slshape *b*Sqroot(ab)}} of \mbox{\texttt{\mdseries\slshape SqrtField}}. }
 
  
 
@@ -359,16 +359,16 @@ class \mbox{\texttt{\mdseries\slshape InfoSqrtField}}; this can be turned off by
 
  If \mbox{\texttt{\mdseries\slshape l}} is a list $[[r_1,k_1],\ldots,[r_m,k_m]]$ with Gaussian rationals $r_j$ and rationals $k_j$, then \mbox{\texttt{\mdseries\slshape SqrtFieldEltByCoeffiients(l)}} returns the element $\sum_{j=1}^m r_j\sqrt{k_j}$ as an element of \mbox{\texttt{\mdseries\slshape SqrtField}}. Note that here $k_1,\ldots,k_m$ need not to be positive, squarefree, or pairwise distinct. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@sqrt(-(2*3*4)/(11*13)); sqrt(245/15); sqrt(16/9);|
-  2/143*E(4)*sqrt(858)
-  7/3*sqrt(3)
+  !gapprompt@gap>| !gapinput@Sqroot(-(2*3*4)/(11*13)); Sqroot(245/15); Sqroot(16/9);|
+  2/143*E(4)*Sqroot(858)
+  7/3*Sqroot(3)
   4/3
-  !gapprompt@gap>| !gapinput@a := 2+sqrt(7)+sqrt(99);|
-  2 + sqrt(7) + 3*sqrt(11)
+  !gapprompt@gap>| !gapinput@a := 2+Sqroot(7)+Sqroot(99);|
+  2 + Sqroot(7) + 3*Sqroot(11)
   !gapprompt@gap>| !gapinput@SqrtFieldEltCoefficients(a);|
   [ [ 2, 1 ], [ 1, 7 ], [ 3, 11 ] ]
   !gapprompt@gap>| !gapinput@SqrtFieldEltByCoefficients([[2,9],[1,7],[E(4),13]]);|
-  6 + sqrt(7) + E(4)*sqrt(13)
+  6 + Sqroot(7) + E(4)*Sqroot(13)
 \end{Verbatim}
  }
 
@@ -396,15 +396,15 @@ class \mbox{\texttt{\mdseries\slshape InfoSqrtField}}; this can be turned off by
 
  If \mbox{\texttt{\mdseries\slshape c}} is an element of $\mathbb{Q}^{\sqrt{}}(\imath)$ represented as an element of a cyclotomic field \mbox{\texttt{\mdseries\slshape CF(n)}}, then \mbox{\texttt{\mdseries\slshape SqrtFieldEltByCyclotomic(c)}} returns the corresponding element in \mbox{\texttt{\mdseries\slshape SqrtField}}. Our algorithm for doing this is described in \cite{hdwdg12}. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@SqrtFieldEltToCyclotomic( sqrt(2) );|
+  !gapprompt@gap>| !gapinput@SqrtFieldEltToCyclotomic( Sqroot(2) );|
   E(8)-E(8)^3
-  !gapprompt@gap>| !gapinput@SqrtFieldEltToCyclotomic( sqrt(2)+E(4)*sqrt(7) );|
+  !gapprompt@gap>| !gapinput@SqrtFieldEltToCyclotomic( Sqroot(2)+E(4)*Sqroot(7) );|
   E(56)^5+E(56)^8+E(56)^13-E(56)^15+E(56)^16-E(56)^23-E(56)^24+E(56)^29-E(56)^31+
   E(56)^32+E(56)^37-E(56)^39-E(56)^40+E(56)^45-E(56)^47-E(56)^48+E(56)^53-E(56)^55
   !gapprompt@gap>| !gapinput@SqrtFieldEltByCyclotomic( E(8)-E(8)^3 );|
-  sqrt(2)
+  Sqroot(2)
   !gapprompt@gap>| !gapinput@SqrtFieldEltByCyclotomic( 3*E(4)*Sqrt(11)-2/4*Sqrt(-13/7) );|
-  3*E(4)*sqrt(11) + (-1/14*E(4))*sqrt(91)
+  3*E(4)*Sqroot(11) + (-1/14*E(4))*Sqroot(91)
 \end{Verbatim}
  }
 
@@ -418,39 +418,40 @@ class \mbox{\texttt{\mdseries\slshape InfoSqrtField}}; this can be turned off by
 polynomial of $f$ can become rather large. For example, if $f=\sum_{j=1}^m r_i \sqrt{k_j}$ for rational $r_i$ and pairwise distinct positive squarefree integers $k_1,\ldots,k_m$, then $f$ is a primitive element of the number field $\mathbb{Q}(\sqrt{k_1},\ldots,\sqrt{k_m})$, see for example Lemma A.5 in \cite{hdwdg12}. For larger degree, the progress of the computation of the inverse is printed
 via the InfoClass \mbox{\texttt{\mdseries\slshape InfoSqrtField}}. We remark that the method \mbox{\texttt{\mdseries\slshape Random}} simply returns a sum of a few terms $a\sqrt{b}$ where $a,b$ are random rationals constructed with \mbox{\texttt{\mdseries\slshape Random(Rationals)}}. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@a := sqrt( 2 ) + 3 * sqrt( 3/7 ); b := sqrt( 21 ) - sqrt( 2 );|
-  sqrt(2) + 3/7*sqrt(21)
-  (-1)*sqrt(2) + sqrt(21)
+  !gapprompt@gap>| !gapinput@a := Sqroot( 2 ) + 3 * Sqroot( 3/7 ); b := Sqroot( 21 ) - Sqroot( 2 );|
+  Sqroot(2) + 3/7*Sqroot(21)
+  (-1)*Sqroot(2) + Sqroot(21)
   !gapprompt@gap>| !gapinput@a + b; a * b; a - b;|
-  10/7*sqrt(21)
-  7 + 4/7*sqrt(42)
-  2*sqrt(2) + (-4/7)*sqrt(21)
+  10/7*Sqroot(21)
+  7 + 4/7*Sqroot(42)
+  2*Sqroot(2) + (-4/7)*Sqroot(21)
   !gapprompt@gap>| !gapinput@c := ( a - b )^-2;|
-  91/8 + 7/4*sqrt(42)
-  !gapprompt@gap>| !gapinput@a := Sum( List( [2,3,5,7], x -> sqrt( x ) ) );|
-  sqrt(2) + sqrt(3) + sqrt(5) + sqrt(7)
+  91/8 + 7/4*Sqroot(42)
+  !gapprompt@gap>| !gapinput@a := Sum( List( [2,3,5,7], x -> Sqroot( x ) ) );|
+  Sqroot(2) + Sqroot(3) + Sqroot(5) + Sqroot(7)
   !gapprompt@gap>| !gapinput@b := a^-1; a*b;                                  |
   #I    InfoSqrtField: (inverses) computed 10 powers
-  37/43*sqrt(2) + (-29/43)*sqrt(3) + (-133/215)*sqrt(5) + 27/43*sqrt(7) + 
-  62/215*sqrt(30) + (-10/43)*sqrt(42) + (-34/215)*sqrt(70) + 22/215*sqrt(105)
+  37/43*Sqroot(2) + (-29/43)*Sqroot(3) + (-133/215)*Sqroot(5) + 
+  27/43*Sqroot(7) + 62/215*Sqroot(30) + (-10/43)*Sqroot(42) + (-34/215)*Sqroot(70) 
+  + 22/215*Sqroot(105)
   1
-  !gapprompt@gap>| !gapinput@ComplexConjugate(sqrt(17)+sqrt(-7));|
-  (-E(4))*sqrt(7) + sqrt(17)
+  !gapprompt@gap>| !gapinput@ComplexConjugate(Sqroot(17)+Sqroot(-7));|
+  (-E(4))*Sqroot(7) + Sqroot(17)
   !gapprompt@gap>| !gapinput@Random( SqrtField );|
-  -1 + 1/4*sqrt(3) + 1/9*sqrt(6)
+  -1 + 1/4*Sqroot(3) + 1/9*Sqroot(6)
 \end{Verbatim}
  Most methods for list, matrices, and polynomials also work over \mbox{\texttt{\mdseries\slshape SqrtField}}. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@m:=[[sqrt(2),sqrt(3)],[sqrt(2),sqrt(5)],[1,0]]*One(SqrtField);|
-  [ [ sqrt(2), sqrt(3) ], [ sqrt(2), sqrt(5) ], [ 1, 0 ] ]
+  !gapprompt@gap>| !gapinput@m:=[[Sqroot(2),Sqroot(3)],[Sqroot(2),Sqroot(5)],[1,0]]*One(SqrootField);|
+  [ [ Sqroot(2), Sqroot(3) ], [ Sqroot(2), Sqroot(5) ], [ 1, 0 ] ]
   !gapprompt@gap>| !gapinput@NullspaceMat(m);|
-  [ [ (-5/4)*sqrt(2) + (-1/4)*sqrt(30), 3/4*sqrt(2) + 1/4*sqrt(30), 1 ] ]
+  [ [ (-5/4)*Sqroot(2) + (-1/4)*Sqroot(30), 3/4*Sqroot(2) + 1/4*Sqroot(30), 1 ] ]
   !gapprompt@gap>| !gapinput@RankMat(m);|
   2
-  !gapprompt@gap>| !gapinput@m := [[sqrt(2),sqrt(3)],[sqrt(2),sqrt(5)]];  |
-  [ [ sqrt(2), sqrt(3) ], [ sqrt(2), sqrt(5) ] ]
+  !gapprompt@gap>| !gapinput@m := [[Sqroot(2),Sqroot(3)],[Sqroot(2),Sqroot(5)]];  |
+  [ [ Sqroot(2), Sqroot(3) ], [ Sqroot(2), Sqroot(5) ] ]
   !gapprompt@gap>| !gapinput@Determinant( m );  DefaultFieldOfMatrix( m );|
-  (-1)*sqrt(6) + sqrt(10)
+  (-1)*Sqroot(6) + Sqroot(10)
   SqrtField
   !gapprompt@gap>| !gapinput@x := Indeterminate( SqrtField, "x" );; f := x^2+x+1;|
   x^2+x+1

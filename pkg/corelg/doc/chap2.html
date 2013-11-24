@@ -29,7 +29,7 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X850FE9D385B653D9">2.2 <span class="Heading"> Construction of elements </span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7E8F1FB87C229BB0">2.2-1 sqrt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X84E7D3D787000313">2.2-1 Sqroot</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8323D85081602DB1">2.2-2 SqrtFieldEltCoefficients</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7B0063817B03422F">2.2-3 SqrtFieldEltByCoefficients</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X84E90EC582E8A921">2.2-4 SqrtFieldEltToCyclotomic</a></span>
@@ -88,12 +88,12 @@ true
 
 <p>Every <span class="SimpleMath">f</span> in <var class="Arg">SqrtField</var> can be uniquely written as <span class="SimpleMath">f=∑_j=1^m r_i sqrtk_j</span> for Gaussian rationals <span class="SimpleMath">r_i∈Q(imath)</span> and pairwise distinct squarefree positive integers <span class="SimpleMath">k_1,...,k_m</span>. Thus, <span class="SimpleMath">f</span> can be described efficiently by its coefficient vector <span class="SimpleMath">[[r_1,k_1],...,[r_j,k_j]]</span>.</p>
 
-<p><a id="X7E8F1FB87C229BB0" name="X7E8F1FB87C229BB0"></a></p>
+<p><a id="X84E7D3D787000313" name="X84E7D3D787000313"></a></p>
 
-<h5>2.2-1 sqrt</h5>
+<h5>2.2-1 Sqroot</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; sqrt</code>( <var class="Arg">q</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>Here <var class="Arg">q</var> is a rational number and <var class="Arg">sqrt(q)</var> is the element <span class="SimpleMath">sqrtq</span> as an element of <var class="Arg">SqrtField</var>. If <span class="SimpleMath">q=(-1)^ϵ a/b</span> with coprime integers <span class="SimpleMath">a,b≥ 0</span> and <span class="SimpleMath">ϵ∈{0,1}</span>, then <var class="Arg">sqrt(q)</var> is represented as the element <var class="Arg">E(4)</var><span class="SimpleMath">^ε</span><var class="Arg">*b*sqrt(ab)</var> of <var class="Arg">SqrtField</var>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sqroot</code>( <var class="Arg">q</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Here <var class="Arg">q</var> is a rational number and <var class="Arg">Sqroot(q)</var> is the element <span class="SimpleMath">sqrtq</span> as an element of <var class="Arg">SqrtField</var>. If <span class="SimpleMath">q=(-1)^ϵ a/b</span> with coprime integers <span class="SimpleMath">a,b≥ 0</span> and <span class="SimpleMath">ϵ∈{0,1}</span>, then <var class="Arg">Sqroot(q)</var> is represented as the element <var class="Arg">E(4)</var><span class="SimpleMath">^ε</span><var class="Arg">*b*Sqroot(ab)</var> of <var class="Arg">SqrtField</var>.</p>
 
 <p><a id="X8323D85081602DB1" name="X8323D85081602DB1"></a></p>
 
@@ -111,16 +111,16 @@ true
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sqrt(-(2*3*4)/(11*13)); sqrt(245/15); sqrt(16/9);</span>
-2/143*E(4)*sqrt(858)
-7/3*sqrt(3)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Sqroot(-(2*3*4)/(11*13)); Sqroot(245/15); Sqroot(16/9);</span>
+2/143*E(4)*Sqroot(858)
+7/3*Sqroot(3)
 4/3
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := 2+sqrt(7)+sqrt(99);</span>
-2 + sqrt(7) + 3*sqrt(11)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := 2+Sqroot(7)+Sqroot(99);</span>
+2 + Sqroot(7) + 3*Sqroot(11)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SqrtFieldEltCoefficients(a);</span>
 [ [ 2, 1 ], [ 1, 7 ], [ 3, 11 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SqrtFieldEltByCoefficients([[2,9],[1,7],[E(4),13]]);</span>
-6 + sqrt(7) + E(4)*sqrt(13)
+6 + Sqroot(7) + E(4)*Sqroot(13)
 </pre></div>
 
 <p><a id="X84E90EC582E8A921" name="X84E90EC582E8A921"></a></p>
@@ -139,15 +139,15 @@ true
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SqrtFieldEltToCyclotomic( sqrt(2) );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SqrtFieldEltToCyclotomic( Sqroot(2) );</span>
 E(8)-E(8)^3
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SqrtFieldEltToCyclotomic( sqrt(2)+E(4)*sqrt(7) );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SqrtFieldEltToCyclotomic( Sqroot(2)+E(4)*Sqroot(7) );</span>
 E(56)^5+E(56)^8+E(56)^13-E(56)^15+E(56)^16-E(56)^23-E(56)^24+E(56)^29-E(56)^31+
 E(56)^32+E(56)^37-E(56)^39-E(56)^40+E(56)^45-E(56)^47-E(56)^48+E(56)^53-E(56)^55
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SqrtFieldEltByCyclotomic( E(8)-E(8)^3 );</span>
-sqrt(2)
+Sqroot(2)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SqrtFieldEltByCyclotomic( 3*E(4)*Sqrt(11)-2/4*Sqrt(-13/7) );</span>
-3*E(4)*sqrt(11) + (-1/14*E(4))*sqrt(91)
+3*E(4)*Sqroot(11) + (-1/14*E(4))*Sqroot(91)
 </pre></div>
 
 <p><a id="X82EB5BE77F9F686A" name="X82EB5BE77F9F686A"></a></p>
@@ -158,42 +158,43 @@ sqrt(2)
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := sqrt( 2 ) + 3 * sqrt( 3/7 ); b := sqrt( 21 ) - sqrt( 2 );</span>
-sqrt(2) + 3/7*sqrt(21)
-(-1)*sqrt(2) + sqrt(21)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := Sqroot( 2 ) + 3 * Sqroot( 3/7 ); b := Sqroot( 21 ) - Sqroot( 2 );</span>
+Sqroot(2) + 3/7*Sqroot(21)
+(-1)*Sqroot(2) + Sqroot(21)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a + b; a * b; a - b;</span>
-10/7*sqrt(21)
-7 + 4/7*sqrt(42)
-2*sqrt(2) + (-4/7)*sqrt(21)
+10/7*Sqroot(21)
+7 + 4/7*Sqroot(42)
+2*Sqroot(2) + (-4/7)*Sqroot(21)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">c := ( a - b )^-2;</span>
-91/8 + 7/4*sqrt(42)
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := Sum( List( [2,3,5,7], x -&gt; sqrt( x ) ) );</span>
-sqrt(2) + sqrt(3) + sqrt(5) + sqrt(7)
+91/8 + 7/4*Sqroot(42)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := Sum( List( [2,3,5,7], x -&gt; Sqroot( x ) ) );</span>
+Sqroot(2) + Sqroot(3) + Sqroot(5) + Sqroot(7)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b := a^-1; a*b;                                  </span>
 #I    InfoSqrtField: (inverses) computed 10 powers
-37/43*sqrt(2) + (-29/43)*sqrt(3) + (-133/215)*sqrt(5) + 27/43*sqrt(7) + 
-62/215*sqrt(30) + (-10/43)*sqrt(42) + (-34/215)*sqrt(70) + 22/215*sqrt(105)
+37/43*Sqroot(2) + (-29/43)*Sqroot(3) + (-133/215)*Sqroot(5) + 
+27/43*Sqroot(7) + 62/215*Sqroot(30) + (-10/43)*Sqroot(42) + (-34/215)*Sqroot(70) 
++ 22/215*Sqroot(105)
 1
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ComplexConjugate(sqrt(17)+sqrt(-7));</span>
-(-E(4))*sqrt(7) + sqrt(17)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ComplexConjugate(Sqroot(17)+Sqroot(-7));</span>
+(-E(4))*Sqroot(7) + Sqroot(17)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Random( SqrtField );</span>
--1 + 1/4*sqrt(3) + 1/9*sqrt(6)
+-1 + 1/4*Sqroot(3) + 1/9*Sqroot(6)
 </pre></div>
 
 <p>Most methods for list, matrices, and polynomials also work over <var class="Arg">SqrtField</var>.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m:=[[sqrt(2),sqrt(3)],[sqrt(2),sqrt(5)],[1,0]]*One(SqrtField);</span>
-[ [ sqrt(2), sqrt(3) ], [ sqrt(2), sqrt(5) ], [ 1, 0 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m:=[[Sqroot(2),Sqroot(3)],[Sqroot(2),Sqroot(5)],[1,0]]*One(SqrootField);</span>
+[ [ Sqroot(2), Sqroot(3) ], [ Sqroot(2), Sqroot(5) ], [ 1, 0 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NullspaceMat(m);</span>
-[ [ (-5/4)*sqrt(2) + (-1/4)*sqrt(30), 3/4*sqrt(2) + 1/4*sqrt(30), 1 ] ]
+[ [ (-5/4)*Sqroot(2) + (-1/4)*Sqroot(30), 3/4*Sqroot(2) + 1/4*Sqroot(30), 1 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RankMat(m);</span>
 2
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m := [[sqrt(2),sqrt(3)],[sqrt(2),sqrt(5)]];  </span>
-[ [ sqrt(2), sqrt(3) ], [ sqrt(2), sqrt(5) ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m := [[Sqroot(2),Sqroot(3)],[Sqroot(2),Sqroot(5)]];  </span>
+[ [ Sqroot(2), Sqroot(3) ], [ Sqroot(2), Sqroot(5) ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Determinant( m );  DefaultFieldOfMatrix( m );</span>
-(-1)*sqrt(6) + sqrt(10)
+(-1)*Sqroot(6) + Sqroot(10)
 SqrtField
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Indeterminate( SqrtField, "x" );; f := x^2+x+1;</span>
 x^2+x+1

@@ -7,7 +7,7 @@
 \contentsline {section}{\numberline {2.1}\leavevmode {\color {Chapter } Definition of the field }}{7}{section.2.1}
 \contentsline {subsection}{\numberline {2.1.1}\leavevmode {\color {Chapter }SqrtFieldIsGaussRat}}{7}{subsection.2.1.1}
 \contentsline {section}{\numberline {2.2}\leavevmode {\color {Chapter } Construction of elements }}{8}{section.2.2}
-\contentsline {subsection}{\numberline {2.2.1}\leavevmode {\color {Chapter }sqrt}}{8}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.1}\leavevmode {\color {Chapter }Sqroot}}{8}{subsection.2.2.1}
 \contentsline {subsection}{\numberline {2.2.2}\leavevmode {\color {Chapter }SqrtFieldEltCoefficients}}{8}{subsection.2.2.2}
 \contentsline {subsection}{\numberline {2.2.3}\leavevmode {\color {Chapter }SqrtFieldEltByCoefficients}}{8}{subsection.2.2.3}
 \contentsline {subsection}{\numberline {2.2.4}\leavevmode {\color {Chapter }SqrtFieldEltToCyclotomic}}{8}{subsection.2.2.4}

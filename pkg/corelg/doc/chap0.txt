@@ -6,10 +6,10 @@
                         [1XComputing with real Lie Algebras[101X
   
   
-                                  Version 0.1
+                                  Version 0.2
   
   
-                                  October 2013
+                                 November 2013
   
   
                                  Heiko Dietrich
@@ -77,7 +77,7 @@
     2.1 [33X[0;0YDefinition of the field[133X
       2.1-1 SqrtFieldIsGaussRat
     2.2 [33X[0;0YConstruction of elements[133X
-      2.2-1 sqrt
+      2.2-1 Sqroot
       2.2-2 SqrtFieldEltCoefficients
       2.2-3 SqrtFieldEltByCoefficients
       2.2-4 SqrtFieldEltToCyclotomic

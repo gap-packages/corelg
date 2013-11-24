@@ -21,7 +21,7 @@ SqrtFieldType    := NewType( fam_SqrtFieldElt,
 ################################
 # SQRTFIELD
 DeclareCategory( "IsSqrtField", IsField );
-DeclareGlobalVariable( "SqrtField", "sqrt field..." );
+DeclareGlobalVariable( "SqrtField", "SqrtField..." );
 
 InstallValue( SqrtField,  Objectify( NewType( 
                  CollectionsFamily( fam_SqrtFieldElt ),
@@ -41,7 +41,7 @@ SqrtFieldFam:= ElementsFamily( FamilyObj( SqrtField ) );
 
 ##################################
 # GLOBAL FUNCTIONS AND ATTRIBUTES
-DeclareGlobalFunction("sqrt");
+DeclareGlobalFunction("Sqroot");
 DeclareGlobalFunction("SqrtFieldIsGaussRat");
 DeclareGlobalFunction("SqrtFieldMakeRational");
 DeclareGlobalFunction("SqrtFieldMinimalPolynomial");

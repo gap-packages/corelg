@@ -43,7 +43,7 @@
   \indexspace
 
   \item \texttt  {SatakeDiagram}, \hyperpage{17}
-  \item \texttt  {sqrt}, \hyperpage{8}
+  \item \texttt  {Sqroot}, \hyperpage{8}
   \item \texttt  {SqrtFieldEltByCoefficients}, \hyperpage{8}
   \item \texttt  {SqrtFieldEltByCyclotomic}, \hyperpage{9}
   \item \texttt  {SqrtFieldEltCoefficients}, \hyperpage{8}

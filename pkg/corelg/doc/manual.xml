@@ -12,7 +12,7 @@
 <TitlePage>
   <Title>CoReLG</Title>
   <Subtitle>Computing with real Lie Algebras</Subtitle>
-  <Version>Version 0.1</Version>
+  <Version>Version 0.2</Version>
 
 <Author>
   Heiko Dietrich
@@ -44,7 +44,7 @@ I-38050 Povo (Trento), Italy<Br/>
        </Address> 
   </Author>
 
-  <Date>October 2013
+  <Date>November 2013
 </Date>
 
 
@@ -309,61 +309,61 @@ true
 Every <M>f</M> in <A>SqrtField</A> can be uniquely written as <M>f=\sum_{j=1}^m r_i \sqrt{k_j}</M> for Gaussian rationals <M>r_i\in\mathbb{Q}(\imath)</M> and pairwise distinct squarefree positive integers <M>k_1,\ldots,k_m</M>. Thus, <M>f</M> can be described efficiently by its coefficient vector <M>[[r_1,k_1],\ldots,[r_j,k_j]]</M>.
 
 <ManSection>
-<Func Name="sqrt" Arg="q"
-      Comm="sqrt"/>
+<Func Name="Sqroot" Arg="q"
+      Comm="Sqroot"/>
 <Description>
-Here <A>q</A> is a rational number and <A>sqrt(q)</A> is the element <M>\sqrt{q}</M> as an element of <A>SqrtField</A>. If <M>q=(-1)^\epsilon a/b</M> with coprime integers <M> a,b\geq 0</M> and <M>\epsilon\in\{0,1\}</M>, then <A>sqrt(q)</A> is represented as the element <A>E(4)</A><M>^\varepsilon</M><A>*b*sqrt(ab)</A> of <A>SqrtField</A>.
+Here <A>q</A> is a rational number and <A>Sqroot(q)</A> is the element <M>\sqrt{q}</M> as an element of <A>SqrtField</A>. If <M>q=(-1)^\epsilon a/b</M> with coprime integers <M> a,b\geq 0</M> and <M>\epsilon\in\{0,1\}</M>, then <A>Sqroot(q)</A> is represented as the element <A>E(4)</A><M>^\varepsilon</M><A>*b*Sqroot(ab)</A> of <A>SqrtField</A>.
 </Description>
 </ManSection>
 <ManSection>
 <Func Name="SqrtFieldEltCoefficients" Arg="f"
-      Comm="sqrt"/>
+      Comm="Sqroot"/>
 <Description>
 If <A>f</A> is an element in <A>SqrtField</A>, then <A>SqrtFieldEltCoefficients(f)</A> returns its coefficient vector   <M>[[r_1,k_1],\ldots,[r_m,k_m]]</M> as described above, that is, <M>r_1,\ldots,r_m\in\mathbb{Q}(\imath)</M> and <M>k_1,\ldots,k_m</M> are pairwise distinct positive squarefree integers such that <M>f=\sum_{j=1}^m r_j\sqrt{k_j}</M>.
 </Description>
 </ManSection>
 <ManSection>
 <Func Name="SqrtFieldEltByCoefficients" Arg="l"
-      Comm="sqrt"/>
+      Comm="Sqroot"/>
 <Description>
 If <A>l</A> is a list <M>[[r_1,k_1],\ldots,[r_m,k_m]]</M> with Gaussian rationals <M>r_j</M> and rationals <M>k_j</M>, then <A>SqrtFieldEltByCoeffiients(l)</A> returns the element <M>\sum_{j=1}^m r_j\sqrt{k_j}</M> as an element of <A>SqrtField</A>. Note that here <M>k_1,\ldots,k_m</M> need not to be positive, squarefree, or pairwise distinct.
 <Example>
-gap> sqrt(-(2*3*4)/(11*13)); sqrt(245/15); sqrt(16/9);
-2/143*E(4)*sqrt(858)
-7/3*sqrt(3)
+gap> Sqroot(-(2*3*4)/(11*13)); Sqroot(245/15); Sqroot(16/9);
+2/143*E(4)*Sqroot(858)
+7/3*Sqroot(3)
 4/3
-gap> a := 2+sqrt(7)+sqrt(99);
-2 + sqrt(7) + 3*sqrt(11)
+gap> a := 2+Sqroot(7)+Sqroot(99);
+2 + Sqroot(7) + 3*Sqroot(11)
 gap> SqrtFieldEltCoefficients(a);
 [ [ 2, 1 ], [ 1, 7 ], [ 3, 11 ] ]
 gap> SqrtFieldEltByCoefficients([[2,9],[1,7],[E(4),13]]);
-6 + sqrt(7) + E(4)*sqrt(13)
+6 + Sqroot(7) + E(4)*Sqroot(13)
 </Example>
 </Description>
 </ManSection>
 
 <ManSection>
 <Func Name="SqrtFieldEltToCyclotomic" Arg="f"
-      Comm="sqrt"/>
+      Comm="Sqroot"/>
 <Description>
 If <A>f</A> lies in <A>SqrtField</A> with coefficient vector <M>[[r_1,k_1],\ldots,[r_m,k_m]]</M>, then <A>SqrtFieldEltToCyclotomic(f)</A> returns <M>\sum_{j=1}^m r_j\sqrt{k_j}</M> lying in a suitable cyclotomic field <A>CF(n)</A>. The degree <M>n</M> can easily become too large, hence this function should be used with caution.
 </Description>
 </ManSection>
 <ManSection>
 <Func Name="SqrtFieldEltByCyclotomic" Arg="c"
-      Comm="sqrt"/>
+      Comm="Sqroot"/>
 <Description>
 If <A>c</A> is an element of <M>\mathbb{Q}^{\sqrt{}}(\imath)</M> represented as an element of a cyclotomic field <A>CF(n)</A>, then <A>SqrtFieldEltByCyclotomic(c)</A> returns the corresponding element in <A>SqrtField</A>. Our algorithm for doing this is described in <Cite Key="hdwdg12"/>.
 <Example>
-gap> SqrtFieldEltToCyclotomic( sqrt(2) );
+gap> SqrtFieldEltToCyclotomic( Sqroot(2) );
 E(8)-E(8)^3
-gap> SqrtFieldEltToCyclotomic( sqrt(2)+E(4)*sqrt(7) );
+gap> SqrtFieldEltToCyclotomic( Sqroot(2)+E(4)*Sqroot(7) );
 E(56)^5+E(56)^8+E(56)^13-E(56)^15+E(56)^16-E(56)^23-E(56)^24+E(56)^29-E(56)^31+
 E(56)^32+E(56)^37-E(56)^39-E(56)^40+E(56)^45-E(56)^47-E(56)^48+E(56)^53-E(56)^55
 gap> SqrtFieldEltByCyclotomic( E(8)-E(8)^3 );
-sqrt(2)
+Sqroot(2)
 gap> SqrtFieldEltByCyclotomic( 3*E(4)*Sqrt(11)-2/4*Sqrt(-13/7) );
-3*E(4)*sqrt(11) + (-1/14*E(4))*sqrt(91)
+3*E(4)*Sqroot(11) + (-1/14*E(4))*Sqroot(91)
 </Example>
 </Description>
 </ManSection>
@@ -373,40 +373,41 @@ gap> SqrtFieldEltByCyclotomic( 3*E(4)*Sqrt(11)-2/4*Sqrt(-13/7) );
 
 All basic field operations are available. The inverse of an element <M>f</M> in <A>SqrtField</A> as follows: We first compute the minimal polynomial <M>p(X)</M> of <M>f</M> over <M>\mathbb{Q}(\imath)</M>, that is, a non-trivial linear combination <M>0=p(f)=a_0+a_1 f+\ldots a_{i-1}f^{i-1}+f^i</M>. Then <M>f^{-1}=-(a_1+a_2f+\ldots+a_{i-1}f^{i-2}+f^{i-1})/a_0</M>. Although the inverse of <M>f</M> can be computed with linear algebra methods only, the degree of the minimal polynomial of <M>f</M> can become rather large. For example, if <M>f=\sum_{j=1}^m r_i \sqrt{k_j}</M> for rational <M>r_i</M> and pairwise distinct positive squarefree integers <M>k_1,\ldots,k_m</M>, then <M>f</M> is a primitive element of the number field <M>\mathbb{Q}(\sqrt{k_1},\ldots,\sqrt{k_m})</M>, see for example  Lemma A.5 in <Cite Key="hdwdg12"/>. For larger degree, the progress of the computation of the inverse is printed via the InfoClass <A>InfoSqrtField</A>. We remark that the method <A>Random</A> simply returns a sum of a few terms <M>a\sqrt{b}</M> where <M>a,b</M> are random rationals constructed with <A>Random(Rationals)</A>.
 <Example>
-gap> a := sqrt( 2 ) + 3 * sqrt( 3/7 ); b := sqrt( 21 ) - sqrt( 2 );
-sqrt(2) + 3/7*sqrt(21)
-(-1)*sqrt(2) + sqrt(21)
+gap> a := Sqroot( 2 ) + 3 * Sqroot( 3/7 ); b := Sqroot( 21 ) - Sqroot( 2 );
+Sqroot(2) + 3/7*Sqroot(21)
+(-1)*Sqroot(2) + Sqroot(21)
 gap> a + b; a * b; a - b;
-10/7*sqrt(21)
-7 + 4/7*sqrt(42)
-2*sqrt(2) + (-4/7)*sqrt(21)
+10/7*Sqroot(21)
+7 + 4/7*Sqroot(42)
+2*Sqroot(2) + (-4/7)*Sqroot(21)
 gap> c := ( a - b )^-2;
-91/8 + 7/4*sqrt(42)
-gap> a := Sum( List( [2,3,5,7], x -> sqrt( x ) ) );
-sqrt(2) + sqrt(3) + sqrt(5) + sqrt(7)
+91/8 + 7/4*Sqroot(42)
+gap> a := Sum( List( [2,3,5,7], x -> Sqroot( x ) ) );
+Sqroot(2) + Sqroot(3) + Sqroot(5) + Sqroot(7)
 gap> b := a^-1; a*b;                                  
 #I    InfoSqrtField: (inverses) computed 10 powers
-37/43*sqrt(2) + (-29/43)*sqrt(3) + (-133/215)*sqrt(5) + 27/43*sqrt(7) + 
-62/215*sqrt(30) + (-10/43)*sqrt(42) + (-34/215)*sqrt(70) + 22/215*sqrt(105)
+37/43*Sqroot(2) + (-29/43)*Sqroot(3) + (-133/215)*Sqroot(5) + 
+27/43*Sqroot(7) + 62/215*Sqroot(30) + (-10/43)*Sqroot(42) + (-34/215)*Sqroot(70) 
++ 22/215*Sqroot(105)
 1
-gap> ComplexConjugate(sqrt(17)+sqrt(-7));
-(-E(4))*sqrt(7) + sqrt(17)
+gap> ComplexConjugate(Sqroot(17)+Sqroot(-7));
+(-E(4))*Sqroot(7) + Sqroot(17)
 gap> Random( SqrtField );
--1 + 1/4*sqrt(3) + 1/9*sqrt(6)
+-1 + 1/4*Sqroot(3) + 1/9*Sqroot(6)
 </Example>
 
 Most methods for list, matrices, and polynomials also work over <A>SqrtField</A>.
 <Example>
-gap> m:=[[sqrt(2),sqrt(3)],[sqrt(2),sqrt(5)],[1,0]]*One(SqrtField);
-[ [ sqrt(2), sqrt(3) ], [ sqrt(2), sqrt(5) ], [ 1, 0 ] ]
+gap> m:=[[Sqroot(2),Sqroot(3)],[Sqroot(2),Sqroot(5)],[1,0]]*One(SqrootField);
+[ [ Sqroot(2), Sqroot(3) ], [ Sqroot(2), Sqroot(5) ], [ 1, 0 ] ]
 gap> NullspaceMat(m);
-[ [ (-5/4)*sqrt(2) + (-1/4)*sqrt(30), 3/4*sqrt(2) + 1/4*sqrt(30), 1 ] ]
+[ [ (-5/4)*Sqroot(2) + (-1/4)*Sqroot(30), 3/4*Sqroot(2) + 1/4*Sqroot(30), 1 ] ]
 gap> RankMat(m);
 2
-gap> m := [[sqrt(2),sqrt(3)],[sqrt(2),sqrt(5)]];  
-[ [ sqrt(2), sqrt(3) ], [ sqrt(2), sqrt(5) ] ]
+gap> m := [[Sqroot(2),Sqroot(3)],[Sqroot(2),Sqroot(5)]];  
+[ [ Sqroot(2), Sqroot(3) ], [ Sqroot(2), Sqroot(5) ] ]
 gap> Determinant( m );  DefaultFieldOfMatrix( m );
-(-1)*sqrt(6) + sqrt(10)
+(-1)*Sqroot(6) + Sqroot(10)
 SqrtField
 gap> x := Indeterminate( SqrtField, "x" );; f := x^2+x+1;
 x^2+x+1
@@ -414,7 +415,7 @@ x^2+x+1
 
 <ManSection>
 <Func Name="SqrtFieldMakeRational" Arg="m"
-      Comm="sqrt"/>
+      Comm="Sqroot"/>
 <Description>
 If <A>m</A> is an element of <A>SqrtField</A>, or a list or a matrix over <A>SqrtField</A>, defined over the Gaussian rationals, then <A>SqrtFieldMakeRational( m )</A> returns the corresponding element in <M>\mathbb{Q}(\imath)</M> or defined over <M>\mathbb{Q}(\imath)</M>, respectively. This function is used internally, for example, to compute the determinant or rank of a rational matrix over <A>SqrtField</A> more efficiently. It is also used in the following three functions.
 </Description>
@@ -422,7 +423,7 @@ If <A>m</A> is an element of <A>SqrtField</A>, or a list or a matrix over <A>Sqr
 
 <ManSection>
 <Func Name="SqrtFieldPolynomialToRationalPolynomial" Arg="f"
-      Comm="sqrt"/>
+      Comm="Sqroot"/>
 <Description>
 Here <A>f</A> is a polynomial over <A>SqrtField</A> but with coefficients in the Gaussian rationals. The function returns the corresponding polynomial defined over the Gaussian rationals.
 </Description>
@@ -430,14 +431,14 @@ Here <A>f</A> is a polynomial over <A>SqrtField</A> but with coefficients in the
 
 <ManSection>
 <Func Name="SqrtFieldRationalPolynomialToSqrtFieldPolynomial" Arg="f"
-      Comm="sqrt"/>
+      Comm="Sqroot"/>
 <Description>
 If <A>f</A> is a polynomial over the Gaussian rationals, then the function returns the corresponding polynomial defined over <A>SqrtField</A>. 
 </Description>
 </ManSection>
 <ManSection>
 <Oper Name="Factors" Arg="f"
-      Comm="sqrt"/>
+      Comm="Sqroot"/>
 <Description>
 If <A>f</A> is a rational polynomial defined over <A>SqrtField</A>, then the previous two functions are used to obtain its factorisation over <M>\mathbb{Q}</M>. 
 <Example>

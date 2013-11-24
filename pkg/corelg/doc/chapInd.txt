@@ -27,7 +27,7 @@
   [2XRootsystemOfCartanSubalgebra[102X  3.3-6
   [2XRootsystemOfCartanSubalgebra[102X  3.3-6
   [2XSatakeDiagram[102X  3.4-2
-  [2Xsqrt[102X  2.2-1
+  [2XSqroot[102X  2.2-1
   [2XSqrtFieldEltByCoefficients[102X  2.2-3
   [2XSqrtFieldEltByCyclotomic[102X  2.2-5
   [2XSqrtFieldEltCoefficients[102X  2.2-2

@@ -161,16 +161,16 @@
   elements  of  the  base  field.  So  the  ideal base field would contain the
   imaginary  unit, as well as being closed under taking square roots. However,
   such  a  field is difficult to construct and to work with on a computer. For
-  this  reason  we  have  provided  the  field  [3XSqrtField[103X (see Chapter [14X2.2-1[114X),
-  containing the square roots of all rational numbers. Although it is possible
-  to  try  most  functions  of  the  package  using  the base field [3XCF(4)[103X, for
-  example,  it  is  likely  that  many  computations  will result in an error,
-  because  of  the  lack of square roots in that field. Many more computations
-  are possible over [3XSqrtField[103X, but also in that case, of course, a computation
-  may result in an error because we cannot construct a particular square root.
-  Also, computations over [3XSqrtField[103X tend to be significantly slower than over,
-  say,  [3XCF(4)[103X;  see  the  next example. But that is a price we have to pay (at
-  least, in order to be able to do some computations).[133X
+  this reason we have provided the field [3XSqrtField[103X (see Chapter [14X2[114X), containing
+  the  square  roots  of  all rational numbers. Although it is possible to try
+  most functions of the package using the base field [3XCF(4)[103X, for example, it is
+  likely  that  many computations will result in an error, because of the lack
+  of  square  roots  in  that  field. Many more computations are possible over
+  [3XSqrtField[103X,  but also in that case, of course, a computation may result in an
+  error   because   we  cannot  construct  a  particular  square  root.  Also,
+  computations  over [3XSqrtField[103X tend to be significantly slower than over, say,
+  [3XCF(4)[103X;  see  the next example. But that is a price we have to pay (at least,
+  in order to be able to do some computations).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XL:=RealFormById("E",8,2);[127X[104X

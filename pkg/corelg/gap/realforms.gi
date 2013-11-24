@@ -857,7 +857,7 @@ local MSF, RSF, writeToSF, T, R, rank, csa, ct, cb, ci, K, P, k, p, v, vnew, tmp
    MSF  := LieAlgebraByStructureConstants( SqrtField, T);
    writeToSF := function(v)
    local er;
-     #er := ExtRepOfObj(v)*sqrt(1);
+     #er := ExtRepOfObj(v)*Sqroot(1);
       er := List(ExtRepOfObj(v),SqrtFieldEltByCyclotomic);
       return ObjByExtRep(FamilyObj(Zero(MSF)),er);
    end;            
