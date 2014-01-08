@@ -651,7 +651,7 @@ end);
 ##########################################################################
 
 
-InstallGlobalFunction(SqrtFieldEltCoefficients, function(e)
+InstallGlobalFunction(CoefficientsOfSqrtFieldElt, function(e)
 local cfs, i, x;
    if not IsSqrtFieldElement(e) then 
       Error("input must be SqrtFieldElement"); 

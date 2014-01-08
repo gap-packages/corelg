@@ -13,8 +13,8 @@
 SetPackageInfo( rec(
 PackageName := "CoReLG",
 Subtitle := "computation with real Lie groups",        
-Version := "0.2",
-Date := "24/11/2013",
+Version := "1.0",
+Date := "08/01/2014",
 ArchiveURL := Concatenation("http://science.unitn.it/~corelg/corelg-",~.Version),
 ArchiveFormats := ".tar.gz",
 Persons := [
@@ -53,9 +53,9 @@ Persons := [
   )
 
 ],
-Status := "other",
-#CommunicatedBy := ,
-#AcceptDate := ,
+Status := "accepted",
+CommunicatedBy := "Bettina Eick (Braunschweig)",
+AcceptDate := "01/2014",
 PackageDoc := rec( BookName  := "CoReLG" ,  
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
@@ -73,7 +73,7 @@ AbstractHTML := "The package <span class=\"pkgname\">CoReLG</span> contains \
 PackageWWWHome := "http://science.unitn.it/~corelg/",
 Dependencies := rec(
   GAP := ">=4.4",
-  NeededOtherPackages:= [ ["sla", ">=0.13"] ],                 
+  NeededOtherPackages:= [ ["sla", ">=0.14"] ],                 
   SuggestedOtherPackages := [ ["GAPDoc", ">= 1.0"] ],
   ExternalConditions := []
 ),

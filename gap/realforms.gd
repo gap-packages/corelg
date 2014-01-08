@@ -114,6 +114,6 @@ DeclareGlobalFunction( "IsomorphismOfRealSemisimpleLieAlgebras" );
 
 ##############################################################################
 ##
-#A   CartanSubalgebras( <L> )
+#A   CartanSubalgebrasOfRealForm( <L> )
 ##
-DeclareAttribute( "CartanSubalgebras", IsLieAlgebra );
+DeclareAttribute( "CartanSubalgebrasOfRealForm", IsLieAlgebra );

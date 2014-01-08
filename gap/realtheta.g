@@ -65,9 +65,9 @@ Zgrading:= function( L, d )
     SetCartanDecomposition( D, rec( CartanInv:= cd.CartanInv,
                                     K:= Intersection( cd.K, D ),
                                     P:= Intersection( cd.P, D ) ) );
-    H:= CartanSubalgebras(D);
+    H:= CartanSubalgebrasOfRealForm(D);
     cc:= BasisVectors( Basis( LieCentre(K0) ) );
-    SetCartanSubalgebras( K0, List( H, U -> 
+    SetCartanSubalgebrasOfRealForm( K0, List( H, U -> 
                           Subalgebra(K0,Concatenation(BasisVectors(Basis(U)),cc))));
     return rec( grading:= rec( g0:= gr[3], gp:= gr[1], gn:= gr[2] ), K0:= K0 );
 
@@ -296,11 +296,11 @@ Print("carrier candidates... ",Length(crs),"\n");
               SetCartanDecomposition( DN, rec( CartanInv:= CartanDecomposition(L).CartanInv,
                          P:= Intersection( DN, CartanDecomposition(L).P ), 
                          K:= Intersection( DN, CartanDecomposition(L).K ) ) );
-              HD:= CartanSubalgebras(DN);
-              SetCartanSubalgebras( N, List( HD, U -> Subalgebra( N, Concatenation( Basis(U),
+              HD:= CartanSubalgebrasOfRealForm(DN);
+              SetCartanSubalgebrasOfRealForm( N, List( HD, U -> Subalgebra( N, Concatenation( Basis(U),
                          Basis(CN) ) ) ) );
            fi;
-           HN:= CartanSubalgebras(N);
+           HN:= CartanSubalgebrasOfRealForm(N);
            mcpt:= Maximum( List( HN, u -> Dimension(Intersection(u,NP)) ) );
 Print( List( HN, u -> Dimension(Intersection(u,NP))), " ",Dimension(Intersection(H2,NP)),"\n" ); 
            if mcpt = Dimension(Intersection(H2,NP)) then
@@ -733,7 +733,7 @@ realOrbits:= function( type, rank, grading ) # At the moment only for Z-gradings
    zg:= Zgrading( L, grading );
    Print("Computed the Z-grading...\n");
 
-   H:= CartanSubalgebras( zg.K0 );
+   H:= CartanSubalgebrasOfRealForm( zg.K0 );
 
    if not H[1] = CartanSubalgebra(L) then 
       Print("Something WRONG with the Cartan subalgs of K0...\n");

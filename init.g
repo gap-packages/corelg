@@ -11,7 +11,7 @@
 ################################
 # INFO CLASSES
 DeclareInfoClass("InfoSqrtField");
-SetInfoLevel(InfoSqrtField,2);
+SetInfoLevel(InfoSqrtField,0);
 DeclareInfoClass("InfoCorelg");
 SetInfoLevel(InfoCorelg,0);
 
