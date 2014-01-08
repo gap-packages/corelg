@@ -44,8 +44,8 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7D7B755F7E6B8471">3.3-1 MaximallyCompactCartanSubalgebra</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7D593D72871F56B1">3.3-2 MaximallyNonCompactCartanSubalgebra</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X84EB6208818E5D17">3.3-3 CompactDegreeOfCartanSubalgebra</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X842D38C9856841F7">3.3-4 CartanSubalgebras</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7F5A10E0782A4DBC">3.3-3 CompactDimensionOfCartanSubalgebra</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X83BFAD338107D9FF">3.3-4 CartanSubalgebrasOfRealForm</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7A8D86667BC7C033">3.3-5 CartanSubspace</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7F9943407A2F367E">3.3-6 RootsystemOfCartanSubalgebra</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X82EBF10A7B3B6F6E">3.3-7 ChevalleyBasis</a></span>
@@ -232,19 +232,19 @@ P := &lt;vector space over SqrtField, with 0 generators&gt; )
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MaximallyNonCompactCartanSubalgebra</code>( <var class="Arg">L</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>Here <var class="Arg">L</var> is a real semisimple Lie algebra. This function returns a maximally non-compact Cartan subalgebra of <var class="Arg">L</var>.</p>
 
-<p><a id="X84EB6208818E5D17" name="X84EB6208818E5D17"></a></p>
+<p><a id="X7F5A10E0782A4DBC" name="X7F5A10E0782A4DBC"></a></p>
 
-<h5>3.3-3 CompactDegreeOfCartanSubalgebra</h5>
+<h5>3.3-3 CompactDimensionOfCartanSubalgebra</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompactDegreeOfCartanSubalgebra</code>( <var class="Arg">L</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompactDegreeOfCartanSubalgebra</code>( <var class="Arg">L</var>, <var class="Arg">H</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompactDimensionOfCartanSubalgebra</code>( <var class="Arg">L</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompactDimensionOfCartanSubalgebra</code>( <var class="Arg">L</var>, <var class="Arg">H</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>Here <var class="Arg">L</var> is a real semisimple Lie algebra. This function returns the compact dimension of the Cartan subalgebra <var class="Arg">H</var>. If <var class="Arg">H</var> is not given, then <var class="Arg">CartanSubalgebra(L)</var> will be taken. The compact dimension will be stored in the Cartan subalgebra, so that a new call to this function, with the same input, will return the compact dimension immediately.</p>
 
-<p><a id="X842D38C9856841F7" name="X842D38C9856841F7"></a></p>
+<p><a id="X83BFAD338107D9FF" name="X83BFAD338107D9FF"></a></p>
 
-<h5>3.3-4 CartanSubalgebras</h5>
+<h5>3.3-4 CartanSubalgebrasOfRealForm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CartanSubalgebras</code>( <var class="Arg">L</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CartanSubalgebrasOfRealForm</code>( <var class="Arg">L</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>Here <var class="Arg">L</var> is a real form of a complex semisimple Lie algebra. This function returns a list of Cartan subalgebras of <var class="Arg">L</var>. They are representatives of all classes of conjugate (by the adjoint group) Cartan subalgebras of <var class="Arg">L</var>.</p>
 
 <p><a id="X7A8D86667BC7C033" name="X7A8D86667BC7C033"></a></p>

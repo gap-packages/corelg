@@ -12,7 +12,7 @@
 <TitlePage>
   <Title>CoReLG</Title>
   <Subtitle>Computing with real Lie Algebras</Subtitle>
-  <Version>Version 0.2</Version>
+  <Version>Version 1.0</Version>
 
 <Author>
   Heiko Dietrich
@@ -44,7 +44,7 @@ I-38050 Povo (Trento), Italy<Br/>
        </Address> 
   </Author>
 
-  <Date>November 2013
+  <Date>January 2014
 </Date>
 
 
@@ -59,7 +59,7 @@ The research leading to this package has received funding from the European Unio
 </Acknowledgements>
 
 <Copyright>
-  &copyright; 2013 Heiko Dietrich, Paolo Faccin, and Willem de Graaf 
+  &copyright; 2014 Heiko Dietrich, Paolo Faccin, and Willem de Graaf 
 </Copyright>
   
 
@@ -224,7 +224,7 @@ Every nilpotent orbit has a representative lying in a real Cayley triple.
 
 <Section> <Heading>On base fields</Heading>
 
-In order to define a Lie algebra by a multiplication table over the reals, it usually suffices
+To define a Lie algebra by a multiplication table over the reals, it usually suffices
 to take a subfield of the real field as base field. However, the algorithms contained
 in this package very often need a Chevalley basis of the Lie algebra at hand, which is defined
 only over the complex field. Computations with such a Chevalley basis take place behind
@@ -235,8 +235,9 @@ reason, we require that the base field contains the imaginary unit <A>E(4)</A>.
 Furthermore, in many algorithms it is necessary to take square roots of elements of the
 base field. So the ideal base field would contain the imaginary unit, as well as being
 closed under taking square roots. However, such a field is difficult to construct and  to work
-with on a computer. For this reason we have provided the field <A>SqrtField</A> (see Chapter
-<Ref Chap="sqrt"/>), containing the square roots of all rational numbers. Although it is
+with on a computer. For this reason we have provided the field <A>SqrtField</A>  containing the square roots of all rational numbers. Mathematically, this is the field <M>\mathbb{Q}^{\sqrt{}}(\imath)</M> with <M>\mathbb{Q}^{\sqrt{}}=\mathbb{Q}(\{\sqrt{p}\mid p\textrm{ a prime}\})</M> and <M>\imath=\sqrt{-1}\in\mathbb{C}</M>. Clearly,  <M>\mathbb{Q}^{\sqrt{}}(\imath)</M> is an infinite extension of the rationals  <M>\mathbb{Q}</M>, and every <M>f</M> in <M>\mathbb{Q}^{\sqrt{}}(\imath)</M> can be uniquely written as <M>f=\sum_{j=1}^m r_i \sqrt{k_j}</M> for Gaussian rationals <M>r_i\in\mathbb{Q}(\imath)</M> and pairwise distinct squarefree positive integers <M>k_1,\ldots,k_m</M>. Thus, <M>f</M> can be described efficiently by its coefficient vector <M>[[r_1,k_1],\ldots,[r_j,k_j]]</M>. We comment on our implementation of <M>\mathbb{Q}^{\sqrt{}}(\imath)</M> in  Chapter <Ref Chap="sqrt"/>.
+<P/>
+Although it is
 possible to try most functions of the package using the base field <A>CF(4)</A>, for example,
 it is likely that many computations will result in an error, because of the lack of square
 roots in that field. Many more computations are possible over <A>SqrtField</A>, but also in
@@ -248,11 +249,11 @@ than over, say, <A>CF(4)</A>; see the next example. But that is a price we have 
 <Example>
 gap> L:=RealFormById("E",8,2);
 &lt;Lie algebra of dimension 248 over SqrtField>
-gap> allCSA := CartanSubalgebras(L);;time;
+gap> allCSA := CartanSubalgebrasOfRealForm(L);;time;
 67224
 gap> L:=RealFormById("E",8,2,CF(4));
 &lt;Lie algebra of dimension 248 over GaussianRationals>
-gap> allCSA := CartanSubalgebras(L);;time;
+gap> allCSA := CartanSubalgebrasOfRealForm(L);;time;
 7301
 # We remark that both computations are exactly the same; 
 # the difference in timing is caused by the fact that 
@@ -316,10 +317,10 @@ Here <A>q</A> is a rational number and <A>Sqroot(q)</A> is the element <M>\sqrt{
 </Description>
 </ManSection>
 <ManSection>
-<Func Name="SqrtFieldEltCoefficients" Arg="f"
+<Func Name="CoefficientsOfSqrtFieldElt" Arg="f"
       Comm="Sqroot"/>
 <Description>
-If <A>f</A> is an element in <A>SqrtField</A>, then <A>SqrtFieldEltCoefficients(f)</A> returns its coefficient vector   <M>[[r_1,k_1],\ldots,[r_m,k_m]]</M> as described above, that is, <M>r_1,\ldots,r_m\in\mathbb{Q}(\imath)</M> and <M>k_1,\ldots,k_m</M> are pairwise distinct positive squarefree integers such that <M>f=\sum_{j=1}^m r_j\sqrt{k_j}</M>.
+If <A>f</A> is an element in <A>SqrtField</A>, then <A>CoefficientsOfSqrtFieldElt(f)</A> returns its coefficient vector   <M>[[r_1,k_1],\ldots,[r_m,k_m]]</M> as described above, that is, <M>r_1,\ldots,r_m\in\mathbb{Q}(\imath)</M> and <M>k_1,\ldots,k_m</M> are pairwise distinct positive squarefree integers such that <M>f=\sum_{j=1}^m r_j\sqrt{k_j}</M>.
 </Description>
 </ManSection>
 <ManSection>
@@ -334,7 +335,7 @@ gap> Sqroot(-(2*3*4)/(11*13)); Sqroot(245/15); Sqroot(16/9);
 4/3
 gap> a := 2+Sqroot(7)+Sqroot(99);
 2 + Sqroot(7) + 3*Sqroot(11)
-gap> SqrtFieldEltCoefficients(a);
+gap> CoefficientsOfSqrtFieldElt(a);
 [ [ 2, 1 ], [ 1, 7 ], [ 3, 11 ] ]
 gap> SqrtFieldEltByCoefficients([[2,9],[1,7],[E(4),13]]);
 6 + Sqroot(7) + E(4)*Sqroot(13)
@@ -385,7 +386,6 @@ gap> c := ( a - b )^-2;
 gap> a := Sum( List( [2,3,5,7], x -> Sqroot( x ) ) );
 Sqroot(2) + Sqroot(3) + Sqroot(5) + Sqroot(7)
 gap> b := a^-1; a*b;                                  
-#I    InfoSqrtField: (inverses) computed 10 powers
 37/43*Sqroot(2) + (-29/43)*Sqroot(3) + (-133/215)*Sqroot(5) + 
 27/43*Sqroot(7) + 62/215*Sqroot(30) + (-10/43)*Sqroot(42) + (-34/215)*Sqroot(70) 
 + 22/215*Sqroot(105)
@@ -716,15 +716,15 @@ non-compact Cartan subalgebra of <A>L</A>.
 </ManSection>
 
 <ManSection>
-<Func Name="CompactDegreeOfCartanSubalgebra" Arg="L"/>
-<Func Name="CompactDegreeOfCartanSubalgebra" Arg="L, H"/>
+<Func Name="CompactDimensionOfCartanSubalgebra" Arg="L"/>
+<Func Name="CompactDimensionOfCartanSubalgebra" Arg="L, H"/>
 <Description>
 Here <A>L</A> is a real semisimple Lie algebra. This function returns the compact dimension of the Cartan subalgebra <A>H</A>. If <A>H</A> is not given, then <A>CartanSubalgebra(L)</A> will be taken. The compact dimension will be stored in the Cartan subalgebra, so that a new call to this function, with the same input, will return the compact dimension immediately.
 </Description>
 </ManSection>
 
 <ManSection>
-<Attr Name="CartanSubalgebras" Arg="L"/>
+<Attr Name="CartanSubalgebrasOfRealForm" Arg="L"/>
 <Description>
 Here <A>L</A> is a real form of a complex semisimple Lie algebra. This function returns 
 a list of Cartan subalgebras of <A>L</A>. They are representatives of all classes of 

@@ -147,39 +147,48 @@
   
   [1X1.4 [33X[0;0YOn base fields[133X[101X
   
-  [33X[0;0YIn  order  to define a Lie algebra by a multiplication table over the reals,
-  it  usually  suffices  to  take  a subfield of the real field as base field.
-  However,  the  algorithms  contained  in  this  package  very  often  need a
-  Chevalley  basis  of the Lie algebra at hand, which is defined only over the
-  complex  field.  Computations  with such a Chevalley basis take place behind
-  the  scenes,  and  the  result is again defined over the reals. However, the
-  computations  would  not be possible if the Lie algebra is just defined over
-  (a  subfield  of) the reals. For this reason, we require that the base field
-  contains the imaginary unit [3XE(4)[103X.[133X
+  [33X[0;0YTo define a Lie algebra by a multiplication table over the reals, it usually
+  suffices  to  take  a subfield of the real field as base field. However, the
+  algorithms  contained  in  this package very often need a Chevalley basis of
+  the  Lie  algebra  at  hand,  which  is defined only over the complex field.
+  Computations  with  such a Chevalley basis take place behind the scenes, and
+  the  result is again defined over the reals. However, the computations would
+  not  be possible if the Lie algebra is just defined over (a subfield of) the
+  reals.  For  this  reason,  we  require  that  the  base  field contains the
+  imaginary unit [3XE(4)[103X.[133X
   
   [33X[0;0YFurthermore,  in  many  algorithms  it  is necessary to take square roots of
   elements  of  the  base  field.  So  the  ideal base field would contain the
   imaginary  unit, as well as being closed under taking square roots. However,
   such  a  field is difficult to construct and to work with on a computer. For
-  this reason we have provided the field [3XSqrtField[103X (see Chapter [14X2[114X), containing
-  the  square  roots  of  all rational numbers. Although it is possible to try
-  most functions of the package using the base field [3XCF(4)[103X, for example, it is
-  likely  that  many computations will result in an error, because of the lack
-  of  square  roots  in  that  field. Many more computations are possible over
-  [3XSqrtField[103X,  but also in that case, of course, a computation may result in an
-  error   because   we  cannot  construct  a  particular  square  root.  Also,
-  computations  over [3XSqrtField[103X tend to be significantly slower than over, say,
-  [3XCF(4)[103X;  see  the next example. But that is a price we have to pay (at least,
-  in order to be able to do some computations).[133X
+  this reason we have provided the field [3XSqrtField[103X containing the square roots
+  of  all  rational  numbers. Mathematically, this is the field [22XQ^sqrt}(imath)[122X
+  with   [22XQ^sqrt}=Q({sqrtp∣   p   a   prime})[122X   and   [22Ximath=sqrt-1∈C[122X.  Clearly,
+  [22XQ^sqrt}(imath)[122X  is  an infinite extension of the rationals [22XQ[122X, and every [22Xf[122X in
+  [22XQ^sqrt}(imath)[122X can be uniquely written as [22Xf=∑_j=1^m r_i sqrtk_j[122X for Gaussian
+  rationals  [22Xr_i∈Q(imath)[122X  and  pairwise distinct squarefree positive integers
+  [22Xk_1,...,k_m[122X.  Thus, [22Xf[122X can be described efficiently by its coefficient vector
+  [22X[[r_1,k_1],...,[r_j,k_j]][122X.    We    comment   on   our   implementation   of
+  [22XQ^sqrt}(imath)[122X in Chapter [14X2[114X.[133X
+  
+  [33X[0;0YAlthough  it is possible to try most functions of the package using the base
+  field [3XCF(4)[103X, for example, it is likely that many computations will result in
+  an  error,  because  of  the  lack  of square roots in that field. Many more
+  computations  are possible over [3XSqrtField[103X, but also in that case, of course,
+  a  computation  may  result  in  an  error  because  we  cannot  construct a
+  particular  square  root.  Also,  computations  over  [3XSqrtField[103X  tend  to be
+  significantly  slower  than over, say, [3XCF(4)[103X; see the next example. But that
+  is  a  price  we  have  to  pay  (at  least,  in order to be able to do some
+  computations).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XL:=RealFormById("E",8,2);[127X[104X
     [4X[28X<Lie algebra of dimension 248 over SqrtField>[128X[104X
-    [4X[25Xgap>[125X [27XallCSA := CartanSubalgebras(L);;time;[127X[104X
+    [4X[25Xgap>[125X [27XallCSA := CartanSubalgebrasOfRealForm(L);;time;[127X[104X
     [4X[28X67224[128X[104X
     [4X[25Xgap>[125X [27XL:=RealFormById("E",8,2,CF(4));[127X[104X
     [4X[28X<Lie algebra of dimension 248 over GaussianRationals>[128X[104X
-    [4X[25Xgap>[125X [27XallCSA := CartanSubalgebras(L);;time;[127X[104X
+    [4X[25Xgap>[125X [27XallCSA := CartanSubalgebrasOfRealForm(L);;time;[127X[104X
     [4X[28X7301[128X[104X
     [4X[28X# We remark that both computations are exactly the same; [128X[104X
     [4X[28X# the difference in timing is caused by the fact that [128X[104X

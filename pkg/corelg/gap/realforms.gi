@@ -2,7 +2,7 @@
 #
 # These are the functions contained here:
 #
-#  CartanSubalgebras
+#  CartanSubalgebrasOfRealForm
 #  CartanSubspace
 #  VoganDiagram
 #  SatakeDiagram
@@ -3634,7 +3634,7 @@ end;
 
 
 ##############################################################################################
-InstallMethod( CartanSubalgebras,
+InstallMethod( CartanSubalgebrasOfRealForm,
    "for a Lie algebra",
    true,
    [ IsLieAlgebra ], 0, function( L )

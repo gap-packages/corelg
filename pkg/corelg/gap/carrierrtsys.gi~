@@ -268,7 +268,7 @@ InstallGlobalFunction( RootsystemOfCartanSubalgebra, function( arg )
               M    := SqrtFieldMakeRational(Mold);
               if M = false then 
                 #Error("matrix we want to compute char pol of cannot be made rationals");
-                #Print(" matrix cannot be made rations; use CharPol for SqrtField\n");
+                 Print(" matrix cannot be made rations; use CharPol for SqrtField\n");
                  M    := Mold;
                  f    := CharacteristicPolynomial( M );
                  facs := Set(Factors( f ));
@@ -342,8 +342,6 @@ InstallGlobalFunction( RootsystemOfCartanSubalgebra, function( arg )
   # on an element of B.
 
    S    := [];
-
-
    zero := Zero( F );
    for i in [ 1 .. Length(B) ] do
       a   := [ ];

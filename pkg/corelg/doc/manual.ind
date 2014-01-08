@@ -5,10 +5,11 @@
   \indexspace
 
   \item \texttt  {CartanDecomposition}, \hyperpage{14}
-  \item \texttt  {CartanSubalgebras}, \hyperpage{16}
+  \item \texttt  {CartanSubalgebrasOfRealForm}, \hyperpage{16}
   \item \texttt  {CartanSubspace}, \hyperpage{16}
   \item \texttt  {ChevalleyBasis}, \hyperpage{16}
-  \item \texttt  {CompactDegreeOfCartanSubalgebra}, \hyperpage{15}
+  \item \texttt  {CoefficientsOfSqrtFieldElt}, \hyperpage{8}
+  \item \texttt  {CompactDimensionOfCartanSubalgebra}, \hyperpage{15}
 
   \indexspace
 
@@ -46,7 +47,6 @@
   \item \texttt  {Sqroot}, \hyperpage{8}
   \item \texttt  {SqrtFieldEltByCoefficients}, \hyperpage{8}
   \item \texttt  {SqrtFieldEltByCyclotomic}, \hyperpage{9}
-  \item \texttt  {SqrtFieldEltCoefficients}, \hyperpage{8}
   \item \texttt  {SqrtFieldEltToCyclotomic}, \hyperpage{8}
   \item \texttt  {SqrtFieldIsGaussRat}, \hyperpage{7}
   \item \texttt  {SqrtFieldMakeRational}, \hyperpage{10}

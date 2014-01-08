@@ -1,6 +1,6 @@
 \indexentry{SqrtFieldIsGaussRat@\texttt  {SqrtFieldIsGaussRat}|hyperpage}{7}
 \indexentry{Sqroot@\texttt  {Sqroot}|hyperpage}{8}
-\indexentry{SqrtFieldEltCoefficients@\texttt  {SqrtFieldEltCoefficients}|hyperpage}{8}
+\indexentry{CoefficientsOfSqrtFieldElt@\texttt  {CoefficientsOfSqrtFieldElt}|hyperpage}{8}
 \indexentry{SqrtFieldEltByCoefficients@\texttt  {SqrtFieldEltByCoefficients}|hyperpage}{8}
 \indexentry{SqrtFieldEltToCyclotomic@\texttt  {SqrtFieldEltToCyclotomic}|hyperpage}{8}
 \indexentry{SqrtFieldEltByCyclotomic@\texttt  {SqrtFieldEltByCyclotomic}|hyperpage}{9}
@@ -22,9 +22,9 @@
 \indexentry{IsomorphismOfRealSemisimpleLieAlgebras@\texttt  {Isomorphism}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Real}\discretionary {-}{}{}\texttt  {Semisimple}\discretionary {-}{}{}\texttt  {Lie}\discretionary {-}{}{}\texttt  {Algebras}|hyperpage}{15}
 \indexentry{MaximallyCompactCartanSubalgebra@\texttt  {MaximallyCompactCartanSubalgebra}|hyperpage}{15}
 \indexentry{MaximallyNonCompactCartanSubalgebra@\texttt  {MaximallyNonCompactCartanSubalgebra}|hyperpage}{15}
-\indexentry{CompactDegreeOfCartanSubalgebra@\texttt  {CompactDegreeOfCartanSubalgebra}|hyperpage}{15}
-\indexentry{CompactDegreeOfCartanSubalgebra@\texttt  {CompactDegreeOfCartanSubalgebra}|hyperpage}{15}
-\indexentry{CartanSubalgebras@\texttt  {CartanSubalgebras}|hyperpage}{16}
+\indexentry{CompactDimensionOfCartanSubalgebra@\texttt  {CompactDimensionOfCartanSubalgebra}|hyperpage}{15}
+\indexentry{CompactDimensionOfCartanSubalgebra@\texttt  {CompactDimensionOfCartanSubalgebra}|hyperpage}{15}
+\indexentry{CartanSubalgebrasOfRealForm@\texttt  {CartanSubalgebrasOfRealForm}|hyperpage}{16}
 \indexentry{CartanSubspace@\texttt  {CartanSubspace}|hyperpage}{16}
 \indexentry{RootsystemOfCartanSubalgebra@\texttt  {RootsystemOfCartanSubalgebra}|hyperpage}{16}
 \indexentry{RootsystemOfCartanSubalgebra@\texttt  {RootsystemOfCartanSubalgebra}|hyperpage}{16}

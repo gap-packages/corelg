@@ -1,4 +1,5 @@
 corelg/copying
+corelg/gap/carrierrtsys.gi~
 corelg/gap/realTriples.db
 corelg/gap/carrierAlg.db
 corelg/doc/manual.log

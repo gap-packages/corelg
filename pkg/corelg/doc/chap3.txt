@@ -189,10 +189,10 @@
   [33X[0;0YHere  [3XL[103X  is a real semisimple Lie algebra. This function returns a maximally
   non-compact Cartan subalgebra of [3XL[103X.[133X
   
-  [1X3.3-3 CompactDegreeOfCartanSubalgebra[101X
+  [1X3.3-3 CompactDimensionOfCartanSubalgebra[101X
   
-  [29X[2XCompactDegreeOfCartanSubalgebra[102X( [3XL[103X ) [32X function
-  [29X[2XCompactDegreeOfCartanSubalgebra[102X( [3XL[103X, [3XH[103X ) [32X function
+  [29X[2XCompactDimensionOfCartanSubalgebra[102X( [3XL[103X ) [32X function
+  [29X[2XCompactDimensionOfCartanSubalgebra[102X( [3XL[103X, [3XH[103X ) [32X function
   
   [33X[0;0YHere  [3XL[103X  is a real semisimple Lie algebra. This function returns the compact
   dimension   of   the   Cartan   subalgebra  [3XH[103X.  If  [3XH[103X  is  not  given,  then
@@ -200,9 +200,9 @@
   the  Cartan  subalgebra,  so that a new call to this function, with the same
   input, will return the compact dimension immediately.[133X
   
-  [1X3.3-4 CartanSubalgebras[101X
+  [1X3.3-4 CartanSubalgebrasOfRealForm[101X
   
-  [29X[2XCartanSubalgebras[102X( [3XL[103X ) [32X attribute
+  [29X[2XCartanSubalgebrasOfRealForm[102X( [3XL[103X ) [32X attribute
   
   [33X[0;0YHere  [3XL[103X  is  a  real form of a complex semisimple Lie algebra. This function
   returns  a  list of Cartan subalgebras of [3XL[103X. They are representatives of all

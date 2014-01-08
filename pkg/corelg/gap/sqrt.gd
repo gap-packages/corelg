@@ -33,9 +33,9 @@ SetName( SqrtField, "SqrtField" );
 SetIsLeftActedOnByDivisionRing( SqrtField, true );
 SetSize( SqrtField, infinity );
 SetIsFiniteDimensional( SqrtField, false);
-#SetLeftActingDomain( SqrtField, Rationals ); ## why did we have this?!?
 SetLeftActingDomain( SqrtField, GaussianRationals );
 SetCharacteristic( SqrtField, 0);
+SetPrimeField( SqrtField, Rationals );
 SqrtFieldFam:= ElementsFamily( FamilyObj( SqrtField ) );
 
 
@@ -48,7 +48,7 @@ DeclareGlobalFunction("SqrtFieldMinimalPolynomial");
 DeclareGlobalFunction("SqrtFieldEltByRationalSqrt");
 DeclareGlobalFunction("SqrtFieldEltRealAndComplexPart");
 DeclareGlobalFunction("IsPosSqrtFieldElt");
-DeclareGlobalFunction("SqrtFieldEltCoefficients");
+DeclareGlobalFunction("CoefficientsOfSqrtFieldElt");
 DeclareGlobalFunction("SqrtFieldEltByCoefficients");
 DeclareGlobalFunction("SqrtFieldEltToCyclotomic");
 DeclareGlobalFunction("SqrtFieldEltByCyclotomic");

@@ -30,7 +30,7 @@
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X84E7D3D787000313">2.2-1 Sqroot</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8323D85081602DB1">2.2-2 SqrtFieldEltCoefficients</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X86C3EA257D7CF10C">2.2-2 CoefficientsOfSqrtFieldElt</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7B0063817B03422F">2.2-3 SqrtFieldEltByCoefficients</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X84E90EC582E8A921">2.2-4 SqrtFieldEltToCyclotomic</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7EBF6AAC7A4189CC">2.2-5 SqrtFieldEltByCyclotomic</a></span>
@@ -95,12 +95,12 @@ true
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sqroot</code>( <var class="Arg">q</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>Here <var class="Arg">q</var> is a rational number and <var class="Arg">Sqroot(q)</var> is the element <span class="SimpleMath">sqrtq</span> as an element of <var class="Arg">SqrtField</var>. If <span class="SimpleMath">q=(-1)^ϵ a/b</span> with coprime integers <span class="SimpleMath">a,b≥ 0</span> and <span class="SimpleMath">ϵ∈{0,1}</span>, then <var class="Arg">Sqroot(q)</var> is represented as the element <var class="Arg">E(4)</var><span class="SimpleMath">^ε</span><var class="Arg">*b*Sqroot(ab)</var> of <var class="Arg">SqrtField</var>.</p>
 
-<p><a id="X8323D85081602DB1" name="X8323D85081602DB1"></a></p>
+<p><a id="X86C3EA257D7CF10C" name="X86C3EA257D7CF10C"></a></p>
 
-<h5>2.2-2 SqrtFieldEltCoefficients</h5>
+<h5>2.2-2 CoefficientsOfSqrtFieldElt</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SqrtFieldEltCoefficients</code>( <var class="Arg">f</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>If <var class="Arg">f</var> is an element in <var class="Arg">SqrtField</var>, then <var class="Arg">SqrtFieldEltCoefficients(f)</var> returns its coefficient vector <span class="SimpleMath">[[r_1,k_1],...,[r_m,k_m]]</span> as described above, that is, <span class="SimpleMath">r_1,...,r_m∈Q(imath)</span> and <span class="SimpleMath">k_1,...,k_m</span> are pairwise distinct positive squarefree integers such that <span class="SimpleMath">f=∑_j=1^m r_jsqrtk_j</span>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoefficientsOfSqrtFieldElt</code>( <var class="Arg">f</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>If <var class="Arg">f</var> is an element in <var class="Arg">SqrtField</var>, then <var class="Arg">CoefficientsOfSqrtFieldElt(f)</var> returns its coefficient vector <span class="SimpleMath">[[r_1,k_1],...,[r_m,k_m]]</span> as described above, that is, <span class="SimpleMath">r_1,...,r_m∈Q(imath)</span> and <span class="SimpleMath">k_1,...,k_m</span> are pairwise distinct positive squarefree integers such that <span class="SimpleMath">f=∑_j=1^m r_jsqrtk_j</span>.</p>
 
 <p><a id="X7B0063817B03422F" name="X7B0063817B03422F"></a></p>
 
@@ -117,7 +117,7 @@ true
 4/3
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := 2+Sqroot(7)+Sqroot(99);</span>
 2 + Sqroot(7) + 3*Sqroot(11)
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SqrtFieldEltCoefficients(a);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CoefficientsOfSqrtFieldElt(a);</span>
 [ [ 2, 1 ], [ 1, 7 ], [ 3, 11 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SqrtFieldEltByCoefficients([[2,9],[1,7],[E(4),13]]);</span>
 6 + Sqroot(7) + E(4)*Sqroot(13)
@@ -170,7 +170,6 @@ Sqroot(2) + 3/7*Sqroot(21)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := Sum( List( [2,3,5,7], x -&gt; Sqroot( x ) ) );</span>
 Sqroot(2) + Sqroot(3) + Sqroot(5) + Sqroot(7)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b := a^-1; a*b;                                  </span>
-#I    InfoSqrtField: (inverses) computed 10 powers
 37/43*Sqroot(2) + (-29/43)*Sqroot(3) + (-133/215)*Sqroot(5) + 
 27/43*Sqroot(7) + 62/215*Sqroot(30) + (-10/43)*Sqroot(42) + (-34/215)*Sqroot(70) 
 + 22/215*Sqroot(105)

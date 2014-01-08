@@ -4,11 +4,12 @@
   
   [2XAllRealForms[102X  3.1-4
   [2XCartanDecomposition[102X  3.1-8
-  [2XCartanSubalgebras[102X  3.3-4
+  [2XCartanSubalgebrasOfRealForm[102X  3.3-4
   [2XCartanSubspace[102X  3.3-5
   [2XChevalleyBasis[102X  3.3-7
-  [2XCompactDegreeOfCartanSubalgebra[102X  3.3-3
-  [2XCompactDegreeOfCartanSubalgebra[102X  3.3-3
+  [2XCoefficientsOfSqrtFieldElt[102X  2.2-2
+  [2XCompactDimensionOfCartanSubalgebra[102X  3.3-3
+  [2XCompactDimensionOfCartanSubalgebra[102X  3.3-3
   [2XFactors[102X  2.3-4
   [2XIsomorphismOfRealSemisimpleLieAlgebras[102X  3.2-1
   [2XIsRealFormOfInnerType[102X  3.1-6
@@ -30,7 +31,6 @@
   [2XSqroot[102X  2.2-1
   [2XSqrtFieldEltByCoefficients[102X  2.2-3
   [2XSqrtFieldEltByCyclotomic[102X  2.2-5
-  [2XSqrtFieldEltCoefficients[102X  2.2-2
   [2XSqrtFieldEltToCyclotomic[102X  2.2-4
   [2XSqrtFieldIsGaussRat[102X  2.1-1
   [2XSqrtFieldMakeRational[102X  2.3-1

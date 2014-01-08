@@ -53,11 +53,11 @@
   of [3XSqrtField[103X. If [22Xq=(-1)^ϵ a/b[122X with coprime integers [22Xa,b≥ 0[122X and [22Xϵ∈{0,1}[122X, then
   [3XSqroot(q)[103X is represented as the element [3XE(4)[103X[22X^ε[122X[3X*b*Sqroot(ab)[103X of [3XSqrtField[103X.[133X
   
-  [1X2.2-2 SqrtFieldEltCoefficients[101X
+  [1X2.2-2 CoefficientsOfSqrtFieldElt[101X
   
-  [29X[2XSqrtFieldEltCoefficients[102X( [3Xf[103X ) [32X function
+  [29X[2XCoefficientsOfSqrtFieldElt[102X( [3Xf[103X ) [32X function
   
-  [33X[0;0YIf  [3Xf[103X  is  an element in [3XSqrtField[103X, then [3XSqrtFieldEltCoefficients(f)[103X returns
+  [33X[0;0YIf  [3Xf[103X is an element in [3XSqrtField[103X, then [3XCoefficientsOfSqrtFieldElt(f)[103X returns
   its  coefficient  vector  [22X[[r_1,k_1],...,[r_m,k_m]][122X as described above, that
   is,  [22Xr_1,...,r_m∈Q(imath)[122X  and  [22Xk_1,...,k_m[122X  are  pairwise distinct positive
   squarefree integers such that [22Xf=∑_j=1^m r_jsqrtk_j[122X.[133X
@@ -78,7 +78,7 @@
     [4X[28X4/3[128X[104X
     [4X[25Xgap>[125X [27Xa := 2+Sqroot(7)+Sqroot(99);[127X[104X
     [4X[28X2 + Sqroot(7) + 3*Sqroot(11)[128X[104X
-    [4X[25Xgap>[125X [27XSqrtFieldEltCoefficients(a);[127X[104X
+    [4X[25Xgap>[125X [27XCoefficientsOfSqrtFieldElt(a);[127X[104X
     [4X[28X[ [ 2, 1 ], [ 1, 7 ], [ 3, 11 ] ][128X[104X
     [4X[25Xgap>[125X [27XSqrtFieldEltByCoefficients([[2,9],[1,7],[E(4),13]]);[127X[104X
     [4X[28X6 + Sqroot(7) + E(4)*Sqroot(13)[128X[104X
@@ -144,7 +144,6 @@
     [4X[25Xgap>[125X [27Xa := Sum( List( [2,3,5,7], x -> Sqroot( x ) ) );[127X[104X
     [4X[28XSqroot(2) + Sqroot(3) + Sqroot(5) + Sqroot(7)[128X[104X
     [4X[25Xgap>[125X [27Xb := a^-1; a*b;                                  [127X[104X
-    [4X[28X#I    InfoSqrtField: (inverses) computed 10 powers[128X[104X
     [4X[28X37/43*Sqroot(2) + (-29/43)*Sqroot(3) + (-133/215)*Sqroot(5) + [128X[104X
     [4X[28X27/43*Sqroot(7) + 62/215*Sqroot(30) + (-10/43)*Sqroot(42) + (-34/215)*Sqroot(70) [128X[104X
     [4X[28X+ 22/215*Sqroot(105)[128X[104X

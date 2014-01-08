@@ -6,10 +6,10 @@
                         [1XComputing with real Lie Algebras[101X
   
   
-                                  Version 0.2
+                                  Version 1.0
   
   
-                                 November 2013
+                                  January 2014
   
   
                                  Heiko Dietrich
@@ -53,7 +53,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 2013 Heiko Dietrich, Paolo Faccin, and Willem de Graaf[133X
+  [33X[0;0Y© 2014 Heiko Dietrich, Paolo Faccin, and Willem de Graaf[133X
   
   
   -------------------------------------------------------
@@ -78,7 +78,7 @@
       2.1-1 SqrtFieldIsGaussRat
     2.2 [33X[0;0YConstruction of elements[133X
       2.2-1 Sqroot
-      2.2-2 SqrtFieldEltCoefficients
+      2.2-2 CoefficientsOfSqrtFieldElt
       2.2-3 SqrtFieldEltByCoefficients
       2.2-4 SqrtFieldEltToCyclotomic
       2.2-5 SqrtFieldEltByCyclotomic
@@ -103,8 +103,8 @@
     3.3 [33X[0;0YCartan subalgebras and root systems[133X
       3.3-1 MaximallyCompactCartanSubalgebra
       3.3-2 MaximallyNonCompactCartanSubalgebra
-      3.3-3 CompactDegreeOfCartanSubalgebra
-      3.3-4 CartanSubalgebras
+      3.3-3 CompactDimensionOfCartanSubalgebra
+      3.3-4 CartanSubalgebrasOfRealForm
       3.3-5 CartanSubspace
       3.3-6 RootsystemOfCartanSubalgebra
       3.3-7 ChevalleyBasis
