@@ -13,8 +13,8 @@
 SetPackageInfo( rec(
 PackageName := "CoReLG",
 Subtitle := "computation with real Lie groups",        
-Version := "1.0",
-Date := "08/01/2014",
+Version := "1.01",
+Date := "17/01/2014",
 ArchiveURL := Concatenation("http://science.unitn.it/~corelg/corelg-",~.Version),
 ArchiveFormats := ".tar.gz",
 Persons := [

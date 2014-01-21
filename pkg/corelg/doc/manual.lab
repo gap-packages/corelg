@@ -1,0 +1,60 @@
+\GAPDocLabFile{corelg}
+\makelabel{corelg:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{corelg:Abstract}{}{X7AA6C5737B711C89}
+\makelabel{corelg:Copyright}{}{X81488B807F2A1CF1}
+\makelabel{corelg:Acknowledgements}{}{X82A988D47DFAFCFA}
+\makelabel{corelg:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{corelg:Introduction}{1}{X7DFB63A97E67C0A1}
+\makelabel{corelg:The simple real Lie algebras}{1.1}{X7A0F3100829CD1E1}
+\makelabel{corelg:Cartan subalgebras and more}{1.2}{X80030DB07E5F4FBF}
+\makelabel{corelg:Nilpotent orbits}{1.3}{X8295733081A2BFF8}
+\makelabel{corelg:On base fields}{1.4}{X7C0A369A841F5BC9}
+\makelabel{corelg:The field SqrtField}{2}{X7BC64D3583EAEA34}
+\makelabel{corelg:Definition of the field}{2.1}{X80E89FFF7F52BE64}
+\makelabel{corelg:Construction of elements}{2.2}{X850FE9D385B653D9}
+\makelabel{corelg:Basic operations}{2.3}{X82EB5BE77F9F686A}
+\makelabel{corelg:Real Lie Algebras}{3}{X81152A5D7B4BF910}
+\makelabel{corelg:Construction of simple real Lie algebras}{3.1}{X86598A16853C825D}
+\makelabel{corelg:Isomorphisms}{3.2}{X7D702EA087C1C5EF}
+\makelabel{corelg:Cartan subalgebras and root systems}{3.3}{X82EAE07A8557719A}
+\makelabel{corelg:Diagrams}{3.4}{X78932FB48237B18F}
+\makelabel{corelg:Nilpotent orbits}{3.5}{X8295733081A2BFF8}
+\makelabel{corelg:Bibliography}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{corelg:References}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{corelg:Index}{Ind}{X83A0356F839C696F}
+\makelabel{corelg:SqrtFieldIsGaussRat}{2.1.1}{X7E924375789E5F98}
+\makelabel{corelg:Sqroot}{2.2.1}{X84E7D3D787000313}
+\makelabel{corelg:CoefficientsOfSqrtFieldElt}{2.2.2}{X86C3EA257D7CF10C}
+\makelabel{corelg:SqrtFieldEltByCoefficients}{2.2.3}{X7B0063817B03422F}
+\makelabel{corelg:SqrtFieldEltToCyclotomic}{2.2.4}{X84E90EC582E8A921}
+\makelabel{corelg:SqrtFieldEltByCyclotomic}{2.2.5}{X7EBF6AAC7A4189CC}
+\makelabel{corelg:SqrtFieldMakeRational}{2.3.1}{X873983AD867AC476}
+\makelabel{corelg:SqrtFieldPolynomialToRationalPolynomial}{2.3.2}{X860A58627B6D5999}
+\makelabel{corelg:SqrtFieldRationalPolynomialToSqrtFieldPolynomial}{2.3.3}{X79C882567BC98D65}
+\makelabel{corelg:Factors}{2.3.4}{X82D6EDC685D12AE2}
+\makelabel{corelg:RealFormsInformation}{3.1.1}{X7BB53454857133FF}
+\makelabel{corelg:NumberRealForms}{3.1.2}{X78143E4187893A79}
+\makelabel{corelg:RealFormById}{3.1.3}{X8443E03C868CA7D3}
+\makelabel{corelg:RealFormById}{3.1.3}{X8443E03C868CA7D3}
+\makelabel{corelg:AllRealForms}{3.1.4}{X85C3549A8537FBF6}
+\makelabel{corelg:RealFormParameters}{3.1.5}{X7CA76CD087DBABF4}
+\makelabel{corelg:IsRealFormOfInnerType}{3.1.6}{X8266EA5E7D3B4DD5}
+\makelabel{corelg:IsRealification}{3.1.7}{X79A0991B809A4D6C}
+\makelabel{corelg:CartanDecomposition}{3.1.8}{X81E1C65282CE3130}
+\makelabel{corelg:RealStructure}{3.1.9}{X8318965D8692FC43}
+\makelabel{corelg:RealStructure}{3.1.9}{X8318965D8692FC43}
+\makelabel{corelg:IsomorphismOfRealSemisimpleLieAlgebras}{3.2.1}{X7F84150B84B62412}
+\makelabel{corelg:MaximallyCompactCartanSubalgebra}{3.3.1}{X7D7B755F7E6B8471}
+\makelabel{corelg:MaximallyNonCompactCartanSubalgebra}{3.3.2}{X7D593D72871F56B1}
+\makelabel{corelg:CompactDimensionOfCartanSubalgebra}{3.3.3}{X7F5A10E0782A4DBC}
+\makelabel{corelg:CompactDimensionOfCartanSubalgebra}{3.3.3}{X7F5A10E0782A4DBC}
+\makelabel{corelg:CartanSubalgebrasOfRealForm}{3.3.4}{X83BFAD338107D9FF}
+\makelabel{corelg:CartanSubspace}{3.3.5}{X7A8D86667BC7C033}
+\makelabel{corelg:RootsystemOfCartanSubalgebra}{3.3.6}{X7F9943407A2F367E}
+\makelabel{corelg:RootsystemOfCartanSubalgebra}{3.3.6}{X7F9943407A2F367E}
+\makelabel{corelg:ChevalleyBasis}{3.3.7}{X82EBF10A7B3B6F6E}
+\makelabel{corelg:VoganDiagram}{3.4.1}{X7AE4B8A479E73F6D}
+\makelabel{corelg:SatakeDiagram}{3.4.2}{X84042AAE7CF12E38}
+\makelabel{corelg:NilpotentOrbitsOfRealForm}{3.5.1}{X8424BB44791EAA48}
+\makelabel{corelg:RealCayleyTriple}{3.5.2}{X7A05B2957A625D85}
+\makelabel{corelg:WeightedDynkinDiagram}{3.5.3}{X804830757E5971E9}

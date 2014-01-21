@@ -1,7 +1,7 @@
 corelg.BuildManual:=function()
-   MakeGAPDocDoc( ".", "manual", [], "corelg" );;
+   MakeGAPDocDoc( ".", "manual", [], "corelg", ".", "MathJax" );;
 end;
 
-corelg.makeManual:=function(path)
-   MakeGAPDocDoc( path, "manual", [], "corelg" );;
+corelg.makeManual:=function(path,pathgap)
+   MakeGAPDocDoc( path, "manual", [], "corelg", pathgap, "MathJax" );;
 end;

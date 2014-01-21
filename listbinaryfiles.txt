@@ -8,10 +8,14 @@ corelg/doc/manual.pdf
 corelg/doc/manual.blg
 corelg/doc/manual.aux
 corelg/doc/manual.toc
+corelg/doc/manual.lab
 corelg/doc/manual.pnr
 corelg/doc/manual.brf
 corelg/doc/manual.six
 corelg/doc/manual.ind
 corelg/doc/manual.ilg
 corelg/doc/manual.out
+corelg/doc/toggless.js
 corelg/doc/manual.idx
+corelg/doc/rainbow.js
+corelg/doc/manual.js
