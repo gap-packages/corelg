@@ -555,7 +555,7 @@ local b1, b2, c1, c2, t, tp, en, i, cm1, cm2, tmp;
        fi;
        b1:= SLAfcts.canbas( L1, R1 );
        b2:= SLAfcts.canbas( L2, R2 );
-       tmp := AlgebraHomomorphismByImagesNC( L1, L2, Flat(b1), Flat(b2) );
+       tmp := AlgebraHomomorphismByImagesNC( L1, L2, corelg.myflat(b1), corelg.myflat(b2) );
        SetIsIsomorphismOfLieAlgebras(tmp,true);
        return tmp;
     fi;
@@ -1380,7 +1380,7 @@ corelg.carrierAlgebraBySL2Triple:= function( L, grad, sl2 )
 
    F:= LeftActingDomain(L);
 
-   K0:= SubalgebraNC( L, Concatenation( gs.g0, Flat( gs.gp ), Flat( gs.gn ) ) );
+   K0:= SubalgebraNC( L, Concatenation( gs.g0, corelg.myflat( gs.gp ), corelg.myflat( gs.gn ) ) );
    K0:= LieDerivedSubalgebra( K0 );
    gs.g0:= BasisVectors( Basis( Intersection( K0, SubspaceNC( L, gs.g0,"basis" ) ) ) );
 
@@ -1734,7 +1734,7 @@ corelg.carrierAlgebraBySL2Triple:= function( L, grad, sl2 )
              while Length(gn[k]) = 0 do k:= k-1; od;
              gn:= gn{[1..k]};
              r0.gp:= gp; r0.gn:= gn;
-             U:= SubalgebraNC( L, Concatenation( r0.g0, Flat(r0.gp), Flat(r0.gn) ), "basis" );
+             U:= SubalgebraNC( L, Concatenation( r0.g0, corelg.myflat(r0.gp), corelg.myflat(r0.gn) ), "basis" );
              U:= LieDerivedSubalgebra(U);
              r0.g0:= BasisVectors( Basis( Intersection( U, SubspaceNC( L, r0.g0, "basis" ) ) ) );
 

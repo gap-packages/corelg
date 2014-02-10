@@ -38,7 +38,8 @@ corelg.isom:= function( L, H1, H2, grad )
     b1:= SLAfcts.canbas( L, c1 );
     b2:= SLAfcts.canbas( L, c2 );
 
-    return AlgebraHomomorphismByImagesNC( L, L, Flat(b1), Flat(b2) );
+    return AlgebraHomomorphismByImagesNC( L, L, corelg.myflat(b1), 
+                                                corelg.myflat(b2) );
 
 end;
 
@@ -215,7 +216,9 @@ imagesCarr:= function( L, H2, f, car, grp, C )
         p0:= List( posi, u -> List( u, k -> rv[k^g] ) );
         n0:= List( negi, u -> List( u, k -> rv[k^g] ) );
         g0:= List( g0i, k -> rv[k^g] );
-        U:= Subalgebra( L, Concatenation( Flat(g0), Flat(p0), Flat(n0) ) );
+        U:= Subalgebra( L, Concatenation( corelg.myflat(g0), 
+                                          corelg.myflat(p0), 
+                                          corelg.myflat(n0) ) );
         if ForAll( Basis(U), x -> sig(x) in U ) then
            # found one...
            Add( algs, rec( U:= U, posdeg:= p0, negdeg:= n0, g0:= g0 ) );

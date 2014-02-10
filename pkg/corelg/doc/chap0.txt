@@ -6,7 +6,7 @@
                         [1XComputing with real Lie Algebras[101X
   
   
-                                  Version 1.01
+                                  Version 1.02
   
   
                                   January 2014
