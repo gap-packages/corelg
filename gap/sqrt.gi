@@ -5,6 +5,13 @@
 #
 #
 
+###############################################
+# Do deal with Flat for lists of matrices
+#
+corelg.myflat := function(L)
+   return Concatenation(L);
+end;
+
 
 ###############################################
 # DUE TO A BUG IN BasisNC

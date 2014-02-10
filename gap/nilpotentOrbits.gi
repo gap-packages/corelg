@@ -436,7 +436,7 @@ local res, L, K, P, sl2, sigma, tr, f, h, e, calg, cs, writeToSF,
       f    := tr.sl2[1]; 
       h    := tr.sl2[2];
       e    := tr.sl2[3];
-      calg := SubalgebraNC(L,Flat(Concatenation(tr.g0,tr.gp,tr.gn)),"basis");
+      calg := SubalgebraNC(L,corelg.myflat(Concatenation(tr.g0,tr.gp,tr.gn)),"basis");
      tr := sl2.sl2[t]; 
      #tr has the form rec(sl2=rec(f,h,e), g0,gp,gn) 
      #where the g0, gp, gn describe a carrier alg
@@ -444,7 +444,7 @@ local res, L, K, P, sl2, sigma, tr, f, h, e, calg, cs, writeToSF,
       f    := tr.sl2[1]; 
       h    := tr.sl2[2];
       e    := tr.sl2[3];
-      calg := SubalgebraNC(L,Flat(Concatenation(tr.g0,tr.gp,tr.gn)),"basis");
+      calg := SubalgebraNC(L,corelg.myflat(Concatenation(tr.g0,tr.gp,tr.gn)),"basis");
 
      #do we have principal case?
       if IsAbelian(SubalgebraNC(L,tr.g0)) then
@@ -516,7 +516,7 @@ local L, sigma, ca, grad, rs, cm, pos, ct, cg, salgs, sl2, i, j, t,enum, F,
    sigma   := RealStructure(L);
    sigmaSF := RealStructure(LSF);
 
-   ca    := SubalgebraNC(L,Flat(Concatenation(out.carrier.g0,
+   ca    := SubalgebraNC(L,corelg.myflat(Concatenation(out.carrier.g0,
                                     out.carrier.gp,out.carrier.gn)),"basis"); 
    SetCartanSubalgebra(ca,Intersection(ca,CartanSubalgebra(L)));
    grad  := List([ [out.carrier.g0], out.carrier.gp, out.carrier.gn],
@@ -528,7 +528,7 @@ local L, sigma, ca, grad, rs, cm, pos, ct, cg, salgs, sl2, i, j, t,enum, F,
    cm    := CartanMatrix(rs);
    ct    := CartanType(cm);
    cg    := CanonicalGenerators(rs);
-   cb    := Flat(SLAfcts.canbas( ca, cg));
+   cb    := corelg.myflat(SLAfcts.canbas( ca, cg));
    salgs := [];
    sl2   := out.oldsl2;
    for i in [1..Length(ct.types)] do
@@ -537,7 +537,7 @@ local L, sigma, ca, grad, rs, cm, pos, ct, cg, salgs, sl2, i, j, t,enum, F,
       enum  := [1..Length(t)];
       new   := rec(type := ct.types[i],
                    enum := enum,
-                   alg  := SubalgebraNC(ca,Flat(newcg),"basis"));
+                   alg  := SubalgebraNC(ca,corelg.myflat(newcg),"basis"));
       ngrad := List(grad, x-> List(x,y->Intersection(y,new.alg)));
       ngrad := List(ngrad,x-> Filtered(x,y->Dimension(y)>0));
       ndims := List(ngrad,x-> List(x,Dimension));
@@ -552,7 +552,7 @@ local L, sigma, ca, grad, rs, cm, pos, ct, cg, salgs, sl2, i, j, t,enum, F,
    if Length(Filtered(salgs,x->x.isprincipal))>0 then
       bas  := List(salgs,x->BasisVectors(CanonicalBasis(x.alg)));
       dim  := List(bas,Length);
-      bas2 := Basis(VectorSpace(CF(4),Flat(bas),"basis"),Flat(bas));
+      bas2 := Basis(VectorSpace(CF(4),corelg.myflat(bas),"basis"),corelg.myflat(bas));
       cfh  := Coefficients(bas2,sl2[2]);
       dim2 := [[1..dim[1]]];
       for i in [2..Length(dim)] do
@@ -625,7 +625,7 @@ local L, sigma, ca, grad, rs, cm, pos, ct, cg, salgs, sl2, i, j, t,enum, F,
              mycgSF[2][j] := cf[j]^-1*writeToSF(mycg[2][j]);
              mycgSF[3][j] := writeToSF(mycg[3][j]);
          od;
-         canbas := Flat(corelg.mySLAfctCanBas(LSF, mycgSF));
+         canbas := corelg.myflat(corelg.mySLAfctCanBas(LSF, mycgSF));
          csl2   := List(csl2,x->x*canbas);
          if i = 1 then
             newtr := csl2;
@@ -648,7 +648,7 @@ local L, sigma, ca, grad, rs, cm, pos, ct, cg, salgs, sl2, i, j, t,enum, F,
                       gp := List(mygr[2],x->BasisVectors(Basis(x))),
                       gn := List(mygr[3],x->BasisVectors(Basis(x))));
 
-            my   := SubalgebraNC(L,Flat(Concatenation(tr.g0,tr.gp,tr.gn)),"basis");
+            my   := SubalgebraNC(L,corelg.myflat(Concatenation(tr.g0,tr.gp,tr.gn)),"basis");
             cs   := corelg.ChevalleySystemInnerType(my,tr,sigma).chevSys;
             r    := Concatenation(cs[1],cs[2]);
            #r    := Filtered([1..Length(r)], x-> corelg.eltInSubspace(L,tr.gp[1],r[x])); 
@@ -723,7 +723,7 @@ local T, wdd, cb, L, LSF, form, new, i, o;
    L   := form.liealg;
    LSF := form.liealgSF;
    T   := SignatureTable(L);
-   cb  := BasisNC(LSF,Flat(ChevalleyBasis(LSF)));
+   cb  := BasisNC(LSF,corelg.myflat(ChevalleyBasis(LSF)));
    Info(InfoCorelg,4,"compute WDDs and coefficients for constructing orbits");
    for i in res.triples.principal do
       wdd := corelg.WDD(L, List(Coefficients(Basis(LSF),i.realsl2[2]),
@@ -908,7 +908,7 @@ local csl2,j,w,tmp, out, bas, realsl2, L, sigmaSF, calg,  enum, form,
    L       := res.form.liealg;
    LSF     := res.form.liealgSF;
    sigmaSF := RealStructure(LSF);
-   calg := SubalgebraNC(L,Flat(Concatenation(out.carrier.g0, 
+   calg := SubalgebraNC(L,corelg.myflat(Concatenation(out.carrier.g0, 
                                             out.carrier.gp,out.carrier.gn)),"basis");
    SetCartanSubalgebra(calg,Intersection(calg,CartanSubalgebra(L)));
    rs   := RootSystemOfZGradedLieAlgebra(calg,out.carrier);
@@ -926,7 +926,7 @@ local csl2,j,w,tmp, out, bas, realsl2, L, sigmaSF, calg,  enum, form,
                 Coefficients(Basis(VectorSpace(SqrtField,[cgSF[2][x]],"basis"),
                              [cgSF[2][x]]),sigmaSF(cgSF[1][x]))[1]);
 
-   CB     := List(Flat(SLAfcts.canbas( calg, cg )),res.form.writeToSF);
+   CB     := List(corelg.myflat(SLAfcts.canbas( calg, cg )),res.form.writeToSF);
    CB     := Basis(VectorSpace(SqrtField,CB,"basis"),CB);
    cfcsl2 := List(csl2,x->Coefficients(CB,x));
 
@@ -1018,7 +1018,7 @@ local L, sigma, ca, s1, sl2, h, bas, s1b, new, n, PR, prb, lhs, rhs,
    sigma   := RealStructure(L);
    sigmaSF := RealStructure(LSF);
 
-   ca    := SubalgebraNC(L,Flat(Concatenation(out.carrier.g0,
+   ca    := SubalgebraNC(L,corelg.myflat(Concatenation(out.carrier.g0,
                                     out.carrier.gp,out.carrier.gn)),"basis"); 
    s1    := SubspaceNC(ca,out.carrier.gp[1],"basis");
    sl2   := out.oldsl2;
@@ -1157,7 +1157,7 @@ local form, res, triples, f, new, tr, T, newtr, L, LSF, tmp, cf, i, cnt, cb, pat
       else
          L    := f.liealg; 
          LSF  := f.liealgSF;
-         cb   := BasisNC(LSF,Flat(ChevalleyBasis(LSF)));
+         cb   := BasisNC(LSF,corelg.myflat(ChevalleyBasis(LSF)));
          new  := rec( form := RealFormParameters(f.liealg), triples :=[]);
          tr   := corelg.RealCayleyTriplesOfRealForm(f);
          if not tr.tobedone=[] then
@@ -1417,7 +1417,7 @@ local sl2, i, j, g0, h, ca, tmp, esp, hm, K, z, t, grad, gr, tt, zz, old;
    esp := [[], [],[]];
    i   := 0;
    repeat
-      old := Length(Flat(esp));
+      old := Length(corelg.myflat(esp));
       if i=0 then 
          esp[1][1] := List(NullspaceMat(hm),x->x*Basis(z)); 
       else
@@ -1425,9 +1425,9 @@ local sl2, i, j, g0, h, ca, tmp, esp, hm, K, z, t, grad, gr, tt, zz, old;
          esp[3][i/2] := List(NullspaceMat(hm+i*hm^0),x->x*Basis(z));
       fi;
       i := i+2;
-   until Length(Flat(esp))=old;
+   until Length(corelg.myflat(esp))=old;
 
-   K          := LieDerivedSubalgebra( SubalgebraNC( L, Flat(esp),"basis"));
+   K          := LieDerivedSubalgebra( SubalgebraNC( L, corelg.myflat(esp),"basis"));
    grad       := [[],[],[]];
    grad[1][1] := BasisVectors( Basis( Intersection(K,SubspaceNC(L,esp[1][1],"basis")) ) );
    for i in [1..Length(esp[2])] do
