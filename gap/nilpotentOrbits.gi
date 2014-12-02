@@ -954,7 +954,9 @@ local csl2,j,w,tmp, out, bas, realsl2, L, sigmaSF, calg,  enum, form,
  
    if pos=[] then
       Add(corelg.carrierAlgDB, tmp);
-      path := Concatenation(LOADED_PACKAGES.corelg[1],"/gap/carrierAlg.db");
+    ##path := Concatenation(LOADED_PACKAGES.corelg[1],"/gap/carrierAlg.db");
+      path := Filename(DirectoriesPackageLibrary("corelg","gap"),"carrierAlg.db");
+
       PrintTo(path,"corelg.carrierAlgDB:=");
       AppendTo(path,corelg.carrierAlgDB);
       AppendTo(path,";");
@@ -1205,7 +1207,8 @@ local form, res, triples, f, new, tr, T, newtr, L, LSF, tmp, cf, i, cnt, cb, pat
          ReadPackage( "corelg", "gap/realTriples.db" ); 
          Info(InfoCorelg,4,"  re-read corelg.realtriplesDB");
          Add(corelg.realtriplesDB,new);  
-         path := Concatenation(LOADED_PACKAGES.corelg[1],"/gap/realTriples.db");   
+       ##path := Concatenation(LOADED_PACKAGES.corelg[1],"/gap/realTriples.db");  
+         path := Filename(DirectoriesPackageLibrary("corelg","gap"),"realTriples.db"); 
          PrintTo(path,"corelg.realtriplesDB:=");
          AppendTo(path,corelg.realtriplesDB);
          AppendTo(path,";");
