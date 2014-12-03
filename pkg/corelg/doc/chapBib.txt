@@ -6,6 +6,10 @@
   Lie  algebras:  real  forms,  Cartan decompositions, and Cartan subalgebras[117X,
   [18XJournal of Symbolic Computation[118X, [19X56[119X (2013), 27--45.
   
+  [[20XDFG15[120X]  [16XDietrich,  H.,  Faccin, P. and Graaf, W. A. d.[116X, [17XRegular subalgebras
+  and  nilpotent  orbits  of real graded Lie algebras[117X, [18XJournal of Algebra[118X, [19X423[119X
+  (2015), 1044--1079.
+  
   [[20XDG13[120X]  [16XDietrich,  H.  and  Graaf, W. A. d.[116X, [17XA computational approach to the
   Kostant-Sekiguchi   correspondence[117X,  [18XPacific  Journal  of  Mathematics[118X,  [19X265[119X
   (2013), 349--379.

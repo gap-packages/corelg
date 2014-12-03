@@ -13,9 +13,9 @@
 SetPackageInfo( rec(
 PackageName := "CoReLG",
 Subtitle := "computation with real Lie groups",        
-Version := "1.02",
-Date := "10/02/2014",
-ArchiveURL := Concatenation("http://science.unitn.it/~corelg/corelg-",~.Version),
+Version := "1.20",
+Date := "02/12/2014",
+ArchiveURL := Concatenation("http://users.monash.edu/~heikod/corelg/corelg-",~.Version),
 ArchiveFormats := ".tar.gz",
 Persons := [
 
@@ -36,7 +36,6 @@ Persons := [
   IsAuthor := true,
   IsMaintainer := true,
   Email := "faccin@science.unitn.it",
-  WWWHome := "",
   Place := "Trento",
   Institution := "Dipartimento di Matematica, University of Trento"
   ),
@@ -65,12 +64,12 @@ PackageDoc := rec( BookName  := "CoReLG" ,
   Autoload  := false
 ),
 README_URL := 
-  "http://science.unitn.it/~corelg/README",
+  "http://users.monash.edu/~heikod/corelg/README",
 PackageInfoURL := 
-  "http://science.unitn.it/~corelg/PackageInfo.g",
+  "http://users.monash.edu/~heikod/corelg/PackageInfo.g",
 AbstractHTML := "The package <span class=\"pkgname\">CoReLG</span> contains \
                  functionality for working with real semisimple Lie algebras.",
-PackageWWWHome := "http://science.unitn.it/~corelg/",
+PackageWWWHome := "http://users.monash.edu/~heikod/corelg/",
 Dependencies := rec(
   GAP := ">=4.4",
   NeededOtherPackages:= [ ["sla", ">=0.14"] ],                 

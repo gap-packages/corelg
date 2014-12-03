@@ -48,13 +48,21 @@ entries :=
       "X82EAE07A8557719A" ], 
   [ "\033[1X\033[33X\033[0;-2YDiagrams\033[133X\033[101X", "3.4", 
       [ 3, 4, 0 ], 242, 16, "diagrams", "X78932FB48237B18F" ], 
-  [ "\033[1X\033[33X\033[0;-2YNilpotent orbits\033[133X\033[101X", "3.5", 
-      [ 3, 5, 0 ], 296, 17, "nilpotent orbits", "X8295733081A2BFF8" ], 
-  [ "Bibliography", "bib", [ "Bib", 0, 0 ], 1, 19, "bibliography", 
+  [ "\033[1X\033[33X\033[0;-2YReal nilpotent orbits\033[133X\033[101X", "4", 
+      [ 4, 0, 0 ], 1, 18, "real nilpotent orbits", "X845E3A7E87C93239" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YNilpotent orbits in real Lie algebras\033[133X\\
+033[101X", "4.1", [ 4, 1, 0 ], 4, 18, "nilpotent orbits in real lie algebras",
+      "X7A6BB7967FE7ABA4" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YNilpotent orbits in real Theta groups\033[133X\\
+033[101X", "4.2", [ 4, 2, 0 ], 62, 19, "nilpotent orbits in real theta groups"
+        , "X7B7089407ECA46BC" ], 
+  [ "Bibliography", "bib", [ "Bib", 0, 0 ], 1, 22, "bibliography", 
       "X7A6F98FD85F02BFE" ], 
-  [ "References", "bib", [ "Bib", 0, 0 ], 1, 19, "references", 
+  [ "References", "bib", [ "Bib", 0, 0 ], 1, 22, "references", 
       "X7A6F98FD85F02BFE" ], 
-  [ "Index", "ind", [ "Ind", 0, 0 ], 1, 20, "index", "X83A0356F839C696F" ], 
+  [ "Index", "ind", [ "Ind", 0, 0 ], 1, 23, "index", "X83A0356F839C696F" ], 
   [ "\033[2XSqrtFieldIsGaussRat\033[102X", "2.1-1", [ 2, 1, 1 ], 12, 7, 
       "sqrtfieldisgaussrat", "X7E924375789E5F98" ], 
   [ "\033[2XSqroot\033[102X", "2.2-1", [ 2, 2, 1 ], 48, 8, "sqroot", 
@@ -128,10 +136,19 @@ entries :=
       "vogandiagram", "X7AE4B8A479E73F6D" ], 
   [ "\033[2XSatakeDiagram\033[102X", "3.4-2", [ 3, 4, 2 ], 276, 17, 
       "satakediagram", "X84042AAE7CF12E38" ], 
-  [ "\033[2XNilpotentOrbitsOfRealForm\033[102X", "3.5-1", [ 3, 5, 1 ], 303, 
-      17, "nilpotentorbitsofrealform", "X8424BB44791EAA48" ], 
-  [ "\033[2XRealCayleyTriple\033[102X", "3.5-2", [ 3, 5, 2 ], 320, 18, 
+  [ "\033[2XNilpotentOrbitsOfRealForm\033[102X", "4.1-1", [ 4, 1, 1 ], 11, 
+      18, "nilpotentorbitsofrealform", "X8424BB44791EAA48" ], 
+  [ "\033[2XRealCayleyTriple\033[102X", "4.1-2", [ 4, 1, 2 ], 28, 18, 
       "realcayleytriple", "X7A05B2957A625D85" ], 
-  [ "\033[2XWeightedDynkinDiagram\033[102X", "3.5-3", [ 3, 5, 3 ], 345, 18, 
-      "weighteddynkindiagram", "X804830757E5971E9" ] ]
+  [ "\033[2XWeightedDynkinDiagram\033[102X", "4.1-3", [ 4, 1, 3 ], 53, 19, 
+      "weighteddynkindiagram", "X804830757E5971E9" ], 
+  [ "\033[2XRealWeylGroup\033[102X", "4.2-1", [ 4, 2, 1 ], 74, 19, 
+      "realweylgroup", "X8196CAF57F4CD8C7" ], 
+  [ "\033[2XRealWeylGroup\033[102X", "4.2-1", [ 4, 2, 1 ], 74, 19, 
+      "realweylgroup", "X8196CAF57F4CD8C7" ], 
+  [ "\033[2XCarrierAlgsForNilpOrbsInZGrading\033[102X", "4.2-2", [ 4, 2, 2 ], 
+      86, 19, "carrieralgsfornilporbsinzgrading", "X7F579EDA7EDD0C87" ], 
+  [ "\033[2XCarrierAlgsForNilpOrbsInZmGrading\033[102X", "4.2-3", 
+      [ 4, 2, 3 ], 123, 20, "carrieralgsfornilporbsinzmgrading", 
+      "X7BAFCFF878612B46" ] ]
 );

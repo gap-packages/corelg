@@ -8,6 +8,7 @@ corelg/gap/forms.g
 corelg/gap/cartandecomp.gi
 corelg/gap/sqrt.gi
 corelg/gap/nilpotentOrbits.gi
+corelg/gap/realtheta.gd
 corelg/gap/realforms.gi
 corelg/gap/nilpotentOrbits.gd
 corelg/gap/otherStuff.gi
@@ -34,6 +35,7 @@ corelg/doc/ragged.css
 corelg/doc/chooser.html
 corelg/doc/chap2.txt
 corelg/doc/chapInd.txt
+corelg/doc/chap4_mj.html
 corelg/doc/chap2_mj.html
 corelg/doc/chapInd_mj.html
 corelg/doc/chap1.html

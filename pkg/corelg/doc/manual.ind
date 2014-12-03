@@ -4,6 +4,8 @@
 
   \indexspace
 
+  \item \texttt  {CarrierAlgsForNilpOrbsInZGrading}, \hyperpage{19}
+  \item \texttt  {CarrierAlgsForNilpOrbsInZmGrading}, \hyperpage{20}
   \item \texttt  {CartanDecomposition}, \hyperpage{14}
   \item \texttt  {CartanSubalgebrasOfRealForm}, \hyperpage{16}
   \item \texttt  {CartanSubspace}, \hyperpage{16}
@@ -29,7 +31,7 @@
 
   \indexspace
 
-  \item \texttt  {NilpotentOrbitsOfRealForm}, \hyperpage{17}
+  \item \texttt  {NilpotentOrbitsOfRealForm}, \hyperpage{18}
   \item \texttt  {NumberRealForms}, \hyperpage{13}
 
   \indexspace
@@ -39,6 +41,7 @@
   \item \texttt  {RealFormParameters}, \hyperpage{13}
   \item \texttt  {RealFormsInformation}, \hyperpage{12}
   \item \texttt  {RealStructure}, \hyperpage{14}
+  \item \texttt  {RealWeylGroup}, \hyperpage{19}
   \item \texttt  {RootsystemOfCartanSubalgebra}, \hyperpage{16}
 
   \indexspace
@@ -61,6 +64,6 @@
 
   \indexspace
 
-  \item \texttt  {WeightedDynkinDiagram}, \hyperpage{18}
+  \item \texttt  {WeightedDynkinDiagram}, \hyperpage{19}
 
 \end{theindex}

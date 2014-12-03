@@ -12,7 +12,7 @@
 <TitlePage>
   <Title>CoReLG</Title>
   <Subtitle>Computing with real Lie Algebras</Subtitle>
-  <Version>Version 1.02</Version>
+  <Version>Version 1.20</Version>
 
 <Author>
   Heiko Dietrich
@@ -44,7 +44,7 @@ I-38050 Povo (Trento), Italy<Br/>
        </Address> 
   </Author>
 
-  <Date>January 2014
+  <Date>December 2014
 </Date>
 
 
@@ -825,8 +825,12 @@ Involution:  (1,5)(2,4)
 
 
 </Section>
+</Chapter>
 
-<Section> <Heading>Nilpotent orbits</Heading>
+
+<Chapter> <Heading>Real nilpotent orbits</Heading>
+
+<Section> <Heading>Nilpotent orbits in real Lie algebras</Heading>
 
 <Package>CoReLG</Package> has a database of the nilpotent orbits of the real forms of the 
 simple Lie algebras of ranks up to 8. When called the first time in a GAP session, <Package>CoReLG</Package> will first read the database of nilpotent orbits.
@@ -883,6 +887,84 @@ which identifies its orbit in the complexification of the real Lie algebra in wh
 </ManSection>
 
 </Section>
+
+
+
+<Section> <Heading>Nilpotent orbits in real Theta groups</Heading>
+
+Let <M>L=\bigoplus_{i\in \mathbb{Z}_m} L_i</M> be a real semisimple Lie algebra, where <M>\mathbb{Z}_m=\mathbb{Z}/m\mathbb{Z}</M> if <M>m\geq 1</M>, and <M>\mathbb{Z}_0=\mathbb{Z}</M>. We provide some functions which help to determine the <M>G_0</M>-orbits of nilpotent elements in <M>L_1</M>, where  <M>G_0</M> is the adjoint group of <M>L_0</M>. An approach to compute these orbits is described in  <Cite Key="dfg15"/>; the first step is to construct, up to <M>G_0</M>-conjugacy, all carrier subalgebras of <M>L</M>. Functions <Ref Attr="CarrierAlgsForNilpOrbsInZGrading"/> and <Ref Attr="CarrierAlgsForNilpOrbsInZmGrading"/> do this in the case that <M>L</M> is a split real form of a complex simple Lie algebra.
+
+
+
+<ManSection>
+<Func Name="RealWeylGroup" Arg="L"/>
+<Func Name="RealWeylGroup" Arg="L, H"/>
+<Description>
+Here <A>L</A> is a real semisimple Lie algebra with Cartan subalgebra <A>H</A>.  (If <A>H</A> is not given, then <A>CartanSubalgebra(L)</A> will be taken.) This function returns the real Weyl group <M>N_G(H)/C_G(H)</M> associated with  <A>H</A>, where <M>G</M> is the adjoint group of <A>L</A>. The real Weyl group will be stored in the Cartan subalgebra, so that a new call to this function, with the same input, will return the real Weyl group  immediately.
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Attr Name="CarrierAlgsForNilpOrbsInZGrading" Arg="type,rank,d"/>
+<Description>
+Gives a record containing (up to conjugacy) the carrier algebras of the real theta group specified by the input: here <A>type</A> and <A>rank</A> are the type and rank of the simple real Lie algebra (split real form) where everything happens; <A>d</A> is a list of degrees of the simple roots, defining a <M>\mathbb{Z}</M> grading on the Lie algebra. The output is a record with the following entries: <A>L</A> the Lie algebra,  <A>grad</A> the grading that was used (different format for Z-grading, <A>L0</A> the 0-component of the grading, <A>Hs</A> the Cartan subalgebras of <A>L0</A> that are used, <A>cars</A> the carrier algebras. Here <A>cars</A> is a list of lists; for each Cartan subalgebra of <A>L0</A> there is one list: the first corresponds to the split Cartan subalgebra, and so has just the complex carrier algebras (which are also real), the other lists contain lists as well, for each complex carrier algebra (i.e., for each element of the first list) there is a list containing the real carrier algebras which are strongly <M>H_i</M>-regular, and over the complex numbers conjugate to the given complex carrier algebra. Furthermore, a carrier algebra is given by a record, containing the fields <A>g0</A>, <A>gp</A> (positive degree), and <A>gn</A> (negative degree). 
+<Example>
+gap> ca:=CarrierAlgsForNilpOrbsInZGrading("G",2,[1,0]);
+rec( 
+ Hs  := [ &lt;Lie algebra of dimension 2 over SqrtField>, 
+          &lt;Lie algebra of dimension 2 over SqrtField> ], 
+  L  :=   &lt;Lie algebra of dimension 14 over SqrtField>, 
+  L0 :=   &lt;Lie algebra of dimension 4 over SqrtField>, 
+cars :=  [ 
+          [rec( g0 := [ v.13+(3)*v.14 ], gn := [ [ v.9 ] ], gp := [ [ v.3 ] ] )]
+            ,[ [  ] ] 
+         ], 
+grad := rec( g0 := [ v.2, v.8, v.13, v.14 ], 
+               gn := [ [ v.7, v.9 ], [ v.10 ], [ v.11, v.12 ] ], 
+               gp := [ [ v.1, v.3 ], [ v.4 ], [ v.5, v.6 ] ] ) )
+</Example>
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Attr Name="CarrierAlgsForNilpOrbsInZmGrading" Arg="type,rank,m0,str,num"/>
+<Description>
+Gives a record (up to conjugacy) containing the carrier algebras of the real theta group specified by the input: here <A>type</A> and <A>rank</A> are the type and rank of the simple real Lie algebra (split real form) where everything happens;  <A>m0</A> is the order of the automorphism defining the grading, <A>str</A> is "inner" or "outer", depending on whether the automorphism is inner or not, <A>num</A> the <A>num</A>-th automorphism in the list <A>FiniteOrderInnerAutomorpisms( type, rank, m0 )</A>  or  <A>FiniteOrderOuterAutomorphisms( type, rank, m0, 2 )</A> which is used to define the grading. The output is as for  <Ref Attr="CarrierAlgsForNilpOrbsInZGrading"/>, with the exception that the record entry <A>grad</A> is a list with <A>m0</A> entries, the <A>i</A>-th entry containing the basis for the  <A>i</A>-th component of the grading.
+<Example>
+gap> gap> ca:=CarrierAlgsForNilpOrbsInZmGrading("G",2,2,"inner",1);
+rec( 
+ Hs := [ &lt;Lie algebra of dimension 2 over SqrtField>, 
+         &lt;Lie algebra of dimension 2 over SqrtField>, 
+         &lt;Lie algebra of dimension 2 over SqrtField>, 
+         &lt;Lie algebra of dimension 2 over SqrtField> ], 
+  L  :=  &lt;Lie algebra of dimension 14 over SqrtField>, 
+  L0 :=  &lt;Lie algebra of dimension 6 over SqrtField>, 
+cars := [ 
+         [rec( g0 := [ v.13+v.14 ], gn := [ [ v.11 ] ], gp := [ [ v.5 ] ] ), 
+          rec( g0 := [ v.13, v.14 ], gn := [ [ v.2, v.10 ] ], 
+               gp := [ [ v.4, v.8 ] ] ), 
+          rec( g0 := [ v.13+(3/2)*v.14 ], gn := [ [ v.10 ] ], 
+               gp := [ [ v.4 ] ] ), 
+          rec( g0 := [ v.1, v.7, v.13, v.14 ], 
+               gn := [ [ v.8, v.9, v.10, v.11 ], [ v.12 ] ], 
+               gp := [ [ v.2, v.3, v.4, v.5 ], [ v.6 ] ] ), 
+          rec( g0 := [ v.13, v.14 ], 
+               gn := [ [ v.2, v.9 ], [ v.7 ], [ v.10 ], [ v.12 ], [ v.11 ] ], 
+               gp := [ [ v.3, v.8 ], [ v.1 ], [ v.4 ], [ v.6 ], [ v.5 ] ] ) ], 
+         [ [  ], [  ], [  ], [  ], [  ] ], [ [  ], [  ], [  ], [  ], [  ] ], 
+         [ [  ], [  ], [  ], [  ], [  ] ] ], 
+ grad := [ [ v.1, v.6, v.7, v.12, v.13, v.14 ], 
+         [ v.2, v.3, v.4, v.5, v.8, v.9, v.10, v.11 ] ] )
+
+</Example>
+</Description>
+</ManSection>
+
+
+</Section>
+
 
 </Chapter>
 

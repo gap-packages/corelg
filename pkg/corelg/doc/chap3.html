@@ -15,9 +15,9 @@
 <body class="chap3"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
-<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapBib.html">[Next Chapter]</a>&nbsp;  </div>
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap4.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p id="mathjaxlink" class="pcenter"><a href="chap3_mj.html">[MathJax on]</a></p>
 <p><a id="X81152A5D7B4BF910" name="X81152A5D7B4BF910"></a></p>
@@ -56,13 +56,6 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7AE4B8A479E73F6D">3.4-1 VoganDiagram</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X84042AAE7CF12E38">3.4-2 SatakeDiagram</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X8295733081A2BFF8">3.5 <span class="Heading">Nilpotent orbits</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8424BB44791EAA48">3.5-1 NilpotentOrbitsOfRealForm</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7A05B2957A625D85">3.5-2 RealCayleyTriple</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X804830757E5971E9">3.5-3 WeightedDynkinDiagram</a></span>
 </div></div>
 </div>
 
@@ -321,64 +314,11 @@ A5:  1---2---(3)---4---5
 Involution:  (1,5)(2,4)
 </pre></div>
 
-<p><a id="X8295733081A2BFF8" name="X8295733081A2BFF8"></a></p>
 
-<h4>3.5 <span class="Heading">Nilpotent orbits</span></h4>
-
-<p><strong class="pkg">CoReLG</strong> has a database of the nilpotent orbits of the real forms of the simple Lie algebras of ranks up to 8. When called the first time in a GAP session, <strong class="pkg">CoReLG</strong> will first read the database of nilpotent orbits.</p>
-
-<p><a id="X8424BB44791EAA48" name="X8424BB44791EAA48"></a></p>
-
-<h5>3.5-1 NilpotentOrbitsOfRealForm</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NilpotentOrbitsOfRealForm</code>( <var class="Arg">L</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>Here <var class="Arg">L</var> is a real form of a complex simple Lie algebra of rank up to 8. This function returns the list of nilpotent orbits (under the action of the adjoint group) of <var class="Arg">L</var>. For this function to work, <var class="Arg">L</var> must be defined over <var class="Arg">SqrtField</var>.</p>
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap4.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:= RealFormById( "F", 4, 3 );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">no:= NilpotentOrbitsOfRealForm( L );;</span>
-#I CoReLG: read database of real triples ... done
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">no[1];</span>
-&lt;nilpotent orbit in Lie algebra&gt;
-</pre></div>
-
-<p><a id="X7A05B2957A625D85" name="X7A05B2957A625D85"></a></p>
-
-<h5>3.5-2 RealCayleyTriple</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RealCayleyTriple</code>( <var class="Arg">o</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>Here <var class="Arg">o</var> is a nilpotent orbit constructed by <code class="func">NilpotentOrbitsOfRealForm</code> (<a href="chap3.html#X8424BB44791EAA48"><span class="RefLink">3.5-1</span></a>) of a simple real Lie algebra. This function returns a real Cayley triple <var class="Arg">[ f, h, e ]</var> corresponding to the orbit <var class="Arg">o</var>. The third element <var class="Arg">e</var> is a representative of the orbit.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:= RealFormById( "F", 4, 2 );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">no:= NilpotentOrbitsOfRealForm( L );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:= no[10];</span>
-&lt;nilpotent orbit in Lie algebra&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t:=RealCayleyTriple(o);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">theta:= CartanDecomposition(L).CartanInv;</span>
-function( v ) ... end
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">theta(t[1]) = -t[3];</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">theta(t[2]) = -t[2];</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t[3]*t[1] = t[2];</span>
-true
-</pre></div>
-
-<p><a id="X804830757E5971E9" name="X804830757E5971E9"></a></p>
-
-<h5>3.5-3 WeightedDynkinDiagram</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WeightedDynkinDiagram</code>( <var class="Arg">o</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>Here <var class="Arg">o</var> is a nilpotent orbit constructed by <code class="func">NilpotentOrbitsOfRealForm</code> (<a href="chap3.html#X8424BB44791EAA48"><span class="RefLink">3.5-1</span></a>) of a simple real Lie algebra. This function returns the weighted Dynkin diagram of the orbit, which identifies its orbit in the complexification of the real Lie algebra in which <var class="Arg">o</var> lies.</p>
-
-
-<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapBib.html">[Next Chapter]</a>&nbsp;  </div>
-
-
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

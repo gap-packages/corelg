@@ -1,130 +1,166 @@
   
-  [1X4 [33X[0;0YReal Forms[133X[101X
-  
-  [33X[0;0Y(Paolo? ... something on real forms... we also define them over sqrtField or
-  Gaussian rationals... )[133X
+  [1X4 [33X[0;0YReal nilpotent orbits[133X[101X
   
   
-  [1X4.1 [33X[0;0YReal Forms[133X[101X
+  [1X4.1 [33X[0;0YNilpotent orbits in real Lie algebras[133X[101X
   
-  [1X4.1-1 RealFormsOfSimpleLieAlgebra[101X
+  [33X[0;0Y[5XCoReLG[105X  has  a  database  of  the  nilpotent orbits of the real forms of the
+  simple  Lie  algebras  of ranks up to 8. When called the first time in a GAP
+  session, [5XCoReLG[105X will first read the database of nilpotent orbits.[133X
   
-  [29X[2XRealFormsOfSimpleLieAlgebra[102X( [3Xtype[103X, [3Xrank[103X ) [32X function
+  [1X4.1-1 NilpotentOrbitsOfRealForm[101X
   
-  [33X[0;0YThis  function  returns all real forms of the simple complex Lie algebras of
-  type  [3Xtype[103X  and  rank  [3Xrank[103X up to isomorphism. The attributes [3XRootSystem[103X and
-  [3XCartanSubalgebra[103X are yet not stored for the real forms.[133X
+  [29X[2XNilpotentOrbitsOfRealForm[102X( [3XL[103X ) [32X attribute
   
-  [1X4.1-2 ParametersOfNonCompactRealForm[101X
-  
-  [29X[2XParametersOfNonCompactRealForm[102X( [3Xtype[103X, [3Xrank[103X ) [32X function
-  
-  [33X[0;0YThis  function returns all lists [3X[type, rank, signs, perm][103X parametrising the
-  real  forms  of simple complex Lie algebras of type [3Xtype[103X and rank [3Xrank[103X up to
-  isomorphism.[133X
-  
-  [1X4.1-3 NonCompactRealFormsOfSimpleLieAlgebra[101X
-  
-  [29X[2XNonCompactRealFormsOfSimpleLieAlgebra[102X( [3Xtype[103X, [3Xrank[103X ) [32X function
-  [29X[2XNonCompactRealFormsOfSimpleLieAlgebra[102X( [3Xparam[103X ) [32X function
-  
-  [33X[0;0YReturns, up to isomorphism, all real forms of the simple complex Lie algebra
-  of  type  [3Xtype[103X and rank [3Xrank[103X or, in the second version, the single real form
-  determined      by      the     parameters     [3Xparam[103X     as     given     by
-  [3XParametersOfNonCompactRealForm[103X. The output is a list of records, each having
-  the  following  entries:  [3Xliealg[103X,  the  real  form defined over the Gaussian
-  rationals; [3XliealgSF[103X, the same real form defined over [3XSqrtField[103X; [3XwriteToSF[103X, a
-  function  mapping  a  rational element of [3Xliealg[103X into [3XliealgSF[103X, and [3Xrank[103X and
-  [3Xtype[103X.  The  attributes [3XRootSystem[103X, [3XCartanSubalgebra[103X, and [3XCartanDecomposition[103X
-  are stored in each real form.[133X
-  
-  [1X4.1-4 RealFormParameters[101X
-  
-  [29X[2XRealFormParameters[102X( [3XL[103X ) [32X attribute
-  
-  [33X[0;0YThe parameters defining [3XL[103X, see [3XParametersOfNonCompactRealForm[103X.[133X
-  
-  [1X4.1-5 IsCompactForm[101X
-  
-  [29X[2XIsCompactForm[102X( [3XL[103X ) [32X property
-  
-  [33X[0;0YReturns  [3Xtrue[103X  if  the  real  form  [3XL[103X  is  a  compact real form and has this
-  information stored as a property.[133X
-  
-  [1X4.1-6 IsRealFormOfInnerType[101X
-  
-  [29X[2XIsRealFormOfInnerType[102X( [3XL[103X ) [32X property
-  
-  [33X[0;0YReturns  [3Xtrue[103X  if  and  only  if  the  real  form [3XL[103X is a defined by an inner
-  involutive automorphism.[133X
-  
-  [1X4.1-7 CartanDecomposition[101X
-  
-  [29X[2XCartanDecomposition[102X( [3XL[103X ) [32X attribute
-  
-  [33X[0;0YThe  Cartan decomposition of [3XL[103X as a record with entries [3XK[103X, [3XP[103X, and [3XCartanInv[103X,
-  such  that  [22XL=K⊕  P[122X  is  the  Cartan decomposition with corresponding Cartan
-  involution [3XCartanInv[103X, which is defined as a function on [3XL[103X.[133X
+  [33X[0;0YHere  [3XL[103X is a real form of a complex simple Lie algebra of rank up to 8. This
+  function  returns  the  list  of  nilpotent  orbits (under the action of the
+  adjoint  group)  of  [3XL[103X.  For  this  function to work, [3XL[103X must be defined over
+  [3XSqrtField[103X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xrf := RealFormsOfSimpleLieAlgebra( "F", 4 );[127X[104X
-    [4X[28X[ <Lie algebra of dimension 52 over Rationals>, [128X[104X
-    [4X[28X<Lie algebra of dimension 52 over Rationals>, [128X[104X
-    [4X[28X<Lie algebra of dimension 52 over Rationals> ][128X[104X
-    [4X[25Xgap>[125X [27XIsCompactForm(rf[1]); IsCompactForm(rf[2]);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XParametersOfNonCompactRealForm("F",4);[127X[104X
-    [4X[28X[ [ "F", 4, [ -1, 1, 1, 1 ], () ], [ "F", 4, [ 1, -1, 1, 1 ], () ] ][128X[104X
-    [4X[25Xgap>[125X [27XL:=NonCompactRealFormsOfSimpleLieAlgebra( [ "F", 4, [ 1, -1, 1, 1 ], () ] );[127X[104X
-    [4X[28Xrec( liealg := <Lie algebra of dimension 52 over GaussianRationals>, [128X[104X
-    [4X[28XliealgSF := <Lie algebra of dimension 52 over SqrtField>, [128X[104X
-    [4X[28Xrank := 4, [128X[104X
-    [4X[28Xtype := "F", [128X[104X
-    [4X[28XwriteToSF := function( v ) ... end )[128X[104X
-    [4X[25Xgap>[125X [27XLSF := L.liealgSF;[127X[104X
-    [4X[28X<Lie algebra of dimension 52 over SqrtField>[128X[104X
-    [4X[25Xgap>[125X [27XRealFormParameters(LSF);[127X[104X
-    [4X[28X[ "F", 4, [ 1, -1, 1, 1 ], () ][128X[104X
-    [4X[25Xgap>[125X [27Xcd := CartanDecomposition(LSF);; K:=cd.K; P:=cd.P; theta:=cd.CartanInv;[127X[104X
-    [4X[28X<Lie algebra of dimension 24 over SqrtField>[128X[104X
-    [4X[28X<vector space of dimension 28 over SqrtField>[128X[104X
+    [4X[25Xgap>[125X [27XL:= RealFormById( "F", 4, 3 );;[127X[104X
+    [4X[25Xgap>[125X [27Xno:= NilpotentOrbitsOfRealForm( L );;[127X[104X
+    [4X[28X#I CoReLG: read database of real triples ... done[128X[104X
+    [4X[25Xgap>[125X [27Xno[1];[127X[104X
+    [4X[28X<nilpotent orbit in Lie algebra>[128X[104X
+  [4X[32X[104X
+  
+  [1X4.1-2 RealCayleyTriple[101X
+  
+  [29X[2XRealCayleyTriple[102X( [3Xo[103X ) [32X attribute
+  
+  [33X[0;0YHere [3Xo[103X is a nilpotent orbit constructed by [2XNilpotentOrbitsOfRealForm[102X ([14X4.1-1[114X)
+  of  a  simple real Lie algebra. This function returns a real Cayley triple [3X[
+  f,  h,  e  ][103X  corresponding  to  the  orbit  [3Xo[103X.  The  third  element  [3Xe[103X is a
+  representative of the orbit.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XL:= RealFormById( "F", 4, 2 );;[127X[104X
+    [4X[25Xgap>[125X [27Xno:= NilpotentOrbitsOfRealForm( L );;[127X[104X
+    [4X[25Xgap>[125X [27Xo:= no[10];[127X[104X
+    [4X[28X<nilpotent orbit in Lie algebra>[128X[104X
+    [4X[25Xgap>[125X [27Xt:=RealCayleyTriple(o);;[127X[104X
+    [4X[25Xgap>[125X [27Xtheta:= CartanDecomposition(L).CartanInv;[127X[104X
     [4X[28Xfunction( v ) ... end[128X[104X
-    [4X[25Xgap>[125X [27Xk:=Random(K);;p:=Random(P);; theta(k+p)=k-p;[127X[104X
+    [4X[25Xgap>[125X [27Xtheta(t[1]) = -t[3];[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xtheta(t[2]) = -t[2];[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xt[3]*t[1] = t[2];[127X[104X
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
+  [1X4.1-3 WeightedDynkinDiagram[101X
   
-  [1X4.2 [33X[0;0YIsomorphisms[133X[101X
+  [29X[2XWeightedDynkinDiagram[102X( [3Xo[103X ) [32X attribute
   
-  [1X4.2-1 IsomorphismOfRealFormsInnerType[101X
+  [33X[0;0YHere [3Xo[103X is a nilpotent orbit constructed by [2XNilpotentOrbitsOfRealForm[102X ([14X4.1-1[114X)
+  of  a  simple  real  Lie  algebra. This function returns the weighted Dynkin
+  diagram  of the orbit, which identifies its orbit in the complexification of
+  the real Lie algebra in which [3Xo[103X lies.[133X
   
-  [29X[2XIsomorphismOfRealFormsInnerType[102X( [3XLL[103X ) [32X function
   
-  [33X[0;0YHere [3XLL[103X is a list of real forms of the same complex simple Lie algebra, each
-  defined    over    the    Gaussian    rationals,   with   stored   attribute
-  [3XCartanDecomposition[103X.  For each isomorphism type of [22XZ_2[122X-graded Lie algebra in
-  the  list  [3XLL[103X  it  returns  a  record  with  the following entries: [3Xpos[103X, the
-  position  of  elements  in  [3XLL[103X  which  are all of the same isomorphism type;
-  [3Xliealgs[103X,  the  corresponding lie algebras; [3Xisos[103X, a list such that [3Xisos[i][103X is
-  an  isomorphism  between  [3XLL[pos[1]][103X and [3XLL[pos[i]][103X. It can also happen that
-  [3Xisos[i][103X is the string [3X"isom but over SqrtField"[103X in which case an isomorphism
-  would have to be defined over [3XSqrtField[103X.[133X
+  [1X4.2 [33X[0;0YNilpotent orbits in real Theta groups[133X[101X
+  
+  [33X[0;0YLet [22XL=⨁_i∈ Z_m L_i[122X be a real semisimple Lie algebra, where [22XZ_m=Z/mZ[122X if [22Xm≥ 1[122X,
+  and  [22XZ_0=Z[122X. We provide some functions which help to determine the [22XG_0[122X-orbits
+  of  nilpotent  elements  in  [22XL_1[122X,  where [22XG_0[122X is the adjoint group of [22XL_0[122X. An
+  approach  to compute these orbits is described in [DFG15]; the first step is
+  to  construct,  up to [22XG_0[122X-conjugacy, all carrier subalgebras of [22XL[122X. Functions
+  [2XCarrierAlgsForNilpOrbsInZGrading[102X                 ([14X4.2-2[114X)                 and
+  [2XCarrierAlgsForNilpOrbsInZmGrading[102X  ([14X4.2-3[114X)  do  this in the case that [22XL[122X is a
+  split real form of a complex simple Lie algebra.[133X
+  
+  [1X4.2-1 RealWeylGroup[101X
+  
+  [29X[2XRealWeylGroup[102X( [3XL[103X ) [32X function
+  [29X[2XRealWeylGroup[102X( [3XL[103X, [3XH[103X ) [32X function
+  
+  [33X[0;0YHere  [3XL[103X  is a real semisimple Lie algebra with Cartan subalgebra [3XH[103X. (If [3XH[103X is
+  not  given,  then  [3XCartanSubalgebra(L)[103X will be taken.) This function returns
+  the  real Weyl group [22XN_G(H)/C_G(H)[122X associated with [3XH[103X, where [22XG[122X is the adjoint
+  group  of [3XL[103X. The real Weyl group will be stored in the Cartan subalgebra, so
+  that  a new call to this function, with the same input, will return the real
+  Weyl group immediately.[133X
+  
+  [1X4.2-2 CarrierAlgsForNilpOrbsInZGrading[101X
+  
+  [29X[2XCarrierAlgsForNilpOrbsInZGrading[102X( [3Xtype[103X, [3Xrank[103X, [3Xd[103X ) [32X attribute
+  
+  [33X[0;0YGives a record containing (up to conjugacy) the carrier algebras of the real
+  theta group specified by the input: here [3Xtype[103X and [3Xrank[103X are the type and rank
+  of the simple real Lie algebra (split real form) where everything happens; [3Xd[103X
+  is  a  list  of degrees of the simple roots, defining a [22XZ[122X grading on the Lie
+  algebra.  The  output  is  a  record  with  the following entries: [3XL[103X the Lie
+  algebra,  [3Xgrad[103X the grading that was used (different format for Z-grading, [3XL0[103X
+  the  0-component  of  the  grading, [3XHs[103X the Cartan subalgebras of [3XL0[103X that are
+  used,  [3Xcars[103X  the  carrier  algebras.  Here [3Xcars[103X is a list of lists; for each
+  Cartan  subalgebra  of  [3XL0[103X  there  is one list: the first corresponds to the
+  split Cartan subalgebra, and so has just the complex carrier algebras (which
+  are  also  real),  the  other  lists contain lists as well, for each complex
+  carrier  algebra  (i.e., for each element of the first list) there is a list
+  containing  the  real  carrier  algebras which are strongly [22XH_i[122X-regular, and
+  over  the  complex  numbers  conjugate to the given complex carrier algebra.
+  Furthermore,  a  carrier algebra is given by a record, containing the fields
+  [3Xg0[103X, [3Xgp[103X (positive degree), and [3Xgn[103X (negative degree).[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xrf := NonCompactRealFormsOfSimpleLieAlgebra("D",4);;[127X[104X
-    [4X[25Xgap>[125X [27XL:=rf[1].liealg;; K:=rf[2].liealg;; M:=rf[3].liealg;; LL:=[L,K,L,M,M,L,K];;[127X[104X
-    [4X[25Xgap>[125X [27Xiso:=IsomorphismOfRealFormsInnerType(LL);;[127X[104X
-    [4X[25Xgap>[125X [27XList(iso,x->x.pos);[127X[104X
-    [4X[28X[ [ 1, 3, 6 ], [ 2, 7 ], [ 4, 5 ] ][128X[104X
-    [4X[28X#LL[1],LL[3],LL[6] are isomorphic, [128X[104X
-    [4X[28X#LL[2], LL[7] are isomorphic, and [128X[104X
-    [4X[28X#LL[4], LL[5] are isomorphic[128X[104X
-    [4X[25Xgap>[125X [27Xpsi := iso[1].isos[3];;[127X[104X
-    [4X[28X#isomorphism from iso[1].liealg[1] to iso[1].liealgs[3][128X[104X
-    [4X[25Xgap>[125X [27XSource(psi)=LL[iso[1].pos[1]] and Source(psi)=iso[1].liealgs[1];[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XImage(psi)=LL[iso[1].pos[3]] and Image(psi)=iso[1].liealgs[3];[127X[104X
-    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xca:=CarrierAlgsForNilpOrbsInZGrading("G",2,[1,0]);[127X[104X
+    [4X[28Xrec( [128X[104X
+    [4X[28X Hs  := [ <Lie algebra of dimension 2 over SqrtField>, [128X[104X
+    [4X[28X          <Lie algebra of dimension 2 over SqrtField> ], [128X[104X
+    [4X[28X  L  :=   <Lie algebra of dimension 14 over SqrtField>, [128X[104X
+    [4X[28X  L0 :=   <Lie algebra of dimension 4 over SqrtField>, [128X[104X
+    [4X[28Xcars :=  [ [128X[104X
+    [4X[28X          [rec( g0 := [ v.13+(3)*v.14 ], gn := [ [ v.9 ] ], gp := [ [ v.3 ] ] )][128X[104X
+    [4X[28X            ,[ [  ] ] [128X[104X
+    [4X[28X         ], [128X[104X
+    [4X[28Xgrad := rec( g0 := [ v.2, v.8, v.13, v.14 ], [128X[104X
+    [4X[28X               gn := [ [ v.7, v.9 ], [ v.10 ], [ v.11, v.12 ] ], [128X[104X
+    [4X[28X               gp := [ [ v.1, v.3 ], [ v.4 ], [ v.5, v.6 ] ] ) )[128X[104X
+  [4X[32X[104X
+  
+  [1X4.2-3 CarrierAlgsForNilpOrbsInZmGrading[101X
+  
+  [29X[2XCarrierAlgsForNilpOrbsInZmGrading[102X( [3Xtype[103X, [3Xrank[103X, [3Xm0[103X, [3Xstr[103X, [3Xnum[103X ) [32X attribute
+  
+  [33X[0;0YGives a record (up to conjugacy) containing the carrier algebras of the real
+  theta group specified by the input: here [3Xtype[103X and [3Xrank[103X are the type and rank
+  of  the  simple real Lie algebra (split real form) where everything happens;
+  [3Xm0[103X  is the order of the automorphism defining the grading, [3Xstr[103X is "inner" or
+  "outer",  depending  on  whether  the  automorphism is inner or not, [3Xnum[103X the
+  [3Xnum[103X-th automorphism in the list [3XFiniteOrderInnerAutomorpisms( type, rank, m0
+  )[103X  or  [3XFiniteOrderOuterAutomorphisms(  type,  rank, m0, 2 )[103X which is used to
+  define  the  grading.  The output is as for [2XCarrierAlgsForNilpOrbsInZGrading[102X
+  ([14X4.2-2[114X),  with  the  exception  that the record entry [3Xgrad[103X is a list with [3Xm0[103X
+  entries,  the  [3Xi[103X-th entry containing the basis for the [3Xi[103X-th component of the
+  grading.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xgap> ca:=CarrierAlgsForNilpOrbsInZmGrading("G",2,2,"inner",1);[127X[104X
+    [4X[28Xrec( [128X[104X
+    [4X[28X Hs := [ <Lie algebra of dimension 2 over SqrtField>, [128X[104X
+    [4X[28X         <Lie algebra of dimension 2 over SqrtField>, [128X[104X
+    [4X[28X         <Lie algebra of dimension 2 over SqrtField>, [128X[104X
+    [4X[28X         <Lie algebra of dimension 2 over SqrtField> ], [128X[104X
+    [4X[28X  L  :=  <Lie algebra of dimension 14 over SqrtField>, [128X[104X
+    [4X[28X  L0 :=  <Lie algebra of dimension 6 over SqrtField>, [128X[104X
+    [4X[28Xcars := [ [128X[104X
+    [4X[28X         [rec( g0 := [ v.13+v.14 ], gn := [ [ v.11 ] ], gp := [ [ v.5 ] ] ), [128X[104X
+    [4X[28X          rec( g0 := [ v.13, v.14 ], gn := [ [ v.2, v.10 ] ], [128X[104X
+    [4X[28X               gp := [ [ v.4, v.8 ] ] ), [128X[104X
+    [4X[28X          rec( g0 := [ v.13+(3/2)*v.14 ], gn := [ [ v.10 ] ], [128X[104X
+    [4X[28X               gp := [ [ v.4 ] ] ), [128X[104X
+    [4X[28X          rec( g0 := [ v.1, v.7, v.13, v.14 ], [128X[104X
+    [4X[28X               gn := [ [ v.8, v.9, v.10, v.11 ], [ v.12 ] ], [128X[104X
+    [4X[28X               gp := [ [ v.2, v.3, v.4, v.5 ], [ v.6 ] ] ), [128X[104X
+    [4X[28X          rec( g0 := [ v.13, v.14 ], [128X[104X
+    [4X[28X               gn := [ [ v.2, v.9 ], [ v.7 ], [ v.10 ], [ v.12 ], [ v.11 ] ], [128X[104X
+    [4X[28X               gp := [ [ v.3, v.8 ], [ v.1 ], [ v.4 ], [ v.6 ], [ v.5 ] ] ) ], [128X[104X
+    [4X[28X         [ [  ], [  ], [  ], [  ], [  ] ], [ [  ], [  ], [  ], [  ], [  ] ], [128X[104X
+    [4X[28X         [ [  ], [  ], [  ], [  ], [  ] ] ], [128X[104X
+    [4X[28X grad := [ [ v.1, v.6, v.7, v.12, v.13, v.14 ], [128X[104X
+    [4X[28X         [ v.2, v.3, v.4, v.5, v.8, v.9, v.10, v.11 ] ] )[128X[104X
+    [4X[28X[128X[104X
   [4X[32X[104X
   

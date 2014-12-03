@@ -6,10 +6,10 @@
                         [1XComputing with real Lie Algebras[101X
   
   
-                                  Version 1.02
+                                  Version 1.20
   
   
-                                  January 2014
+                                 December 2014
   
   
                                  Heiko Dietrich
@@ -111,10 +111,15 @@
     3.4 [33X[0;0YDiagrams[133X
       3.4-1 VoganDiagram
       3.4-2 SatakeDiagram
-    3.5 [33X[0;0YNilpotent orbits[133X
-      3.5-1 NilpotentOrbitsOfRealForm
-      3.5-2 RealCayleyTriple
-      3.5-3 WeightedDynkinDiagram
+  4 [33X[0;0YReal nilpotent orbits[133X
+    4.1 [33X[0;0YNilpotent orbits in real Lie algebras[133X
+      4.1-1 NilpotentOrbitsOfRealForm
+      4.1-2 RealCayleyTriple
+      4.1-3 WeightedDynkinDiagram
+    4.2 [33X[0;0YNilpotent orbits in real Theta groups[133X
+      4.2-1 RealWeylGroup
+      4.2-2 CarrierAlgsForNilpOrbsInZGrading
+      4.2-3 CarrierAlgsForNilpOrbsInZmGrading
   
   
   [32X

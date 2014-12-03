@@ -1,10 +1,15 @@
-\begin{thebibliography}{DFG13}
+\begin{thebibliography}{DFG15}
 
 \bibitem[DFG13]{dfg12}
 H.~Dietrich, P.~Faccin, and W.~A.~de Graaf.
 \newblock Computing with real lie algebras: real forms, cartan decompositions,
   and cartan subalgebras.
 \newblock {\em Journal of Symbolic Computation}, 56:27--45, 2013.
+
+\bibitem[DFG15]{dfg15}
+H.~Dietrich, P.~Faccin, and W.~A.~de Graaf.
+\newblock Regular subalgebras and nilpotent orbits of real graded lie algebras.
+\newblock {\em Journal of Algebra}, 423:1044--1079, 2015.
 
 \bibitem[DG13]{hdwdg12}
 H.~Dietrich and W.~A.~de Graaf.
