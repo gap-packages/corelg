@@ -64,7 +64,7 @@ PackageDoc := rec( BookName  := "CoReLG" ,
   Autoload  := false
 ),
 README_URL := 
-  "http://users.monash.edu/~heikod/corelg/README",
+  "http://users.monash.edu/~heikod/corelg/README.md",
 PackageInfoURL := 
   "http://users.monash.edu/~heikod/corelg/PackageInfo.g",
 AbstractHTML := "The package <span class=\"pkgname\">CoReLG</span> contains \
