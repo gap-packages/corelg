@@ -81,9 +81,9 @@ AbstractHTML := "The package <span class=\"pkgname\">CoReLG</span> contains \
                  functionality for working with real semisimple Lie algebras.",
 
 Dependencies := rec(
-  GAP := ">=4.4",
-  NeededOtherPackages:= [ ["sla", ">=0.14"] ],                 
-  SuggestedOtherPackages := [ ["GAPDoc", ">= 1.0"] ],
+  GAP := ">=4.8",
+  NeededOtherPackages:= [ ["sla", ">=1.5"] ],
+  SuggestedOtherPackages := [ ],
   ExternalConditions := []
 ),
 AvailabilityTest := ReturnTrue,
