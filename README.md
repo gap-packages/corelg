@@ -24,7 +24,4 @@ In GAP issue
 The manual of CoReLG is contained in the `doc` directory. The different 
 versions of the manual (pdf, dvi, html) can be compiled by doing
 
-    gap> corelg.makeManual( PATHDOC, PATHGAP );
-
-where PATHDOC is the path to the /pkg/corelg/doc directory, and
-PATHGAP is the path to the gap root directory.
+    gap> ReadPackage("corelg", "makedoc.g");
