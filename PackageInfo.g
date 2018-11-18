@@ -12,7 +12,7 @@
 
 SetPackageInfo( rec(
 PackageName := "CoReLG",
-Subtitle := "computation with real Lie groups",        
+Subtitle := "Computation with real Lie groups",        
 Version := "1.20",
 Date := "02/12/2014",
 ArchiveURL := Concatenation("http://users.monash.edu/~heikod/corelg/corelg-",~.Version),
@@ -81,7 +81,22 @@ Autoload := false,
 
 # the banner
 BannerString := "CoReLG\n a package for computing with real Lie groups \n by Heiko Dietrich, Paolo Faccin and Willem de Graaf\n",
-Keywords := ["real Lie algebras","nilpotent orbits Cartan subalgebras"]
+Keywords := ["real Lie algebras","nilpotent orbits Cartan subalgebras"],
+
+AutoDoc := rec(
+    TitlePage := rec(
+        Version := Concatenation( "Version ", ~.Version ),
+        Abstract := """
+            This package provides functions for computing with various
+            aspects of the theory of real simple Lie algebras.
+            """,
+        Acknowledgements := """
+            The research leading to this package has received funding from
+            the European Union's Seventh Framework Program FP7/2007-2013
+            under grant agreement no 271712.
+            """,
+        Copyright := "&copyright; 2014 Heiko Dietrich, Paolo Faccin, and Willem de Graaf",
+    ),
+),
+
 ));
-
-

@@ -1,69 +1,12 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 
 
 <!DOCTYPE Book SYSTEM "gapdoc.dtd"
 [<!ENTITY FpLieRing "<Package>corelg</Package>">] >
 
-
-
-
 <Book Name="CoReLG">
 
-<TitlePage>
-  <Title>CoReLG</Title>
-  <Subtitle>Computing with real Lie Algebras</Subtitle>
-  <Version>Version 1.20</Version>
-
-<Author>
-  Heiko Dietrich
-  <Email>heiko.dietrich@monash.edu</Email>
-  <Homepage>http://users.monash.edu.au/~heikod/</Homepage><Address>
- School of Mathematical Sciences<Br/>
- Monash University<Br/>
-Wellington Road 1<Br/>
-VIC 3800, Melbourne, Australia<Br/>
-       </Address> 
-  </Author>
-<Author>
- Paolo Faccin
-  <Email>paolofaccin86@gmail.com</Email>
-<Address>
-    	    Dipartimento di Matematica<Br/>
-Via Sommarive 14<Br/>
-I-38050 Povo (Trento), Italy<Br/>
-       </Address> 
-  </Author>
-<Author>
- Willem de Graaf  
-<Email>degraaf@science.unitn.it</Email>
-  <Homepage>http://www.science.unitn.it/~degraaf/</Homepage>
-          <Address>
-    	    Dipartimento di Matematica<Br/>
-Via Sommarive 14<Br/>
-I-38050 Povo (Trento), Italy<Br/>
-       </Address> 
-  </Author>
-
-  <Date>December 2014
-</Date>
-
-
-
-<Abstract>
-This package provides functions for computing with various aspects of
-the theory of real simple Lie algebras.
-</Abstract>
-
-<Acknowledgements>
-The research leading to this package has received funding from the European Union's Seventh Framework Program FP7/2007-2013 under grant agreement no 271712. 
-</Acknowledgements>
-
-<Copyright>
-  &copyright; 2014 Heiko Dietrich, Paolo Faccin, and Willem de Graaf 
-</Copyright>
-  
-
-</TitlePage>
+<#Include SYSTEM "title.xml">
 
 <TableOfContents/>
 
