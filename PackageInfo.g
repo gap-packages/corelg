@@ -13,7 +13,7 @@
 SetPackageInfo( rec(
 PackageName := "CoReLG",
 Subtitle := "Computation with real Lie groups",        
-Version := "1.20",
+Version := "1.20dev",
 Date := "02/12/2014", # this is in dd/mm/yyyy format
 
 Persons := [
