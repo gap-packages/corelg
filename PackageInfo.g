@@ -14,9 +14,8 @@ SetPackageInfo( rec(
 PackageName := "CoReLG",
 Subtitle := "Computation with real Lie groups",        
 Version := "1.20",
-Date := "02/12/2014",
-ArchiveURL := Concatenation("http://users.monash.edu/~heikod/corelg/corelg-",~.Version),
-ArchiveFormats := ".tar.gz",
+Date := "02/12/2014", # this is in dd/mm/yyyy format
+
 Persons := [
 
   rec(
@@ -55,6 +54,20 @@ Persons := [
 Status := "accepted",
 CommunicatedBy := "Bettina Eick (Braunschweig)",
 AcceptDate := "01/2014",
+
+PackageWWWHome  := "https://gap-packages.github.io/corelg/",
+README_URL      := Concatenation( ~.PackageWWWHome, "README.md" ),
+PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
+SourceRepository := rec(
+    Type := "git",
+    URL := "https://github.com/gap-packages/corelg",
+),
+IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
+ArchiveURL      := Concatenation( ~.SourceRepository.URL,
+                                 "/releases/download/v", ~.Version,
+                                 "/corelg-", ~.Version ),
+ArchiveFormats := ".tar.gz",
+
 PackageDoc := rec( BookName  := "CoReLG" ,  
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
@@ -63,13 +76,10 @@ PackageDoc := rec( BookName  := "CoReLG" ,
   LongTitle := "Computing with real Lie groups",
   Autoload  := false
 ),
-README_URL := 
-  "http://users.monash.edu/~heikod/corelg/README.md",
-PackageInfoURL := 
-  "http://users.monash.edu/~heikod/corelg/PackageInfo.g",
+
 AbstractHTML := "The package <span class=\"pkgname\">CoReLG</span> contains \
                  functionality for working with real semisimple Lie algebras.",
-PackageWWWHome := "http://users.monash.edu/~heikod/corelg/",
+
 Dependencies := rec(
   GAP := ">=4.4",
   NeededOtherPackages:= [ ["sla", ">=0.14"] ],                 
