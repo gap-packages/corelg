@@ -1,0 +1,221 @@
+  
+  [1X2 [33X[0;0YThe field [3XSqrtField[103X[101X[1X[133X[101X
+  
+  
+  [1X2.1 [33X[0;0YDefinition of the field[133X[101X
+  
+  [33X[0;0YThe   field   [22XQ^sqrt}(imath)[122X   with   [22XQ^sqrt}=Q({sqrtp∣   p  a  prime})[122X  and
+  [22Ximath=sqrt-1∈C[122X  is  realised  as  [3XSqrtField[103X.  A  few  functions  print  some
+  information on what they are doing to the info class [3XInfoSqrtField[103X; this can
+  be turned off by setting [3XSetInfoLevel( InfoSqrtField, 0 );[103X.[133X
+  
+  [1X2.1-1 SqrtFieldIsGaussRat[101X
+  
+  [33X[1;0Y[29X[2XSqrtFieldIsGaussRat[102X( [3Xq[103X ) [32X function[133X
+  
+  [33X[0;0YHere [3Xq[103X is an element of [3XSqrtField[103X; this function returns [3Xtrue[103X if and only if
+  [3Xq[103X is the product of [3XOne(SqrtField)[103X and a Gaussian rational.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF := SqrtField;[127X[104X
+    [4X[28XSqrtField[128X[104X
+    [4X[25Xgap>[125X [27XIsField( F ); LeftActingDomain( F ); Size( F ); Characteristic( F );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28XGaussianRationals[128X[104X
+    [4X[28Xinfinity[128X[104X
+    [4X[28X0[128X[104X
+    [4X[25Xgap>[125X [27Xone := One( F );[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27X2 in F; 2*one in F; 2*E(4)*one in F;[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xa := 2/3*E(4)*one;; [127X[104X
+    [4X[25Xgap>[125X [27Xa in SqrtField; a in GaussianRationals; SqrtFieldIsGaussRat( a );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.2 [33X[0;0YConstruction of elements[133X[101X
+  
+  [33X[0;0YEvery  [22Xf[122X  in  [3XSqrtField[103X can be uniquely written as [22Xf=∑_j=1^m r_i sqrtk_j[122X for
+  Gaussian  rationals  [22Xr_i∈Q(imath)[122X  and pairwise distinct squarefree positive
+  integers   [22Xk_1,...,k_m[122X.   Thus,  [22Xf[122X  can  be  described  efficiently  by  its
+  coefficient vector [22X[[r_1,k_1],...,[r_j,k_j]][122X.[133X
+  
+  [1X2.2-1 Sqroot[101X
+  
+  [33X[1;0Y[29X[2XSqroot[102X( [3Xq[103X ) [32X function[133X
+  
+  [33X[0;0YHere [3Xq[103X is a rational number and [3XSqroot(q)[103X is the element [22Xsqrtq[122X as an element
+  of [3XSqrtField[103X. If [22Xq=(-1)^ϵ a/b[122X with coprime integers [22Xa,b≥ 0[122X and [22Xϵ∈{0,1}[122X, then
+  [3XSqroot(q)[103X is represented as the element [3XE(4)[103X[22X^ε[122X[3X*b*Sqroot(ab)[103X of [3XSqrtField[103X.[133X
+  
+  [1X2.2-2 CoefficientsOfSqrtFieldElt[101X
+  
+  [33X[1;0Y[29X[2XCoefficientsOfSqrtFieldElt[102X( [3Xf[103X ) [32X function[133X
+  
+  [33X[0;0YIf  [3Xf[103X is an element in [3XSqrtField[103X, then [3XCoefficientsOfSqrtFieldElt(f)[103X returns
+  its  coefficient  vector  [22X[[r_1,k_1],...,[r_m,k_m]][122X as described above, that
+  is,  [22Xr_1,...,r_m∈Q(imath)[122X  and  [22Xk_1,...,k_m[122X  are  pairwise distinct positive
+  squarefree integers such that [22Xf=∑_j=1^m r_jsqrtk_j[122X.[133X
+  
+  [1X2.2-3 SqrtFieldEltByCoefficients[101X
+  
+  [33X[1;0Y[29X[2XSqrtFieldEltByCoefficients[102X( [3Xl[103X ) [32X function[133X
+  
+  [33X[0;0YIf  [3Xl[103X  is  a  list [22X[[r_1,k_1],...,[r_m,k_m]][122X with Gaussian rationals [22Xr_j[122X and
+  rationals [22Xk_j[122X, then [3XSqrtFieldEltByCoeffiients(l)[103X returns the element [22X∑_j=1^m
+  r_jsqrtk_j[122X  as  an element of [3XSqrtField[103X. Note that here [22Xk_1,...,k_m[122X need not
+  to be positive, squarefree, or pairwise distinct.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSqroot(-(2*3*4)/(11*13)); Sqroot(245/15); Sqroot(16/9);[127X[104X
+    [4X[28X2/143*E(4)*Sqroot(858)[128X[104X
+    [4X[28X7/3*Sqroot(3)[128X[104X
+    [4X[28X4/3[128X[104X
+    [4X[25Xgap>[125X [27Xa := 2+Sqroot(7)+Sqroot(99);[127X[104X
+    [4X[28X2 + Sqroot(7) + 3*Sqroot(11)[128X[104X
+    [4X[25Xgap>[125X [27XCoefficientsOfSqrtFieldElt(a);[127X[104X
+    [4X[28X[ [ 2, 1 ], [ 1, 7 ], [ 3, 11 ] ][128X[104X
+    [4X[25Xgap>[125X [27XSqrtFieldEltByCoefficients([[2,9],[1,7],[E(4),13]]);[127X[104X
+    [4X[28X6 + Sqroot(7) + E(4)*Sqroot(13)[128X[104X
+  [4X[32X[104X
+  
+  [1X2.2-4 SqrtFieldEltToCyclotomic[101X
+  
+  [33X[1;0Y[29X[2XSqrtFieldEltToCyclotomic[102X( [3Xf[103X ) [32X function[133X
+  
+  [33X[0;0YIf  [3Xf[103X  lies  in [3XSqrtField[103X with coefficient vector [22X[[r_1,k_1],...,[r_m,k_m]][122X,
+  then  [3XSqrtFieldEltToCyclotomic(f)[103X  returns  [22X∑_j=1^m  r_jsqrtk_j[122X  lying  in a
+  suitable  cyclotomic  field [3XCF(n)[103X. The degree [22Xn[122X can easily become too large,
+  hence this function should be used with caution.[133X
+  
+  [1X2.2-5 SqrtFieldEltByCyclotomic[101X
+  
+  [33X[1;0Y[29X[2XSqrtFieldEltByCyclotomic[102X( [3Xc[103X ) [32X function[133X
+  
+  [33X[0;0YIf  [3Xc[103X  is  an  element  of  [22XQ^sqrt}(imath)[122X  represented  as  an element of a
+  cyclotomic   field   [3XCF(n)[103X,  then  [3XSqrtFieldEltByCyclotomic(c)[103X  returns  the
+  corresponding  element  in  [3XSqrtField[103X.  Our  algorithm  for  doing  this  is
+  described in [DG13].[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSqrtFieldEltToCyclotomic( Sqroot(2) );[127X[104X
+    [4X[28XE(8)-E(8)^3[128X[104X
+    [4X[25Xgap>[125X [27XSqrtFieldEltToCyclotomic( Sqroot(2)+E(4)*Sqroot(7) );[127X[104X
+    [4X[28XE(56)^5+E(56)^8+E(56)^13-E(56)^15+E(56)^16-E(56)^23-E(56)^24+E(56)^29-E(56)^31+[128X[104X
+    [4X[28XE(56)^32+E(56)^37-E(56)^39-E(56)^40+E(56)^45-E(56)^47-E(56)^48+E(56)^53-E(56)^55[128X[104X
+    [4X[25Xgap>[125X [27XSqrtFieldEltByCyclotomic( E(8)-E(8)^3 );[127X[104X
+    [4X[28XSqroot(2)[128X[104X
+    [4X[25Xgap>[125X [27XSqrtFieldEltByCyclotomic( 3*E(4)*Sqrt(11)-2/4*Sqrt(-13/7) );[127X[104X
+    [4X[28X3*E(4)*Sqroot(11) + (-1/14*E(4))*Sqroot(91)[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.3 [33X[0;0YBasic operations[133X[101X
+  
+  [33X[0;0YAll  basic  field  operations  are available. The inverse of an element [22Xf[122X in
+  [3XSqrtField[103X as follows: We first compute the minimal polynomial [22Xp(X)[122X of [22Xf[122X over
+  [22XQ(imath)[122X,  that  is,  a  non-trivial linear combination [22X0=p(f)=a_0+a_1 f+...
+  a_i-1f^i-1+f^i[122X. Then [22Xf^-1=-(a_1+a_2f+...+a_i-1f^i-2+f^i-1)/a_0[122X. Although the
+  inverse of [22Xf[122X can be computed with linear algebra methods only, the degree of
+  the  minimal  polynomial  of  [22Xf[122X  can  become  rather  large. For example, if
+  [22Xf=∑_j=1^m  r_i  sqrtk_j[122X  for  rational  [22Xr_i[122X  and  pairwise distinct positive
+  squarefree integers [22Xk_1,...,k_m[122X, then [22Xf[122X is a primitive element of the number
+  field  [22XQ(sqrtk_1,...,sqrtk_m)[122X,  see  for  example  Lemma  A.5 in [DG13]. For
+  larger degree, the progress of the computation of the inverse is printed via
+  the InfoClass [3XInfoSqrtField[103X. We remark that the method [3XRandom[103X simply returns
+  a  sum of a few terms [22Xasqrtb[122X where [22Xa,b[122X are random rationals constructed with
+  [3XRandom(Rationals)[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xa := Sqroot( 2 ) + 3 * Sqroot( 3/7 ); b := Sqroot( 21 ) - Sqroot( 2 );[127X[104X
+    [4X[28XSqroot(2) + 3/7*Sqroot(21)[128X[104X
+    [4X[28X(-1)*Sqroot(2) + Sqroot(21)[128X[104X
+    [4X[25Xgap>[125X [27Xa + b; a * b; a - b;[127X[104X
+    [4X[28X10/7*Sqroot(21)[128X[104X
+    [4X[28X7 + 4/7*Sqroot(42)[128X[104X
+    [4X[28X2*Sqroot(2) + (-4/7)*Sqroot(21)[128X[104X
+    [4X[25Xgap>[125X [27Xc := ( a - b )^-2;[127X[104X
+    [4X[28X91/8 + 7/4*Sqroot(42)[128X[104X
+    [4X[25Xgap>[125X [27Xa := Sum( List( [2,3,5,7], x -> Sqroot( x ) ) );[127X[104X
+    [4X[28XSqroot(2) + Sqroot(3) + Sqroot(5) + Sqroot(7)[128X[104X
+    [4X[25Xgap>[125X [27Xb := a^-1; a*b;                                  [127X[104X
+    [4X[28X37/43*Sqroot(2) + (-29/43)*Sqroot(3) + (-133/215)*Sqroot(5) + [128X[104X
+    [4X[28X27/43*Sqroot(7) + 62/215*Sqroot(30) + (-10/43)*Sqroot(42) + (-34/215)*Sqroot(70) [128X[104X
+    [4X[28X+ 22/215*Sqroot(105)[128X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XComplexConjugate(Sqroot(17)+Sqroot(-7));[127X[104X
+    [4X[28X(-E(4))*Sqroot(7) + Sqroot(17)[128X[104X
+    [4X[25Xgap>[125X [27XRandom( SqrtField );[127X[104X
+    [4X[28X-1 + 1/4*Sqroot(3) + 1/9*Sqroot(6)[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YMost methods for list, matrices, and polynomials also work over [3XSqrtField[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xm:=[[Sqroot(2),Sqroot(3)],[Sqroot(2),Sqroot(5)],[1,0]]*One(SqrootField);[127X[104X
+    [4X[28X[ [ Sqroot(2), Sqroot(3) ], [ Sqroot(2), Sqroot(5) ], [ 1, 0 ] ][128X[104X
+    [4X[25Xgap>[125X [27XNullspaceMat(m);[127X[104X
+    [4X[28X[ [ (-5/4)*Sqroot(2) + (-1/4)*Sqroot(30), 3/4*Sqroot(2) + 1/4*Sqroot(30), 1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XRankMat(m);[127X[104X
+    [4X[28X2[128X[104X
+    [4X[25Xgap>[125X [27Xm := [[Sqroot(2),Sqroot(3)],[Sqroot(2),Sqroot(5)]];  [127X[104X
+    [4X[28X[ [ Sqroot(2), Sqroot(3) ], [ Sqroot(2), Sqroot(5) ] ][128X[104X
+    [4X[25Xgap>[125X [27XDeterminant( m );  DefaultFieldOfMatrix( m );[127X[104X
+    [4X[28X(-1)*Sqroot(6) + Sqroot(10)[128X[104X
+    [4X[28XSqrtField[128X[104X
+    [4X[25Xgap>[125X [27Xx := Indeterminate( SqrtField, "x" );; f := x^2+x+1;[127X[104X
+    [4X[28Xx^2+x+1[128X[104X
+  [4X[32X[104X
+  
+  [1X2.3-1 SqrtFieldMakeRational[101X
+  
+  [33X[1;0Y[29X[2XSqrtFieldMakeRational[102X( [3Xm[103X ) [32X function[133X
+  
+  [33X[0;0YIf  [3Xm[103X  is  an  element  of  [3XSqrtField[103X, or a list or a matrix over [3XSqrtField[103X,
+  defined over the Gaussian rationals, then [3XSqrtFieldMakeRational( m )[103X returns
+  the   corresponding   element   in   [22XQ(imath)[122X   or  defined  over  [22XQ(imath)[122X,
+  respectively.  This function is used internally, for example, to compute the
+  determinant or rank of a rational matrix over [3XSqrtField[103X more efficiently. It
+  is also used in the following three functions.[133X
+  
+  [1X2.3-2 SqrtFieldPolynomialToRationalPolynomial[101X
+  
+  [33X[1;0Y[29X[2XSqrtFieldPolynomialToRationalPolynomial[102X( [3Xf[103X ) [32X function[133X
+  
+  [33X[0;0YHere  [3Xf[103X is a polynomial over [3XSqrtField[103X but with coefficients in the Gaussian
+  rationals.  The  function  returns the corresponding polynomial defined over
+  the Gaussian rationals.[133X
+  
+  [1X2.3-3 SqrtFieldRationalPolynomialToSqrtFieldPolynomial[101X
+  
+  [33X[1;0Y[29X[2XSqrtFieldRationalPolynomialToSqrtFieldPolynomial[102X( [3Xf[103X ) [32X function[133X
+  
+  [33X[0;0YIf  [3Xf[103X is a polynomial over the Gaussian rationals, then the function returns
+  the corresponding polynomial defined over [3XSqrtField[103X.[133X
+  
+  [1X2.3-4 Factors[101X
+  
+  [33X[1;0Y[29X[2XFactors[102X( [3Xf[103X ) [32X operation[133X
+  
+  [33X[0;0YIf  [3Xf[103X is a rational polynomial defined over [3XSqrtField[103X, then the previous two
+  functions are used to obtain its factorisation over [22XQ[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF := SqrtField;; one := One( SqrtField );;                 [127X[104X
+    [4X[25Xgap>[125X [27Xx := Indeterminate( F, "x" );; f := x^5 + 4*x^3 + E(4)*one*x;[127X[104X
+    [4X[28Xx^5+4*x^3+E(4)*x[128X[104X
+    [4X[25Xgap>[125X [27XSqrtFieldPolynomialToRationalPolynomial(f);[127X[104X
+    [4X[28Xx_1^5+4*x_1^3+E(4)*x_1[128X[104X
+    [4X[25Xgap>[125X [27XSqrtFieldRationalPolynomialToSqrtFieldPolynomial(last);[127X[104X
+    [4X[28Xx^5+4*x^3+E(4)*x[128X[104X
+    [4X[25Xgap>[125X [27Xf := x^2-1;; Factors(f);[127X[104X
+    [4X[28X[ x-1, x+1 ][128X[104X
+    [4X[25Xgap>[125X [27Xf := x^2+1;; Factors(f);[127X[104X
+    [4X[28X[ x^2+1 ][128X[104X
+  [4X[32X[104X
+  

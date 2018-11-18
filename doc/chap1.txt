@@ -1,0 +1,197 @@
+  
+  [1X1 [33X[0;0YIntroduction[133X[101X
+  
+  [33X[0;0Y[5XCoReLG[105X  (Computing with Real Lie Groups) is a [5XGAP[105X package for computing with
+  (semi-)simple real Lie algebras. Various capabilities of the package have to
+  do  with  the action of the adjoint group of a real Lie algebra (such as the
+  nilpotent  orbits, and non-conjugate Cartan subalgebras). CoReLG is also the
+  acronym of the EU funded Marie Curie project carried out by the first author
+  of the package at the University of Trento.[133X
+  
+  [33X[0;0YThe  simple  real Lie algebras have been classified, and this classification
+  is  the main theoretical tool that we use, as it determines the objects that
+  we work with. In Section [14X1.1[114X we give a brief account of this classification.
+  We  refer  to  the  standard  works in the literature (e.g., [Kna02]) for an
+  in-depth  discussion. The algorithms of this package are described in [DG13]
+  and [DFG13].[133X
+  
+  [33X[0;0YWe remark that the package still is under development, and its functionality
+  is continuously extended. The package [5XSLA[105X, [Gra12], is required.[133X
+  
+  
+  [1X1.1 [33X[0;0YThe simple real Lie algebras[133X[101X
+  
+  [33X[0;0YLet  [22Xmathfrakg^c[122X  denote  a  complex  simple Lie algebra. Then there are two
+  types   of   simple   real  Lie  algebras  associated  to  [22Xmathfrakg^c[122X:  the
+  [13Xrealification[113X  of  [22Xmathfrakg^c[122X  (this means that [22Xmathfrakg^c[122X is viewed as an
+  algebra over [22XR[122X, of dimension [22X2dim mathfrakg^c[122X), and the [13Xreal forms[113X [22Xmathfrakg[122X
+  of [22Xmathfrakg^c[122X (this means that [22Xmathfrakg⊗_RC[122X is isomorphic to [22Xmathfrakg^c[122X).
+  It  is  straightforward to construct the realification of [22Xmathfrakg^c[122X; so in
+  the rest of this section we concentrate on the real forms of [22Xmathfrakg^c[122X.[133X
+  
+  [33X[0;0YA  Lie  algebra  is  said  to  be  [13Xcompact[113X  if  its Killing form is negative
+  definite.   The  complex  Lie  algebra  [22Xmathfrakg^c[122X  has  a  unique  (up  to
+  isomorphism)  compact  real form [22Xmathfraku[122X. In the sequel we fix the compact
+  form  [22Xmathfraku[122X. Then [22Xmathfrakg^c = mathfraku + imath mathfraku[122X, where [22Ximath[122X
+  is  the  complex  unit;  so  we  get  an  antilinear  map  [22Xτ : mathfrakg^c->
+  mathfrakg^c[122X  by  [22Xτ(x+  imath  y) = x- imath y[122X, where [22Xx,y∈ mathfraku[122X. This is
+  called the [13Xconjugation[113X of [22Xmathfrakg^c[122X with respect to [22Xmathfraku[122X.[133X
+  
+  [33X[0;0YNow  let  [22Xθ[122X  be an automorphism of [22Xmathfrakg^c[122X of order 2, commuting with [22Xτ[122X.
+  Then  [22Xθ[122X  stabilises  [22Xmathfraku[122X,  so  the  latter  is the direct sum of the [22X±
+  1[122X-eigenspaces  of  [22Xθ[122X,  say  [22Xmathfraku  =  mathfraku_1  ⊕  mathfraku_-1[122X.  Set
+  [22Xmathfrakk  =  mathfraku_1[122X  and  [22Xmathfrakp  =  imathfraku_-1[122X.  Then [22Xmathfrakg
+  =mathfrakg(θ)=  mathfrakk  ⊕  mathfrakp[122X  is  a  real  form  of  [22Xmathfrakg^c[122X.
+  Regarding this construction we remark the following:[133X
+  
+  [30X    [33X[0;6Y[22Xmathfrakg  = mathfrakk⊕ mathfrakp[122X is called a [13XCartan decomposition[113X. It
+        is unique up to inner automorphisms of [22Xmathfrakg[122X.[133X
+  
+  [30X    [33X[0;6YThe  map [22Xθ[122X is a [13XCartan involution[113X; it is the identity on [22Xmathfrakk[122X and
+        acts as multiplication by [22X-1[122X on [22Xmathfrakp[122X)[133X
+  
+  [30X    [33X[0;6Y[22Xmathfrakk[122X  is  compact,  and  it  is  a  maximal compact subalgebra of
+        [22Xmathfrakg[122X.[133X
+  
+  [30X    [33X[0;6YTwo  real forms are isomorphic if and only if the corresponding Cartan
+        involutions are conjugate in the automorphism group of [22Xmathfrakg^c[122X.[133X
+  
+  [30X    [33X[0;6YThe automorphism [22Xθ[122X is described by two pieces of data: a list of signs
+        [22X(s_1,...,s_r)[122X  of  length  equal  to  the  rank  [22Xr[122X of [22Xmathfrakg[122X, and a
+        permutation  [22Xπ[122X  of  [22X1,..., r[122X, leaving the list of signs invariant. Let
+        [22Xα_1,..., α_r[122X denote the simple roots of [22Xmathfrakg^c[122X with corresponding
+        canonical generators [22Xx_i, y_i, h_i[122X. Then [22Xθ(x_i) = s_i x_π(i)[122X, [22Xθ(y_i) =
+        s_i y_π(i)[122X, [22Xθ(h_i) = h_π(i)[122X.[133X
+  
+  
+  [1X1.2 [33X[0;0YCartan subalgebras and more[133X[101X
+  
+  [33X[0;0YLet  [22Xmathfrakg[122X  be  a real form of the complex Lie algebra [22Xmathfrakg^c[122X, with
+  Cartan  decomposition  [22Xmathfrakg = mathfrakk⊕ mathfrakp[122X. A Cartan subalgebra
+  [22Xmathfrakh[122X   of   [22Xmathfrakg[122X   is   [13Xstandard[113X  (with  respect  to  this  Cartan
+  decomposition) if [22Xmathfrakh = (mathfrakh∩ mathfrakk)⊕ (mathfrakh∩mathfrakp)[122X,
+  or, equivalently, when [22Xmathfrakh[122X is stable under the Cartan involution [22Xθ[122X.[133X
+  
+  [33X[0;0YIt  is  a  fact that every Cartan subalgebra of [22Xmathfrakg[122X is conjugate by an
+  inner  automorphism to a standard one ([Kna02], Proposition 6.59). Moreover,
+  there  is  a  finite number of non-conjugate (by inner automorphisms) Cartan
+  subalgebras  of  [22Xmathfrakg[122X  ([Kna02],  Proposition  6.64). A standard Cartan
+  subalgebra  [22Xmathfrakh[122X  is  said  to be [13Xmaximally compact[113X if the dimension of
+  [22Xmathfrakh∩  mathfrakk[122X is maximal (among all standard Cartan subalgebras). It
+  is  called [13Xmaximally non-compact[113X if the dimension of [22Xmathfrakh∩ mathfrakp[122X is
+  maximal. We have that all maximally compact Cartan subalgebras are conjugate
+  via  the  inner  automorphism  group.  The  same  holds  for  all  maximally
+  non-compact Cartan subalgebras ([Kna02], Proposition 6.61).[133X
+  
+  [33X[0;0YA  subspace  of  [22Xmathfrakp[122X is said to be a [13XCartan subspace[113X if it consists of
+  commuting  elements. If [22Xmathfrakh[122X is a maximally non-compact standard Cartan
+  subalgebra,  then [22Xmathfrakc = mathfrakh∩ mathfrakp[122X is a Cartan subspace. The
+  other  Cartan subalgebras (i.e., representatives of the conjugacy classes of
+  the   Cartan   subalgebras  under  the  inner  automorphism  group)  can  be
+  constructed  such  that  their  intersection  with [22Xmathfrakp[122X is contained in
+  [22Xmathfrakc[122X.[133X
+  
+  [33X[0;0YEvery   standard   Cartan   subalgebra   [22Xmathfrakh[122X  of  [22Xmathfrakg[122X  yields  a
+  corresponding  root  system [22XΦ[122X of [22Xmathfrakg^c[122X. Let [22Xα∈Φ[122X, then a short argument
+  shows  that  [22Xα∘θ[122X  (where  [22Xα∘θ (h) = α(θ(h))[122X for [22Xh∈ mathfrakh[122X) is also a root
+  (i.e.,  lies  in  [22XΦ[122X). This way we get an automorphism of order 2 of the root
+  system [22XΦ[122X.[133X
+  
+  [33X[0;0YNow  let  [22Xmathfrakh[122X  be  a  maximally  compact standard Cartan subalgebra of
+  [22Xmathfrakg[122X, with root system [22XΦ[122X. Then it can be shown that there is a basis of
+  simple  roots  [22X∆⊂Φ[122X  which  is  [22Xθ[122X-stable.  Write  [22X∆  = {α_1,...,α_r}[122X, and let
+  [22Xx_i,y_i,h_i[122X  be a corresponding set of canonical generators. Then there is a
+  sequence  of  signs  [22X(s_1,...,s_r)[122X  and a permutation [22Xπ[122X of [22X1,...,r[122X such that
+  [22Xθ(x_i) = s_i x_π(i)[122X. Now we encode this information in the Dynkin diagram of
+  [22XΦ[122X.  If  [22Xs_i=-1[122X  then  we paint the node corresponding to [22Xα_i[122X black. Also, if
+  [22Xπ(i)=j  ≠  i[122X  then  the  nodes corresponding to [22Xα_i[122X, [22Xα_j[122X are connected by an
+  arrow.  The  resulting  diagram  is  called a [13XVogan diagram[113X of [22Xmathfrakg[122X. It
+  determines  the real form [22Xmathfrakg[122X up to isomorphism. The signs [22Xs_i[122X are not
+  uniquely  determined. However, it is possible to make a ``canonical'' choice
+  for the signs so that the Vogan diagram is uniquely determined.[133X
+  
+  [33X[0;0YNow  let  [22Xmathfrakh[122X be a maximally non-compact standard Cartan subalgebra of
+  [22Xmathfrakg[122X, with root system [22XΦ[122X. Then, in general, there is no basis of simple
+  roots which is stable under [22Xθ[122X. However we can still define a diagram, in the
+  following  way.  Let [22Xmathfrakc = mathfrakh∩ mathfrakp[122X be the Cartan subspace
+  contained  in [22Xmathfrakh[122X. Let [22XΦ_c = { α∈ Φ ∣ α∘θ = α} = { α∈ Φ ∣ α(mathfrakc)
+  =  0}[122X be the set of [13Xcompact roots [113X. Then there is a choice of positive roots
+  [22XΦ^+[122X  such  that  [22Xα∘θ  ∈ Φ^-[122X for all [13Xnon-compact[113X positive roots [22Xα∈ Φ^+[122X. Let [22X∆[122X
+  denote  the  basis  of  simple  roots corresponding to [22XΦ^+[122X. A theorem due to
+  Satake  says  that  there  is a bijection [22Xτ : ∆-> ∆[122X such that [22Xτ(α) = α[122X if [22Xα∈
+  Φ_c[122X,  and  for  non-compact [22Xα∈∆[122X we have [22Xα∘θ = -τ(α) - ∑_γ∈∆_c c_α,γ γ[122X, where
+  [22X∆_c  =  ∆  ∩  Φ_c[122X  and  the [22Xc_α,γ[122X are non-negative integers. Now we take the
+  Dynkin  diagram  corresponding  to  [22X∆[122X,  where the nodes corresponding to the
+  compact  roots  are  painted  black,  and  the nodes corresponding to a pair
+  [22Xα,τ(α)[122X,  if they are unequal, are joined by arrows. The resulting diagram is
+  called  the  [13XSatake  diagram[113X  of  [22Xmathfrakg[122X.  It  determines  the  real form
+  [22Xmathfrakg[122X up to isomorphism.[133X
+  
+  
+  [1X1.3 [33X[0;0YNilpotent orbits[133X[101X
+  
+  [33X[0;0YBy  [22XG^c[122X,  [22XG[122X  we  denote  the  adjoint  groups  of  [22Xmathfrakg^c[122X and [22Xmathfrakg[122X
+  respectively.  The  nilpotent [22XG^c[122X-orbits in [22Xmathfrakg^c[122X have been classified
+  by  so-called weighted Dynkin diagrams. A nilpotent [22XG^c[122X-orbit in [22Xmathfrakg^c[122X
+  may  have  no  intersection with the real form [22Xmathfrakg[122X. On the other hand,
+  when  it  does  have  an  intersection,  then  this  may  split into several
+  [22XG[122X-orbits.[133X
+  
+  [33X[0;0YLet   [22Xe[122X  be  an  element  of  a  nilpotent  [22XG[122X-orbit  in  [22Xmathfrakg[122X.  By  the
+  Jacobson-Morozov  theorem,  [22Xe[122X  lies  in an [22Xmathfraksl_2[122X-triple [22X(e,h,f)[122X; here
+  this  means  that  [22X[h,e]=2e[122X,  [22X[h,f]=-2f[122X, and [22X[e,f]=h[122X. The triple is called a
+  [13Xreal  Cayley  triple[113X  if  [22Xθ(e)  =  -f[122X, [22Xθ(f)=-e[122X and [22Xθ(h) = -h[122X, where [22Xθ[122X is the
+  Cartan  involution  of [22Xmathfrakg[122X. Every nilpotent orbit has a representative
+  lying in a real Cayley triple.[133X
+  
+  
+  [1X1.4 [33X[0;0YOn base fields[133X[101X
+  
+  [33X[0;0YTo define a Lie algebra by a multiplication table over the reals, it usually
+  suffices  to  take  a subfield of the real field as base field. However, the
+  algorithms  contained  in  this package very often need a Chevalley basis of
+  the  Lie  algebra  at  hand,  which  is defined only over the complex field.
+  Computations  with  such a Chevalley basis take place behind the scenes, and
+  the  result is again defined over the reals. However, the computations would
+  not  be possible if the Lie algebra is just defined over (a subfield of) the
+  reals.  For  this  reason,  we  require  that  the  base  field contains the
+  imaginary unit [3XE(4)[103X.[133X
+  
+  [33X[0;0YFurthermore,  in  many  algorithms  it  is necessary to take square roots of
+  elements  of  the  base  field.  So  the  ideal base field would contain the
+  imaginary  unit, as well as being closed under taking square roots. However,
+  such  a  field is difficult to construct and to work with on a computer. For
+  this reason we have provided the field [3XSqrtField[103X containing the square roots
+  of  all  rational  numbers. Mathematically, this is the field [22XQ^sqrt}(imath)[122X
+  with   [22XQ^sqrt}=Q({sqrtp∣   p   a   prime})[122X   and   [22Ximath=sqrt-1∈C[122X.  Clearly,
+  [22XQ^sqrt}(imath)[122X  is  an infinite extension of the rationals [22XQ[122X, and every [22Xf[122X in
+  [22XQ^sqrt}(imath)[122X can be uniquely written as [22Xf=∑_j=1^m r_i sqrtk_j[122X for Gaussian
+  rationals  [22Xr_i∈Q(imath)[122X  and  pairwise distinct squarefree positive integers
+  [22Xk_1,...,k_m[122X.  Thus, [22Xf[122X can be described efficiently by its coefficient vector
+  [22X[[r_1,k_1],...,[r_j,k_j]][122X.    We    comment   on   our   implementation   of
+  [22XQ^sqrt}(imath)[122X in Chapter [14X2[114X.[133X
+  
+  [33X[0;0YAlthough  it is possible to try most functions of the package using the base
+  field [3XCF(4)[103X, for example, it is likely that many computations will result in
+  an  error,  because  of  the  lack  of square roots in that field. Many more
+  computations  are possible over [3XSqrtField[103X, but also in that case, of course,
+  a  computation  may  result  in  an  error  because  we  cannot  construct a
+  particular  square  root.  Also,  computations  over  [3XSqrtField[103X  tend  to be
+  significantly  slower  than over, say, [3XCF(4)[103X; see the next example. But that
+  is  a  price  we  have  to  pay  (at  least,  in order to be able to do some
+  computations).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XL:=RealFormById("E",8,2);[127X[104X
+    [4X[28X<Lie algebra of dimension 248 over SqrtField>[128X[104X
+    [4X[25Xgap>[125X [27XallCSA := CartanSubalgebrasOfRealForm(L);;time;[127X[104X
+    [4X[28X67224[128X[104X
+    [4X[25Xgap>[125X [27XL:=RealFormById("E",8,2,CF(4));[127X[104X
+    [4X[28X<Lie algebra of dimension 248 over GaussianRationals>[128X[104X
+    [4X[25Xgap>[125X [27XallCSA := CartanSubalgebrasOfRealForm(L);;time;[127X[104X
+    [4X[28X7301[128X[104X
+    [4X[28X# We remark that both computations are exactly the same; [128X[104X
+    [4X[28X# the difference in timing is caused by the fact that [128X[104X
+    [4X[28X# arithmetic over SqrtField is slower.[128X[104X
+  [4X[32X[104X
+  
