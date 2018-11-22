@@ -36,7 +36,7 @@ DeclareAttribute("CartanMatrix",IsSatakeDiagramOfRealForm);
 ##
 ##   returns the id of the real form
 ##
-DeclareGlobalFunction( "IdRealForm", IsLieAlgebra );
+DeclareGlobalFunction( "IdRealForm" );
 
 ##############################################################################
 ##
@@ -44,7 +44,7 @@ DeclareGlobalFunction( "IdRealForm", IsLieAlgebra );
 ##
 ##   lists information about real forms of type t and rank r
 ##
-DeclareGlobalFunction( "RealFormsInformation", [IsString,IsInt] );
+DeclareGlobalFunction( "RealFormsInformation" );
 
 ##############################################################################
 ##
@@ -52,7 +52,7 @@ DeclareGlobalFunction( "RealFormsInformation", [IsString,IsInt] );
 ##
 ##   lists information about real forms of type t and rank r
 ##
-DeclareGlobalFunction( "NumberRealForms", [IsString,IsInt] );
+DeclareGlobalFunction( "NumberRealForms" );
 
 ##############################################################################
 ##
