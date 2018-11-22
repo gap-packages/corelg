@@ -23,7 +23,7 @@ InstallMethod( NiceBasisNC,
 
 SqrtField_objectify:= function( type, elm )
 local u,isrt;
-   isrt:= LEN_LIST(elm[1]) = 1 and LEN_LIST(elm[1][1][2])=0;
+   isrt:= Length(elm[1]) = 1 and Length(elm[1][1][2])=0;
    u:= Objectify( type, elm );
    u![2]:= isrt;
    return u;
@@ -45,7 +45,7 @@ InstallGlobalFunction(Sqroot, function(q)
 local d, n, fc, cf, ps, i, m, sgn;
 
    if not IsRat(q) then 
-      if IsSqrtFieldElement(q) and LEN_LIST(q![1]) = 1 
+      if IsSqrtFieldElement(q) and Length(q![1]) = 1 
          and IsRat(q![1][1][1]) and q![1][1][2] = [] then
          return Sqroot(q![1][1][1]);
       else
@@ -63,7 +63,7 @@ local d, n, fc, cf, ps, i, m, sgn;
    fc := Collected(fc);
    cf := 1/d;
    ps := [];
-   for i in [1..LEN_LIST(fc)] do
+   for i in [1..Length(fc)] do
       m  := fc[i][2] mod 2;
       cf := cf *(fc[i][1]^((fc[i][2]-m)/2));
       if m=1 then Add(ps,fc[i][1]); fi;
@@ -71,7 +71,7 @@ local d, n, fc, cf, ps, i, m, sgn;
    if ps = [] then return 
       SqrtField_objectify( SqrtFieldType, Immutable([[[sgn*cf,[]]]])); 
    fi; 
-   if ps[1] = 1 then ps := ps{[2..LEN_LIST(ps)]}; fi;
+   if ps[1] = 1 then ps := ps{[2..Length(ps)]}; fi;
    Sort(ps);
    MakeImmutable(ps);
    return SqrtField_objectify( SqrtFieldType,Immutable([[[sgn*cf,ps]]]) );
@@ -94,7 +94,7 @@ InstallMethod( ViewObj,
 function( sf )
 local elt, l, i, printmon, printcf;
    elt := sf![1];
-   l   := LEN_LIST(elt);
+   l   := Length(elt);
    printmon := function(mon)
       if mon[1] = 1 then 
          Print( "Sqroot(",Product(mon[2]),")");
@@ -127,7 +127,7 @@ InstallMethod( PrintObj,
 function( sf )
 local elt, l, i, printmon;
    elt := sf![1];
-   l   := LEN_LIST(elt);
+   l   := Length(elt);
    printmon := function(mon)
       if mon[1] = 1 then 
          Print( "Sqroot(",Product(mon[2]),")");
@@ -303,7 +303,7 @@ local a,b,i,j,e,len,pr;
    if y![2] then return y![1][1][1] + x; fi;
 
 
-   if LEN_LIST(x![1])<=LEN_LIST(y![1]) then
+   if Length(x![1])<=Length(y![1]) then
       a := List(x![1],ShallowCopy);
       b := List(y![1],ShallowCopy);
    else
@@ -311,25 +311,25 @@ local a,b,i,j,e,len,pr;
       b := List(x![1],ShallowCopy);
    fi;
    i := 1;
-   for j in [1..LEN_LIST(a)] do
+   for j in [1..Length(a)] do
       e  := a[j];
       pr := Product(e[2]);
-      while i<= LEN_LIST(b) and Product(b[i][2])<pr do i := i+1; od;
-      if i>LEN_LIST(b) then 
-         Append(b,a{[j..LEN_LIST(a)]});
+      while i<= Length(b) and Product(b[i][2])<pr do i := i+1; od;
+      if i>Length(b) then 
+         Append(b,a{[j..Length(a)]});
          return SqrtField_objectify( SqrtFieldType, Immutable([b]) ); 
       fi;
       if e[2]=b[i][2] then
          b[i][1] := b[i][1] + e[1];
          if b[i][1] = 0 then
             #remove position i
-             len := LEN_LIST(b);
-             COPY_LIST_ENTRIES( b, i + 1, 1, b, i, 1, len - i );
+             len := Length(b);
+             CopyListEntries( b, i + 1, 1, b, i, 1, len - i );
              Unbind( b[len] );
          fi;
       else
         #add e at position i
-         COPY_LIST_ENTRIES(b,i,1,b,i+1,1,LEN_LIST(b)-i+1);
+         CopyListEntries(b,i,1,b,i+1,1,Length(b)-i+1);
          b[i] := e;
       fi;
    od;
@@ -355,7 +355,7 @@ local t;
       if t = [] then return Zero(SqrtField); fi;
    else
      #add [y,[]] at position 1
-      COPY_LIST_ENTRIES( t, 1, 1, t, 2, 1, LEN_LIST(t) );
+      CopyListEntries( t, 1, 1, t, 2, 1, Length(t) );
       t[1] := [x,[]];
    fi;
    return SqrtField_objectify( SqrtFieldType,Immutable([t]) );
@@ -440,13 +440,13 @@ InstallMethod( \*,
       for i in a do
          for j in b do
 
-            int := i[2]{[1..LEN_LIST(i[2])]};
+            int := i[2]{[1..Length(i[2])]};
             INTER_SET( int, j[2] );
 
             cf  := i[1]*j[1];  #*Product(int);
             for k in int do cf:= cf*k; od;
 
-            res := i[2]{[1..LEN_LIST(i[2])]};
+            res := i[2]{[1..Length(i[2])]};
             APPEND_LIST( res, j[2] );
             v   := Filtered(res,x->not x in int);
             SORT_LIST(v);
@@ -461,7 +461,7 @@ InstallMethod( \*,
          od;
       od;
       res:= [ ];
-      for i in [1..LEN_LIST(mns)] do
+      for i in [1..Length(mns)] do
          if cfs[i] <> 0 then
             Add( res, [ cfs[i], mns[i] ] );
          fi;
@@ -485,9 +485,9 @@ local b, i, j, bas, mat, elts, a, cfs, l,cf, pos, ns, inv, res, v, nrp, want;
    elts := [One(SqrtField)];
    bas  := [[]];
    cfs  := [ [1] ];
-   l    := LEN_LIST(bas);
-   nrp  := LEN_LIST(Collected(Flat(List(a![1],x->x[2]))));
-   want := 2^Minimum([nrp,LEN_LIST(Filtered(a![1],x->not x[2]=[]))]);
+   l    := Length(bas);
+   nrp  := Length(Collected(Flat(List(a![1],x->x[2]))));
+   want := 2^Minimum([nrp,Length(Filtered(a![1],x->not x[2]=[]))]);
    if want > 16 then
       Info(InfoSqrtField,2,"need ",want," powers for computing the inverse");
    fi;
@@ -511,7 +511,7 @@ local b, i, j, bas, mat, elts, a, cfs, l,cf, pos, ns, inv, res, v, nrp, want;
    until i-1 = want;
    ns  := NullspaceMat(cfs);
    res := ns[1];
-   inv := Sum(List([2..LEN_LIST(res)],i->res[i]*elts[i-1]))/(-res[1]);
+   inv := Sum(List([2..Length(res)],i->res[i]*elts[i-1]))/(-res[1]);
   #Info(InfoSqrtField,3,"test inverse");
   #if not el*inv = One(SqrtField) then Error("hmpf... inv wrong!"); fi;
    return inv;       
@@ -577,9 +577,9 @@ local b, i, j, bas, mat, elts, a, cfs, l,cf, pos, ns, inv, res, v, nrp,
    elts := [One(SqrtField)];
    bas  := [[]];
    cfs  := [ [1] ];
-   l    := LEN_LIST(bas);
-   nrp  := LEN_LIST(Collected(Flat(List(a![1],x->x[2]))));
-   want := 2^Minimum([nrp,LEN_LIST(Filtered(a![1],x->not x[2]=[]))]);
+   l    := Length(bas);
+   nrp  := Length(Collected(Flat(List(a![1],x->x[2]))));
+   want := 2^Minimum([nrp,Length(Filtered(a![1],x->not x[2]=[]))]);
    if want > 16 then
       Info(InfoSqrtField,1,"need ",want," powers for computing the inverse");
    fi;
@@ -605,8 +605,8 @@ local b, i, j, bas, mat, elts, a, cfs, l,cf, pos, ns, inv, res, v, nrp,
    res  := ns[1]*One(SqrtField);
    x    := Indeterminate(SqrtField);
    elts := [One(SqrtField)];
-   Append(elts, List([2..LEN_LIST(res)],i->x^(i-1)));
-   pol  := Sum(List([1..LEN_LIST(res)],i->res[i]*elts[i]));
+   Append(elts, List([2..Length(res)],i->x^(i-1)));
+   pol  := Sum(List([1..Length(res)],i->res[i]*elts[i]));
    return pol;       
 end);
 
@@ -648,7 +648,7 @@ end);
 
 InstallGlobalFunction(IsPosSqrtFieldElt, function(e)
 local real, imag, i, makecf, cf, r;
-   if not IsSqrtFieldElement(e) or not LEN_LIST(e![1]) = 1 or
+   if not IsSqrtFieldElement(e) or not Length(e![1]) = 1 or
       not ForAll(e![1],i->IsRat(i[1])) then 
       Error("input must be a real SqrtFieldElement with one monom"); 
    fi;
@@ -690,7 +690,7 @@ local makemon;
    if not IsSqrtFieldElement(e) then
       Error("input has to lie in SqrtField");
    fi;
-   if LEN_LIST(e![1])=1 and e![1][1][2]=[] then return e![1][1][1]; fi;
+   if Length(e![1])=1 and e![1][1][2]=[] then return e![1][1][1]; fi;
   #Info(InfoSqrtField,1,"Warning: might not work for large cyclotomics.");
    makemon := function(mon)
       if mon[2]=[] then return mon[1]; fi;
@@ -737,7 +737,7 @@ InstallMethod( Sqrt,
 function( el )
 local x, i;
    x := List(el![1],ShallowCopy);
-   if not (LEN_LIST(x) = 1 and x[1][2] = [] and IsRat(x[1][1])) then
+   if not (Length(x) = 1 and x[1][2] = [] and IsRat(x[1][1])) then
       Error("input has to be rational SqrtFieldElt");
    fi;
    return  Sqroot(x[1][1]);
@@ -761,7 +761,7 @@ InstallMethod( AbsoluteValue,
 function( el )
 local x,i;
    x := List(el![1],ShallowCopy);
-   if not (LEN_LIST(x)=1 and IsRat(x[1][1])) then
+   if not (Length(x)=1 and IsRat(x[1][1])) then
       Error("elt must be a real SqrtFieldElt with one summand");
    fi;
    for i in x do i[1] := AbsoluteValue(i[1]); od;
@@ -777,7 +777,7 @@ function( el )
 local elt, l, i, printmon, printcf, str;
    elt := List(el![1],ShallowCopy);
    str := "";
-   l   := LEN_LIST(elt);
+   l   := Length(elt);
    printmon := function(mon)
       if mon[1] = 1 then 
          Append(str, "Sqroot("); 
@@ -839,7 +839,7 @@ local e, cj, re, im, solvereal, res, r1, r2,
   #returns also one for technical reasons
    local sqfree, eeven, res;
       sqfree := x -> ForAll(Collected(FactorsInt(x)),i->i[2]=1);
-      eeven  := x -> LEN_LIST( Filtered(List(Collected(FactorsInt(x)), i->i[1]),
+      eeven  := x -> Length( Filtered(List(Collected(FactorsInt(x)), i->i[1]),
                              p -> p mod 4 = 3)) mod 2 = 0;
       res    := Filtered(DivisorsInt(n),x->sqfree(x));
       if IsOddInt(n) or (IsInt(n/2) and IsOddInt(n/2)) then
@@ -871,7 +871,7 @@ local e, cj, re, im, solvereal, res, r1, r2,
       mat   := List(prsq,x->Coefficients(bas,x));
       ns    := SolutionMat(mat,Coefficients(bas,r));
       if ns = fail then return fail; fi;
-      return Sum(List([1..LEN_LIST(pr)],i->ns[i]*Sqroot(pr[i])));
+      return Sum(List([1..Length(pr)],i->ns[i]*Sqroot(pr[i])));
    end;
 
   #try to solve real and complex part
@@ -894,7 +894,7 @@ InstallGlobalFunction( SqrtFieldPolynomialToRationalPolynomial, function(e)
 local x,i,j,cf;
    x  := Indeterminate(Rationals);
    cf := List(CoefficientsOfUnivariatePolynomial(e),SqrtFieldEltToCyclotomic);
-   return Sum(List([1..LEN_LIST(cf)],i-> cf[i]*x^(i-1)));
+   return Sum(List([1..Length(cf)],i-> cf[i]*x^(i-1)));
 end); 
 
 
@@ -905,7 +905,7 @@ InstallGlobalFunction( SqrtFieldRationalPolynomialToSqrtFieldPolynomial, functio
 local x,i,j,cf;
    x  := Indeterminate(SqrtField);
    cf := List(CoefficientsOfUnivariatePolynomial(e),SqrtFieldEltByCyclotomic);
-   return Sum(List([1..LEN_LIST(cf)],i-> cf[i]*x^(i-1)));
+   return Sum(List([1..Length(cf)],i-> cf[i]*x^(i-1)));
 end); 
 
 
