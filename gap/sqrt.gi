@@ -745,18 +745,18 @@ end );
 
 ##########################################################################
 
-InstallMethod( Random,
-    "not real-random method for SqrtField ",
-    [ IsSqrtField ],
+InstallMethodWithRandomSource( Random,
+    "for a random source and an SqrtField ",
+    [ IsRandomSource, IsSqrtField ],
 function( el )
-   return Sum(List([1..15],x-> Random(Rationals)*Sqroot(Random(Rationals))));
+   return Sum(List([1..15],x-> Random(rs,Rationals)*Sqroot(Random(rs,Rationals))));
    
 end );
 
 ##########################################################################
 
 InstallMethod( AbsoluteValue,
-    "method for SqrtField elt",
+    "for SqrtField element",
     [ IsSqrtFieldElement ], 10000,
 function( el )
 local x,i;
