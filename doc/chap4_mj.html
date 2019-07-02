@@ -32,12 +32,10 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7A05B2957A625D85">4.1-2 RealCayleyTriple</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X804830757E5971E9">4.1-3 WeightedDynkinDiagram</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X7B7089407ECA46BC">4.2 <span class="Heading">Nilpotent orbits in real Theta groups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X7BE2BD6B79367FC8">4.2 <span class="Heading">The real Weyl group</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X8196CAF57F4CD8C7">4.2-1 RealWeylGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7F579EDA7EDD0C87">4.2-2 CarrierAlgsForNilpOrbsInZGrading</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7BAFCFF878612B46">4.2-3 CarrierAlgsForNilpOrbsInZmGrading</a></span>
 </div></div>
 </div>
 
@@ -96,11 +94,9 @@ true
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WeightedDynkinDiagram</code>( <var class="Arg">o</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Here <var class="Arg">o</var> is a nilpotent orbit constructed by <code class="func">NilpotentOrbitsOfRealForm</code> (<a href="chap4_mj.html#X8424BB44791EAA48"><span class="RefLink">4.1-1</span></a>) of a simple real Lie algebra. This function returns the weighted Dynkin diagram of the orbit, which identifies its orbit in the complexification of the real Lie algebra in which <var class="Arg">o</var> lies.</p>
 
-<p><a id="X7B7089407ECA46BC" name="X7B7089407ECA46BC"></a></p>
+<p><a id="X7BE2BD6B79367FC8" name="X7BE2BD6B79367FC8"></a></p>
 
-<h4>4.2 <span class="Heading">Nilpotent orbits in real Theta groups</span></h4>
-
-<p>Let <span class="SimpleMath">\(L=\bigoplus_{i\in \mathbb{Z}_m} L_i\)</span> be a real semisimple Lie algebra, where <span class="SimpleMath">\(\mathbb{Z}_m=\mathbb{Z}/m\mathbb{Z}\)</span> if <span class="SimpleMath">\(m\geq 1\)</span>, and <span class="SimpleMath">\(\mathbb{Z}_0=\mathbb{Z}\)</span>. We provide some functions which help to determine the <span class="SimpleMath">\(G_0\)</span>-orbits of nilpotent elements in <span class="SimpleMath">\(L_1\)</span>, where <span class="SimpleMath">\(G_0\)</span> is the adjoint group of <span class="SimpleMath">\(L_0\)</span>. An approach to compute these orbits is described in <a href="chapBib_mj.html#biBdfg15">[DFG15]</a>; the first step is to construct, up to <span class="SimpleMath">\(G_0\)</span>-conjugacy, all carrier subalgebras of <span class="SimpleMath">\(L\)</span>. Functions <code class="func">CarrierAlgsForNilpOrbsInZGrading</code> (<a href="chap4_mj.html#X7F579EDA7EDD0C87"><span class="RefLink">4.2-2</span></a>) and <code class="func">CarrierAlgsForNilpOrbsInZmGrading</code> (<a href="chap4_mj.html#X7BAFCFF878612B46"><span class="RefLink">4.2-3</span></a>) do this in the case that <span class="SimpleMath">\(L\)</span> is a split real form of a complex simple Lie algebra.</p>
+<h4>4.2 <span class="Heading">The real Weyl group</span></h4>
 
 <p><a id="X8196CAF57F4CD8C7" name="X8196CAF57F4CD8C7"></a></p>
 
@@ -108,67 +104,7 @@ true
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RealWeylGroup</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RealWeylGroup</code>( <var class="Arg">L</var>, <var class="Arg">H</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>Here <var class="Arg">L</var> is a real semisimple Lie algebra with Cartan subalgebra <var class="Arg">H</var>. (If <var class="Arg">H</var> is not given, then <var class="Arg">CartanSubalgebra(L)</var> will be taken.) This function returns the real Weyl group <span class="SimpleMath">\(N_G(H)/C_G(H)\)</span> associated with <var class="Arg">H</var>, where <span class="SimpleMath">\(G\)</span> is the adjoint group of <var class="Arg">L</var>. The real Weyl group will be stored in the Cartan subalgebra, so that a new call to this function, with the same input, will return the real Weyl group immediately.</p>
-
-<p><a id="X7F579EDA7EDD0C87" name="X7F579EDA7EDD0C87"></a></p>
-
-<h5>4.2-2 CarrierAlgsForNilpOrbsInZGrading</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CarrierAlgsForNilpOrbsInZGrading</code>( <var class="Arg">type</var>, <var class="Arg">rank</var>, <var class="Arg">d</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Gives a record containing (up to conjugacy) the carrier algebras of the real theta group specified by the input: here <var class="Arg">type</var> and <var class="Arg">rank</var> are the type and rank of the simple real Lie algebra (split real form) where everything happens; <var class="Arg">d</var> is a list of degrees of the simple roots, defining a <span class="SimpleMath">\(\mathbb{Z}\)</span> grading on the Lie algebra. The output is a record with the following entries: <var class="Arg">L</var> the Lie algebra, <var class="Arg">grad</var> the grading that was used (different format for Z-grading, <var class="Arg">L0</var> the 0-component of the grading, <var class="Arg">Hs</var> the Cartan subalgebras of <var class="Arg">L0</var> that are used, <var class="Arg">cars</var> the carrier algebras. Here <var class="Arg">cars</var> is a list of lists; for each Cartan subalgebra of <var class="Arg">L0</var> there is one list: the first corresponds to the split Cartan subalgebra, and so has just the complex carrier algebras (which are also real), the other lists contain lists as well, for each complex carrier algebra (i.e., for each element of the first list) there is a list containing the real carrier algebras which are strongly <span class="SimpleMath">\(H_i\)</span>-regular, and over the complex numbers conjugate to the given complex carrier algebra. Furthermore, a carrier algebra is given by a record, containing the fields <var class="Arg">g0</var>, <var class="Arg">gp</var> (positive degree), and <var class="Arg">gn</var> (negative degree).</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ca:=CarrierAlgsForNilpOrbsInZGrading("G",2,[1,0]);</span>
-rec( 
- Hs  := [ &lt;Lie algebra of dimension 2 over SqrtField&gt;, 
-          &lt;Lie algebra of dimension 2 over SqrtField&gt; ], 
-  L  :=   &lt;Lie algebra of dimension 14 over SqrtField&gt;, 
-  L0 :=   &lt;Lie algebra of dimension 4 over SqrtField&gt;, 
-cars :=  [ 
-          [rec( g0 := [ v.13+(3)*v.14 ], gn := [ [ v.9 ] ], gp := [ [ v.3 ] ] )]
-            ,[ [  ] ] 
-         ], 
-grad := rec( g0 := [ v.2, v.8, v.13, v.14 ], 
-               gn := [ [ v.7, v.9 ], [ v.10 ], [ v.11, v.12 ] ], 
-               gp := [ [ v.1, v.3 ], [ v.4 ], [ v.5, v.6 ] ] ) )
-</pre></div>
-
-<p><a id="X7BAFCFF878612B46" name="X7BAFCFF878612B46"></a></p>
-
-<h5>4.2-3 CarrierAlgsForNilpOrbsInZmGrading</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CarrierAlgsForNilpOrbsInZmGrading</code>( <var class="Arg">type</var>, <var class="Arg">rank</var>, <var class="Arg">m0</var>, <var class="Arg">str</var>, <var class="Arg">num</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Gives a record (up to conjugacy) containing the carrier algebras of the real theta group specified by the input: here <var class="Arg">type</var> and <var class="Arg">rank</var> are the type and rank of the simple real Lie algebra (split real form) where everything happens; <var class="Arg">m0</var> is the order of the automorphism defining the grading, <var class="Arg">str</var> is "inner" or "outer", depending on whether the automorphism is inner or not, <var class="Arg">num</var> the <var class="Arg">num</var>-th automorphism in the list <var class="Arg">FiniteOrderInnerAutomorpisms( type, rank, m0 )</var> or <var class="Arg">FiniteOrderOuterAutomorphisms( type, rank, m0, 2 )</var> which is used to define the grading. The output is as for <code class="func">CarrierAlgsForNilpOrbsInZGrading</code> (<a href="chap4_mj.html#X7F579EDA7EDD0C87"><span class="RefLink">4.2-2</span></a>), with the exception that the record entry <var class="Arg">grad</var> is a list with <var class="Arg">m0</var> entries, the <var class="Arg">i</var>-th entry containing the basis for the <var class="Arg">i</var>-th component of the grading.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gap&gt; ca:=CarrierAlgsForNilpOrbsInZmGrading("G",2,2,"inner",1);</span>
-rec( 
- Hs := [ &lt;Lie algebra of dimension 2 over SqrtField&gt;, 
-         &lt;Lie algebra of dimension 2 over SqrtField&gt;, 
-         &lt;Lie algebra of dimension 2 over SqrtField&gt;, 
-         &lt;Lie algebra of dimension 2 over SqrtField&gt; ], 
-  L  :=  &lt;Lie algebra of dimension 14 over SqrtField&gt;, 
-  L0 :=  &lt;Lie algebra of dimension 6 over SqrtField&gt;, 
-cars := [ 
-         [rec( g0 := [ v.13+v.14 ], gn := [ [ v.11 ] ], gp := [ [ v.5 ] ] ), 
-          rec( g0 := [ v.13, v.14 ], gn := [ [ v.2, v.10 ] ], 
-               gp := [ [ v.4, v.8 ] ] ), 
-          rec( g0 := [ v.13+(3/2)*v.14 ], gn := [ [ v.10 ] ], 
-               gp := [ [ v.4 ] ] ), 
-          rec( g0 := [ v.1, v.7, v.13, v.14 ], 
-               gn := [ [ v.8, v.9, v.10, v.11 ], [ v.12 ] ], 
-               gp := [ [ v.2, v.3, v.4, v.5 ], [ v.6 ] ] ), 
-          rec( g0 := [ v.13, v.14 ], 
-               gn := [ [ v.2, v.9 ], [ v.7 ], [ v.10 ], [ v.12 ], [ v.11 ] ], 
-               gp := [ [ v.3, v.8 ], [ v.1 ], [ v.4 ], [ v.6 ], [ v.5 ] ] ) ], 
-         [ [  ], [  ], [  ], [  ], [  ] ], [ [  ], [  ], [  ], [  ], [  ] ], 
-         [ [  ], [  ], [  ], [  ], [  ] ] ], 
- grad := [ [ v.1, v.6, v.7, v.12, v.13, v.14 ], 
-         [ v.2, v.3, v.4, v.5, v.8, v.9, v.10, v.11 ] ] )
-
-</pre></div>
+<p>Here <var class="Arg">L</var> is a real semisimple Lie algebra with Cartan subalgebra <var class="Arg">H</var>. (If <var class="Arg">H</var> is not given, then <var class="Arg">CartanSubalgebra(L)</var> will be taken.) This function returns the real Weyl group <span class="SimpleMath">\(N_G(H)/C_G(H)\)</span> associated with <var class="Arg">H</var>, where <span class="SimpleMath">\(G\)</span> is the connected component of the group of real points of the complex adjoint group of <var class="Arg">L</var>. The real Weyl group will be stored in the Cartan subalgebra, so that a new call to this function, with the same input, will return the real Weyl group immediately.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapBib_mj.html">[Next Chapter]</a>&nbsp;  </div>

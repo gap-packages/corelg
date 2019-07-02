@@ -1,33 +1,49 @@
   
   
-                                    [1X CoReLG [101X
+                                     [1XCoReLG[101X
   
   
-                       [1X Computation with real Lie groups [101X
+                        [1XComputing with real Lie Algebras[101X
   
   
-                                  Version 1.20
+                                  Version 1.50
   
   
-                                2 December 2014
+                                   July 2019
   
   
                                  Heiko Dietrich
   
                                   Paolo Faccin
   
-                            Willem Adriaan de Graaf
+                                Willem de Graaf
   
   
   
   Heiko Dietrich
       Email:    [7Xmailto:heiko.dietrich@monash.edu[107X
       Homepage: [7Xhttp://users.monash.edu.au/~heikod/[107X
+      Address:  [33X[0;14YSchool of Mathematics[133X
+                [33X[0;14YMonash University[133X
+                [33X[0;14YWellington Road 1[133X
+                [33X[0;14YVIC 3800, Melbourne, Australia[133X
+  
+  
   Paolo Faccin
-      Email:    [7Xmailto:faccin@science.unitn.it[107X
-  Willem Adriaan de Graaf
+      Email:    [7Xmailto:paolofaccin86@gmail.com[107X
+      Address:  [33X[0;14YDipartimento di Matematica[133X
+                [33X[0;14YVia Sommarive 14[133X
+                [33X[0;14YI-38050 Povo (Trento), Italy[133X
+  
+  
+  Willem de Graaf
       Email:    [7Xmailto:degraaf@science.unitn.it[107X
-      Homepage: [7Xhttp://www.science.unitn.it/~degraaf[107X
+      Homepage: [7Xhttp://www.science.unitn.it/~degraaf/[107X
+      Address:  [33X[0;14YDipartimento di Matematica[133X
+                [33X[0;14YVia Sommarive 14[133X
+                [33X[0;14YI-38050 Povo (Trento), Italy[133X
+  
+  
   
   -------------------------------------------------------
   [1XAbstract[101X
@@ -37,14 +53,15 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 2014 Heiko Dietrich, Paolo Faccin, and Willem de Graaf[133X
+  [33X[0;0Y© 2019 Heiko Dietrich, Paolo Faccin, and Willem de Graaf[133X
   
   
   -------------------------------------------------------
   [1XAcknowledgements[101X
   [33X[0;0YThe  research leading to this package has received funding from the European
   Union's  Seventh  Framework  Program  FP7/2007-2013 under grant agreement no
-  271712.[133X
+  271712,  and  from the Australian Research Council, grantor code DE140100088
+  and DP190100317[133X
   
   
   -------------------------------------------------------
@@ -76,12 +93,13 @@
       3.1-1 RealFormsInformation
       3.1-2 NumberRealForms
       3.1-3 RealFormById
-      3.1-4 AllRealForms
-      3.1-5 RealFormParameters
-      3.1-6 IsRealFormOfInnerType
-      3.1-7 IsRealification
-      3.1-8 CartanDecomposition
-      3.1-9 RealStructure
+      3.1-4 IdRealForm
+      3.1-5 AllRealForms
+      3.1-6 RealFormParameters
+      3.1-7 IsRealFormOfInnerType
+      3.1-8 IsRealification
+      3.1-9 CartanDecomposition
+      3.1-10 RealStructure
     3.2 [33X[0;0YIsomorphisms[133X
       3.2-1 IsomorphismOfRealSemisimpleLieAlgebras
     3.3 [33X[0;0YCartan subalgebras and root systems[133X
@@ -100,10 +118,8 @@
       4.1-1 NilpotentOrbitsOfRealForm
       4.1-2 RealCayleyTriple
       4.1-3 WeightedDynkinDiagram
-    4.2 [33X[0;0YNilpotent orbits in real Theta groups[133X
+    4.2 [33X[0;0YThe real Weyl group[133X
       4.2-1 RealWeylGroup
-      4.2-2 CarrierAlgsForNilpOrbsInZGrading
-      4.2-3 CarrierAlgsForNilpOrbsInZmGrading
   
   
   [32X

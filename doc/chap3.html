@@ -28,12 +28,13 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7BB53454857133FF">3.1-1 RealFormsInformation</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X78143E4187893A79">3.1-2 NumberRealForms</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8443E03C868CA7D3">3.1-3 RealFormById</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X85C3549A8537FBF6">3.1-4 AllRealForms</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7CA76CD087DBABF4">3.1-5 RealFormParameters</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8266EA5E7D3B4DD5">3.1-6 IsRealFormOfInnerType</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X79A0991B809A4D6C">3.1-7 IsRealification</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X81E1C65282CE3130">3.1-8 CartanDecomposition</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8318965D8692FC43">3.1-9 RealStructure</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7E23043A7BBE7DF2">3.1-4 IdRealForm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X85C3549A8537FBF6">3.1-5 AllRealForms</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7CA76CD087DBABF4">3.1-6 RealFormParameters</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8266EA5E7D3B4DD5">3.1-7 IsRealFormOfInnerType</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X79A0991B809A4D6C">3.1-8 IsRealification</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X81E1C65282CE3130">3.1-9 CartanDecomposition</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8318965D8692FC43">3.1-10 RealStructure</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X7D702EA087C1C5EF">3.2 <span class="Heading"> Isomorphisms</span></a>
 </span>
@@ -111,7 +112,11 @@
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RealFormById</code>( <var class="Arg">type</var>, <var class="Arg">rank</var>, <var class="Arg">id</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RealFormById</code>( <var class="Arg">type</var>, <var class="Arg">rank</var>, <var class="Arg">id</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>Let <span class="SimpleMath">L</span> be the complex Lie algebra of type <var class="Arg">type</var> and rank <var class="Arg">rank</var>. This function constructs the real form of <span class="SimpleMath">L</span> with index <var class="Arg">id</var> (see <code class="func">RealFormsInformation</code> (<a href="chap3.html#X7BB53454857133FF"><span class="RefLink">3.1-1</span></a>)). By default this Lie algebra is constructed over the field <var class="Arg">SqrtField</var>. However, by adding as an optional fourth argument the field <var class="Arg">F</var>, it is possible to construct the Lie algebra output by this function over <var class="Arg">F</var>. It is required that the complex unit <var class="Arg">E(4)</var> is contained in <var class="Arg">F</var>. If the index <var class="Arg">ind</var> is 0, then the realification of <span class="SimpleMath">L</span> is constructed, which, strictly speaking is not a real form of <span class="SimpleMath">L</span>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RealFormById</code>( [<var class="Arg">type</var>, <var class="Arg">rank</var>, <var class="Arg">id</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RealFormById</code>( [<var class="Arg">type</var>, <var class="Arg">rank</var>, <var class="Arg">id</var>, ]<var class="Arg">F</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RealFormById</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RealFormById</code>( <var class="Arg">list</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Let <span class="SimpleMath">L</span> be the complex Lie algebra of type <var class="Arg">type</var> and rank <var class="Arg">rank</var>. This function constructs the real form of <span class="SimpleMath">L</span> with index <var class="Arg">id</var> (see <code class="func">RealFormsInformation</code> (<a href="chap3.html#X7BB53454857133FF"><span class="RefLink">3.1-1</span></a>)). By default this Lie algebra is constructed over the field <var class="Arg">SqrtField</var>. However, by adding as an optional fourth argument the field <var class="Arg">F</var>, it is possible to construct the Lie algebra output by this function over <var class="Arg">F</var>. It is required that the complex unit <var class="Arg">E(4)</var> is contained in <var class="Arg">F</var>. The function also accepts <var class="Arg">type</var>, <var class="Arg">rank</var>, and <var class="Arg">id</var> in a list as an argument. Moreover, if <var class="Arg">list</var> is a list of such triples, then the function constructs the direct sum of the simple real forms specified by the individual triples. If the index <var class="Arg">ind</var> is 0, then the realification of <span class="SimpleMath">L</span> is constructed, which, strictly speaking is not a real form of <span class="SimpleMath">L</span>.</p>
 
 
 <div class="example"><pre>
@@ -119,39 +124,58 @@
 &lt;Lie algebra of dimension 24 over SqrtField&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RealFormById( "A", 4, 2, CF(4) );</span>
 &lt;Lie algebra of dimension 24 over GaussianRationals&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RealFormById( [ ["A", 4, 2], ["D", 5, 2] ], SqrtField);</span>
+&lt;Lie algebra of dimension 69 over SqrtField&gt;
+</pre></div>
+
+<p><a id="X7E23043A7BBE7DF2" name="X7E23043A7BBE7DF2"></a></p>
+
+<h5>3.1-4 IdRealForm</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdRealForm</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Let <span class="SimpleMath">L</span> be a semisimple real Lie algebra, where each simple summand is a real form of a simple complex Lie algebra. This function returns (a list of) the id(s) of the simple real form(s).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := RealFormById( [ ["A", 4, 2], ["D", 5, 2] ], SqrtField);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IdRealForm( L );</span>
+[ [ "A", 4, 2 ], [ "D", 5, 2 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K := RealFormById("A",5,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IdRealForm( K );</span>
+[ "A", 5, 2 ]
 </pre></div>
 
 <p><a id="X85C3549A8537FBF6" name="X85C3549A8537FBF6"></a></p>
 
-<h5>3.1-4 AllRealForms</h5>
+<h5>3.1-5 AllRealForms</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllRealForms</code>( <var class="Arg">type</var>, <var class="Arg">rank</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function returns all real forms of the simple complex Lie algebras of type <var class="Arg">type</var> and rank <var class="Arg">rank</var> up to isomorphism. In the same way as with <code class="func">RealFormById</code> (<a href="chap3.html#X8443E03C868CA7D3"><span class="RefLink">3.1-3</span></a>) it is possible to add the base field as an optional third argument.</p>
 
 <p><a id="X7CA76CD087DBABF4" name="X7CA76CD087DBABF4"></a></p>
 
-<h5>3.1-5 RealFormParameters</h5>
+<h5>3.1-6 RealFormParameters</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RealFormParameters</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>For a real Lie algebra <var class="Arg">L</var> constructed by the function <code class="func">RealFormById</code> (<a href="chap3.html#X8443E03C868CA7D3"><span class="RefLink">3.1-3</span></a>), this function returns a list of the parameters defining <var class="Arg">L</var> as a real form of its complexification. The first element of the list is the type of <var class="Arg">L</var> (given by a string), the second element is its rank, the third and fourth elements are the list of signs and the permutation defining the Cartan involution (see Section <a href="chap1.html#X7A0F3100829CD1E1"><span class="RefLink">1.1</span></a>).</p>
 
 <p><a id="X8266EA5E7D3B4DD5" name="X8266EA5E7D3B4DD5"></a></p>
 
-<h5>3.1-6 IsRealFormOfInnerType</h5>
+<h5>3.1-7 IsRealFormOfInnerType</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRealFormOfInnerType</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns <var class="Arg">true</var> if and only if the real form <var class="Arg">L</var> is a defined by an inner involutive automorphism.</p>
 
 <p><a id="X79A0991B809A4D6C" name="X79A0991B809A4D6C"></a></p>
 
-<h5>3.1-7 IsRealification</h5>
+<h5>3.1-8 IsRealification</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRealification</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns <var class="Arg">true</var> if and only if the real form <var class="Arg">L</var> is the realification of a complex simple Lie algebra.</p>
 
 <p><a id="X81E1C65282CE3130" name="X81E1C65282CE3130"></a></p>
 
-<h5>3.1-8 CartanDecomposition</h5>
+<h5>3.1-9 CartanDecomposition</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CartanDecomposition</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>The Cartan decomposition of <var class="Arg">L</var> as a record with entries <var class="Arg">K</var>, <var class="Arg">P</var>, and <var class="Arg">CartanInv</var>, such that <span class="SimpleMath">L=K⊕ P</span> is the Cartan decomposition with corresponding Cartan involution <var class="Arg">CartanInv</var>, which is defined as a function on <var class="Arg">L</var>.</p>
@@ -176,7 +200,7 @@ P := &lt;vector space over SqrtField, with 0 generators&gt; )
 
 <p><a id="X8318965D8692FC43" name="X8318965D8692FC43"></a></p>
 
-<h5>3.1-9 RealStructure</h5>
+<h5>3.1-10 RealStructure</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RealStructure</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RealStructure</code>( <var class="Arg">L:</var> <var class="Arg">basis</var> <var class="Arg">:=</var> <var class="Arg">B</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
@@ -246,7 +270,7 @@ P := &lt;vector space over SqrtField, with 0 generators&gt; )
 <h5>3.3-5 CartanSubspace</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CartanSubspace</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Here <var class="Arg">L</var> is a real semisimple Lie algebra. This function returns a Cartan subspace of <var class="Arg">L</var>. That is a maximal abelian subspace of the subspace <var class="Arg">P</var> given in the <code class="func">CartanDecomposition</code> (<a href="chap3.html#X81E1C65282CE3130"><span class="RefLink">3.1-8</span></a>) of <var class="Arg">L</var>.</p>
+<p>Here <var class="Arg">L</var> is a real semisimple Lie algebra. This function returns a Cartan subspace of <var class="Arg">L</var>. That is a maximal abelian subspace of the subspace <var class="Arg">P</var> given in the <code class="func">CartanDecomposition</code> (<a href="chap3.html#X81E1C65282CE3130"><span class="RefLink">3.1-9</span></a>) of <var class="Arg">L</var>.</p>
 
 <p><a id="X7F9943407A2F367E" name="X7F9943407A2F367E"></a></p>
 
@@ -280,17 +304,19 @@ P := &lt;vector space over SqrtField, with 0 generators&gt; )
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:= RealFormById( "E", 6, 3 );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:= LieCentralizer( L, Subalgebra( L, Basis( CartanSubalgebra(L) ){[1]} ) );</span>
-&lt;Lie algebra of dimension 36 over SqrtField&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DK:= LieDerivedSubalgebra( K );</span>
-&lt;Lie algebra of dimension 35 over SqrtField&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:= RealFormById( [["E", 6, 3],["A", 3, 2]] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"> K:= LieCentralizer( L, Subalgebra( L, Basis( CartanSubalgebra(L) ){[1]} ) );</span>
+&lt;Lie algebra of dimension 51 over SqrtField&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"> DK:= LieDerivedSubalgebra( K );</span>
+&lt;Lie algebra of dimension 50 over SqrtField&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">vd:= VoganDiagram(DK);</span>
-&lt;Vogan diagram in Lie algebra of type A5&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( vd );</span>
-A5:  1---(2)---3---4---5
+&lt;Vogan diagram in Lie algebra of type A3+A5&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"> Display( vd );</span>
+A3:  (1)---2---3
+A5:  4---(5)---6---7---8
 Involution: ()
-
+Types of direct summands:
+[ [ "A", 3, 2 ], [ "A", 5, 3 ] ]
 </pre></div>
 
 <p><a id="X84042AAE7CF12E38" name="X84042AAE7CF12E38"></a></p>
@@ -302,16 +328,17 @@ Involution: ()
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:= RealFormById( "E", 6, 3 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:= RealFormById( [["E", 6, 3],["A", 3, 2]] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K:= LieCentralizer( L, Subalgebra( L, Basis( CartanSubalgebra(L) ){[1]} ) );</span>
-&lt;Lie algebra of dimension 36 over SqrtField&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DK:= LieDerivedSubalgebra( K );</span>
-&lt;Lie algebra of dimension 35 over SqrtField&gt;
+&lt;Lie algebra of dimension 51 over SqrtField&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"> DK:= LieDerivedSubalgebra( K );</span>
+&lt;Lie algebra of dimension 50 over SqrtField&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sd:= SatakeDiagram( DK );</span>
-&lt;Satake diagram in Lie algebra of type A5&gt;
+&lt;Satake diagram in Lie algebra of type A5xA3&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( sd );</span>
 A5:  1---2---(3)---4---5
-Involution:  (1,5)(2,4)
+A3:  6---(7)---8
+Involution:  (1,5)(2,4)(6,8)
 </pre></div>
 
 

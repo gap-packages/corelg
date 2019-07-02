@@ -1,6 +1,6 @@
 name: CoReLG
-version: 1.20
-date: 2014-12-02
+version: 1.50
+date: 2019-07-02
 description: |
     Computation with real Lie groups
 
@@ -25,7 +25,7 @@ GAP: ">=4.8"
 needed-pkgs:
     - name: "sla"
       version: ">=1.5"
-      url: "http://www.science.unitn.it/~degraaf/sla.html"
+      url: "https://gap-packages.github.io/sla/"
 
 www: https://gap-packages.github.io/corelg/
 readme: README.md
@@ -33,10 +33,10 @@ packageinfo: https://gap-packages.github.io/corelg/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/gap-packages/corelg/releases/download/v1.20/corelg-1.20.tar.gz
+      url: https://github.com/gap-packages/corelg/releases/download/v1.50/corelg-1.50.tar.gz
 
 abstract: |
-    The package <span class="pkgname">CoReLG</span> contains                  functionality for working with real semisimple Lie algebras.
+    The package <span class="pkgname">CoReLG</span> contains functionality for working with real semisimple Lie algebras.
 
 status: accepted
 doc-html: doc/chap0.html
@@ -45,24 +45,27 @@ keywords: |
     real Lie algebras, nilpotent orbits Cartan subalgebras.
 citeas: |
     <p class='BibEntry'>
-    [<span class='BibKey'>DFG14</span>]   <b class='BibAuthor'>Dietrich, H., Faccin, P. and de Graaf, W. A.</b>,
+    [<span class='BibKey'>DFG19</span>]   <b class='BibAuthor'>Dietrich, H., Faccin, P. and de Graaf, W. A.</b>,
      <i class='BibTitle'>CoReLG, Computation with real Lie groups,
-             Version 1.20</i>
-     (<span class='BibYear'>2014</span>)<br />
+             Version 1.50</i>
+     (<span class='BibYear'>2019</span>)<br />
     (<span class='BibNote'>Refereed GAP package</span>),
     <span class='BibHowpublished'><a href="https://gap-packages.github.io/corelg/">https://gap-packages.github.io/corelg/</a></span>.
     </p>
     
 
 bibtex: |
-    @misc{ CoReLG1.20,
+    @misc{ CoReLG1.50,
       author =           {Dietrich, H. and Faccin, P. and de Graaf, W. A.},
-      title =            {{CoReLG}, Computation with real Lie groups, {V}ersion 1.20},
-      month =            {Dec},
-      year =             {2014},
+      title =            {{CoReLG},  Computation with real Lie groups, {V}ersion
+                          1.50},
+      month =            {Jul},
+      year =             {2019},
       note =             {Refereed GAP package},
-      howpublished =     {\href {https://gap-packages.github.io/corelg/} {\texttt{https://gap-packages.github.io/}\discretionary {}{}{}\texttt{corelg/}}},
+      howpublished =     {\href         {https://gap-packages.github.io/corelg/}
+                          {\texttt{https://gap-packages.github.io/}\discretionary
+                          {}{}{}\texttt{corelg/}}},
       keywords =         {real Lie algebras; nilpotent orbits Cartan subalgebras},
-      printedkey =       {DFG14}
+      printedkey =       {DFG19}
     }
 
