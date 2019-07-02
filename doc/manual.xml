@@ -1,12 +1,69 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 
 <!DOCTYPE Book SYSTEM "gapdoc.dtd"
 [<!ENTITY FpLieRing "<Package>corelg</Package>">] >
 
+
+
+
 <Book Name="CoReLG">
 
-<#Include SYSTEM "title.xml">
+<TitlePage>
+  <Title>CoReLG</Title>
+  <Subtitle>Computing with real Lie Algebras</Subtitle>
+  <Version>Version 1.50</Version>
+
+<Author>
+  Heiko Dietrich
+  <Email>heiko.dietrich@monash.edu</Email>
+  <Homepage>http://users.monash.edu.au/~heikod/</Homepage><Address>
+ School of Mathematics<Br/>
+ Monash University<Br/>
+Wellington Road 1<Br/>
+VIC 3800, Melbourne, Australia<Br/>
+       </Address> 
+  </Author>
+<Author>
+ Paolo Faccin
+  <Email>paolofaccin86@gmail.com</Email>
+<Address>
+    	    Dipartimento di Matematica<Br/>
+Via Sommarive 14<Br/>
+I-38050 Povo (Trento), Italy<Br/>
+       </Address> 
+  </Author>
+<Author>
+ Willem de Graaf  
+<Email>degraaf@science.unitn.it</Email>
+  <Homepage>http://www.science.unitn.it/~degraaf/</Homepage>
+          <Address>
+    	    Dipartimento di Matematica<Br/>
+Via Sommarive 14<Br/>
+I-38050 Povo (Trento), Italy<Br/>
+       </Address> 
+  </Author>
+
+  <Date>July 2019
+</Date>
+
+
+
+<Abstract>
+This package provides functions for computing with various aspects of
+the theory of real simple Lie algebras.
+</Abstract>
+
+<Acknowledgements>
+The research leading to this package has received funding from the European Union's Seventh Framework Program FP7/2007-2013 under grant agreement no 271712, and from the Australian Research Council, grantor code  DE140100088 and DP190100317
+</Acknowledgements>
+
+<Copyright>
+  &copyright; 2019 Heiko Dietrich, Paolo Faccin, and Willem de Graaf 
+</Copyright>
+  
+
+</TitlePage>
 
 <TableOfContents/>
 
@@ -471,6 +528,10 @@ rank <A>rank</A>.
 
 <Func Name="RealFormById" Arg="type, rank, id"/>
 <Func Name="RealFormById" Arg="type, rank, id, F"/>
+<Func Name="RealFormById" Arg="[type, rank, id]"/>
+<Func Name="RealFormById" Arg="[type, rank, id], F"/>
+<Func Name="RealFormById" Arg="list"/>
+<Func Name="RealFormById" Arg="list, F"/>
 <Description>
 Let <M>L</M> be the complex Lie algebra of type <A>type</A> and rank <A>rank</A>.
 This function constructs the real form of <M>L</M> with index <A>id</A> (see
@@ -478,7 +539,7 @@ This function constructs the real form of <M>L</M> with index <A>id</A> (see
 By default this Lie algebra is constructed over the field <A>SqrtField</A>.
 However, by adding as an optional fourth argument the field <A>F</A>, it is possible
 to construct the Lie algebra output by this function over <A>F</A>. It is required
-that the complex unit <A>E(4)</A> is contained in <A>F</A>.
+that the complex unit <A>E(4)</A> is contained in <A>F</A>. The function also accepts  <A>type</A>, <A>rank</A>, and  <A>id</A> in a list as an argument. Moreover, if <A>list</A> is a list of such triples, then the function constructs the direct sum of the simple real forms specified by the individual triples.
 
 If the index <A>ind</A> is 0, then the realification of <M>L</M> is constructed,
 which, strictly speaking is not a real form of <M>L</M>. 
@@ -487,9 +548,34 @@ gap> RealFormById( "A", 4, 2 );
 &lt;Lie algebra of dimension 24 over SqrtField>
 gap> RealFormById( "A", 4, 2, CF(4) );
 &lt;Lie algebra of dimension 24 over GaussianRationals>
+gap> RealFormById( [ ["A", 4, 2], ["D", 5, 2] ], SqrtField);
+&lt;Lie algebra of dimension 69 over SqrtField>
 </Example>
 </Description>
 </ManSection>
+
+
+<ManSection>
+
+<Func Name="IdRealForm" Arg="L"/>
+<Description>
+Let <M>L</M> be a semisimple real Lie algebra, where each simple summand is a real form of a simple complex Lie algebra. This function returns (a list of) the id(s) of the simple real form(s).
+
+
+<Example>
+gap> L := RealFormById( [ ["A", 4, 2], ["D", 5, 2] ], SqrtField);;
+gap> IdRealForm( L );
+[ [ "A", 4, 2 ], [ "D", 5, 2 ] ]
+gap> K := RealFormById("A",5,2);;
+gap> IdRealForm( K );
+[ "A", 5, 2 ]
+</Example>
+</Description>
+</ManSection>
+
+
+
+
 
 <ManSection>
 
@@ -730,17 +816,19 @@ of the nodes, printed on a line below the diagram.
 Here <A>L</A> is a real semisimple Lie algebra. This function returns 
 the Vogan diagram of <A>L</A>.
 <Example>
-gap> L:= RealFormById( "E", 6, 3 );;
-gap> K:= LieCentralizer( L, Subalgebra( L, Basis( CartanSubalgebra(L) ){[1]} ) );
-&lt;Lie algebra of dimension 36 over SqrtField>
-gap> DK:= LieDerivedSubalgebra( K );
-&lt;Lie algebra of dimension 35 over SqrtField>
+gap> L:= RealFormById( [["E", 6, 3],["A", 3, 2]] );;
+gap>  K:= LieCentralizer( L, Subalgebra( L, Basis( CartanSubalgebra(L) ){[1]} ) );
+&lt;Lie algebra of dimension 51 over SqrtField>
+gap>  DK:= LieDerivedSubalgebra( K );
+&lt;Lie algebra of dimension 50 over SqrtField>
 gap> vd:= VoganDiagram(DK);
-&lt;Vogan diagram in Lie algebra of type A5>
-gap> Display( vd );
-A5:  1---(2)---3---4---5
+&lt;Vogan diagram in Lie algebra of type A3+A5>
+gap>  Display( vd );
+A3:  (1)---2---3
+A5:  4---(5)---6---7---8
 Involution: ()
-
+Types of direct summands:
+[ [ "A", 3, 2 ], [ "A", 5, 3 ] ]
 </Example>
 </Description>
 </ManSection>
@@ -751,16 +839,17 @@ Involution: ()
 Here <A>L</A> is a real semisimple Lie algebra. This function returns 
 the Satake diagram of <A>L</A>.
 <Example>
-gap> L:= RealFormById( "E", 6, 3 );;
+gap> L:= RealFormById( [["E", 6, 3],["A", 3, 2]] );;
 gap> K:= LieCentralizer( L, Subalgebra( L, Basis( CartanSubalgebra(L) ){[1]} ) );
-&lt;Lie algebra of dimension 36 over SqrtField>
-gap> DK:= LieDerivedSubalgebra( K );
-&lt;Lie algebra of dimension 35 over SqrtField>
+&lt;Lie algebra of dimension 51 over SqrtField>
+gap>  DK:= LieDerivedSubalgebra( K );
+&lt;Lie algebra of dimension 50 over SqrtField>
 gap> sd:= SatakeDiagram( DK );
-&lt;Satake diagram in Lie algebra of type A5>
+&lt;Satake diagram in Lie algebra of type A5xA3>
 gap> Display( sd );
 A5:  1---2---(3)---4---5
-Involution:  (1,5)(2,4)
+A3:  6---(7)---8
+Involution:  (1,5)(2,4)(6,8)
 </Example>
 </Description>
 </ManSection>
@@ -833,21 +922,23 @@ which identifies its orbit in the complexification of the real Lie algebra in wh
 
 
 
-<Section> <Heading>Nilpotent orbits in real Theta groups</Heading>
+<Section> <Heading>The real Weyl group</Heading>
 
+<!---
 Let <M>L=\bigoplus_{i\in \mathbb{Z}_m} L_i</M> be a real semisimple Lie algebra, where <M>\mathbb{Z}_m=\mathbb{Z}/m\mathbb{Z}</M> if <M>m\geq 1</M>, and <M>\mathbb{Z}_0=\mathbb{Z}</M>. We provide some functions which help to determine the <M>G_0</M>-orbits of nilpotent elements in <M>L_1</M>, where  <M>G_0</M> is the adjoint group of <M>L_0</M>. An approach to compute these orbits is described in  <Cite Key="dfg15"/>; the first step is to construct, up to <M>G_0</M>-conjugacy, all carrier subalgebras of <M>L</M>. Functions <Ref Attr="CarrierAlgsForNilpOrbsInZGrading"/> and <Ref Attr="CarrierAlgsForNilpOrbsInZmGrading"/> do this in the case that <M>L</M> is a split real form of a complex simple Lie algebra.
 
-
+--->
 
 <ManSection>
 <Func Name="RealWeylGroup" Arg="L"/>
 <Func Name="RealWeylGroup" Arg="L, H"/>
 <Description>
-Here <A>L</A> is a real semisimple Lie algebra with Cartan subalgebra <A>H</A>.  (If <A>H</A> is not given, then <A>CartanSubalgebra(L)</A> will be taken.) This function returns the real Weyl group <M>N_G(H)/C_G(H)</M> associated with  <A>H</A>, where <M>G</M> is the adjoint group of <A>L</A>. The real Weyl group will be stored in the Cartan subalgebra, so that a new call to this function, with the same input, will return the real Weyl group  immediately.
+Here <A>L</A> is a real semisimple Lie algebra with Cartan subalgebra <A>H</A>.  (If <A>H</A> is not given, then <A>CartanSubalgebra(L)</A> will be taken.) This function returns the real Weyl group <M>N_G(H)/C_G(H)</M> associated with  <A>H</A>, where <M>G</M> is the connected component of the group of real points of the complex adjoint group of <A>L</A>. The real Weyl group will be stored in the Cartan subalgebra, so that a new call to this function, with the same input, will return the real Weyl group  immediately.
 </Description>
 </ManSection>
 
 
+<!---
 <ManSection>
 <Attr Name="CarrierAlgsForNilpOrbsInZGrading" Arg="type,rank,d"/>
 <Description>
@@ -904,6 +995,8 @@ cars := [
 </Example>
 </Description>
 </ManSection>
+
+---->
 
 
 </Section>

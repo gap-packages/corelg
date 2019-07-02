@@ -1,28 +1,18 @@
-##############################################################################
-##
-#A corelgRealWG( <L> )
-##
-##
-DeclareAttribute( "corelgRealWG", IsLieAlgebra );
 
-##############################################################################
-##
-#F RealWeylGroup( <L> )
-#F RealWeylGroup( <L>, <H> )
-##
-##
-DeclareGlobalFunction( "RealWeylGroup" );
-
+#
+# CURRENTLY THOSE FUNCTIONS ARE LOCAL ONLY
+#
+#
 ##############################################################################
 ##
 #F CarrierAlgsForNilpOrbsInZGrading( <type>, <rank>, <d> )
 ##
 ##
-DeclareGlobalFunction( "CarrierAlgsForNilpOrbsInZGrading" );
+##### DeclareGlobalFunction( "CarrierAlgsForNilpOrbsInZGrading" );
 
 ##############################################################################
 ##
 #F CarrierAlgsForNilpOrbsInZmGrading( <type>, <rank>, <m0>, <str>, <num>  )
 ##
 ##
-DeclareGlobalFunction( "CarrierAlgsForNilpOrbsInZmGrading" );
+#### DeclareGlobalFunction( "CarrierAlgsForNilpOrbsInZmGrading" );

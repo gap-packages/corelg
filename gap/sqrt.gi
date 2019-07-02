@@ -748,7 +748,7 @@ end );
 InstallMethodWithRandomSource( Random,
     "for a random source and an SqrtField ",
     [ IsRandomSource, IsSqrtField ],
-function( el )
+function( rs, F )
    return Sum(List([1..15],x-> Random(rs,Rationals)*Sqroot(Random(rs,Rationals))));
    
 end );

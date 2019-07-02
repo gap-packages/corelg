@@ -28,3 +28,4 @@ ReadPackage( "corelg", "gap/carrierrtsys.gd" );
 ReadPackage( "corelg", "gap/nilpotentOrbits.gd" );
 ReadPackage( "corelg", "gap/cartandecomp.gd" );
 ReadPackage( "corelg", "gap/realtheta.gd" );
+ReadPackage( "corelg", "gap/realweyl.gd" );

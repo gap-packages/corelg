@@ -12,10 +12,11 @@
 
 SetPackageInfo( rec(
 PackageName := "CoReLG",
-Subtitle := "Computation with real Lie groups",        
-Version := "1.20dev",
-Date := "02/12/2014", # this is in dd/mm/yyyy format
-
+Subtitle := "computation with real Lie groups",        
+Version := "1.5",
+Date := "01/07/2019",
+ArchiveURL := Concatenation("http://users.monash.edu/~heikod/corelg/corelg-",~.Version),
+ArchiveFormats := ".tar.gz",
 Persons := [
 
   rec(
@@ -26,7 +27,7 @@ Persons := [
   Email := "heiko.dietrich@monash.edu",
   WWWHome := "http://users.monash.edu.au/~heikod/",
   Place := "Melbourne",
-  Institution := "School of Mathematical Sciences, Monash University"
+  Institution := "School of Mathematicals, Monash University"
   ),
 
   rec(
@@ -54,20 +55,6 @@ Persons := [
 Status := "accepted",
 CommunicatedBy := "Bettina Eick (Braunschweig)",
 AcceptDate := "01/2014",
-
-PackageWWWHome  := "https://gap-packages.github.io/corelg/",
-README_URL      := Concatenation( ~.PackageWWWHome, "README.md" ),
-PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
-SourceRepository := rec(
-    Type := "git",
-    URL := "https://github.com/gap-packages/corelg",
-),
-IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-ArchiveURL      := Concatenation( ~.SourceRepository.URL,
-                                 "/releases/download/v", ~.Version,
-                                 "/corelg-", ~.Version ),
-ArchiveFormats := ".tar.gz",
-
 PackageDoc := rec( BookName  := "CoReLG" ,  
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
@@ -76,14 +63,17 @@ PackageDoc := rec( BookName  := "CoReLG" ,
   LongTitle := "Computing with real Lie groups",
   Autoload  := false
 ),
-
+README_URL := 
+  "http://users.monash.edu/~heikod/corelg/README",
+PackageInfoURL := 
+  "http://users.monash.edu/~heikod/corelg/PackageInfo.g",
 AbstractHTML := "The package <span class=\"pkgname\">CoReLG</span> contains \
                  functionality for working with real semisimple Lie algebras.",
-
+PackageWWWHome := "http://users.monash.edu/~heikod/corelg/",
 Dependencies := rec(
-  GAP := ">=4.8",
-  NeededOtherPackages:= [ ["sla", ">=1.5"] ],
-  SuggestedOtherPackages := [ ],
+  GAP := ">=4.4",
+  NeededOtherPackages:= [ ["sla", ">=0.14"] ],                 
+  SuggestedOtherPackages := [ ["GAPDoc", ">= 1.0"] ],
   ExternalConditions := []
 ),
 AvailabilityTest := ReturnTrue,
@@ -91,22 +81,7 @@ Autoload := false,
 
 # the banner
 BannerString := "CoReLG\n a package for computing with real Lie groups \n by Heiko Dietrich, Paolo Faccin and Willem de Graaf\n",
-Keywords := ["real Lie algebras","nilpotent orbits Cartan subalgebras"],
-
-AutoDoc := rec(
-    TitlePage := rec(
-        Version := Concatenation( "Version ", ~.Version ),
-        Abstract := """
-            This package provides functions for computing with various
-            aspects of the theory of real simple Lie algebras.
-            """,
-        Acknowledgements := """
-            The research leading to this package has received funding from
-            the European Union's Seventh Framework Program FP7/2007-2013
-            under grant agreement no 271712.
-            """,
-        Copyright := "&copyright; 2014 Heiko Dietrich, Paolo Faccin, and Willem de Graaf",
-    ),
-),
-
+Keywords := ["real Lie algebras","nilpotent orbits Cartan subalgebras"]
 ));
+
+

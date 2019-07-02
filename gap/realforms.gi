@@ -1182,6 +1182,11 @@ InstallMethod( PrintObj,
       minus := Filtered([1..r],x->Signs(o)[x]=-1);
       corelg.prntdg(CartanMatrix(o),minus);
       Print("\nInvolution: ",PermInvolution(o));
+      
+      if IsBound(o!.sstypes) then 
+         Print("\nTypes of direct summands:\n");
+         Print(o!.sstypes); 
+      fi;
 end );
 
 
@@ -1334,8 +1339,15 @@ local res, rank, cd, h, r, c, cg, e, sigma, cf, cb, newcg, iso, wh, phi, i, test
          SetRealFormParameters(L,RealFormParameters(RealFormById(mv)));
       fi;
       Info(InfoCorelg,2,"   end Vogan Diagram for realification"); 
-      return VoganDiagram(L);
-
+      tmp := VoganDiagram(L);
+### added this
+      if Length(ct.types)=2 and ct.types[1] = ct.types[2] then
+         tmp!.sstypes :=  [Concatenation(ct.types[1],[0])];
+        #Print("added ",tmp!.sstypes,"\n");
+      else
+         Display("did NOT add id to realification...");
+      fi;
+       return tmp;
 end;
 
 
@@ -1395,7 +1407,11 @@ local res, rank, cd, h, r, c, cg, e, sigma, cf, cb, newcg, iso, wh, phi, i, test
                                                       cftheta:=ListWithIdenticalEntries(rank,1)));
          SetVoganDiagram(L,tmp);
          SetRealFormParameters(L,[ct.types[1][1],ct.types[1][2],ListWithIdenticalEntries(ct.types[1][2],1),()]);
-         return VoganDiagram(L);
+
+         tmp := VoganDiagram(L);
+         tmp!.sstypes := [IdRealForm(L)];
+         L!.sstypes   := [IdRealForm(L)];
+         return tmp;
       fi;
  
       
@@ -1787,7 +1803,10 @@ local res, rank, cd, h, r, c, cg, e, sigma, cf, cb, newcg, iso, wh, phi, i, test
          fi;
 
          Info(InfoCorelg,2,"   end Vogan Diagram for simple LA");   
-         return VoganDiagram(L);
+
+         tmp := VoganDiagram(L);
+         tmp!.sstypes := [IdRealForm(L)];
+         return tmp;
         
 
      ###########################################
@@ -1948,7 +1967,10 @@ local res, rank, cd, h, r, c, cg, e, sigma, cf, cb, newcg, iso, wh, phi, i, test
  
 
          Info(InfoCorelg,2,"   end Vogan Diagram"); 
-         return VoganDiagram(L);
+         tmp := VoganDiagram(L);
+         tmp!.sstypes := [IdRealForm(L)];
+         return tmp;
+        
 
         #Add(res,rec(L := L, cd:=cd, h:=h, cg:=newcg, base := base, inn:=inn, mv := mv, cftheta := cft,
         #            cfsigma:=cfs, where := wh, rank:=Dimension(h)));
@@ -2065,7 +2087,7 @@ local cd, h, rank, theta, sigma, R, C, base, cg, pr, ct, cb, algs, cgs,
    fi;
 
   #identify realifications
-   halg := List(ct.enumeration,x -> SubalgebraNC(L,Flat(List(cg,i->i{x}))));
+   halg := List(ct.enumeration,x -> SubalgebraNC(L,Concatenation(List(cg,i->i{x}))));
    hh   := List(halg,x->Basis(x)[1]);
    perm := [];
    for i in [1..Length(hh)] do
@@ -2217,7 +2239,13 @@ local cd, h, rank, theta, sigma, R, C, base, cg, pr, ct, cb, algs, cgs,
              cftheta:=Concatenation(List(algs,x->CoefficientsOfSigmaAndTheta(VoganDiagram(x)).cftheta)));
   #Print("this is a",a,"\n");
    a := corelg.VoganDiagramOfRealForm(L,a);
+
+   if ForAll(algs,x->IsBound(VoganDiagram(x)!.sstypes)) then
+      a!.sstypes := Concatenation(List(algs,a->VoganDiagram(a)!.sstypes));
+   fi;
    SetVoganDiagram(L,a);
+   if IsBound(a!.sstypes) then L!.sstypes := StructuralCopy(a!.sstypes); fi;
+
 
    Info(InfoCorelg,1,"end Vogan diagram");
    return a;
@@ -2304,6 +2332,7 @@ InstallGlobalFunction( IdRealForm, function(L)
 local id,vd,pos,tmp;
 
    if IsBound(L!.id) then return L!.id; fi;
+   if IsBound(L!.sstypes) then return L!.sstypes; fi;
 
    if (HasIsCompactForm(L) and IsCompactForm(L)) or Dimension(CartanDecomposition(L).P)=0 then
       id := CartanType(CartanMatrix(VoganDiagram(L))).types[1];
@@ -2320,6 +2349,7 @@ local id,vd,pos,tmp;
                     x->Length(x)=2))>0]);  
    else
       vd  := VoganDiagram(L);
+      if IsBound(L!.sstypes) then return L!.sstypes; fi;
       tmp := vd!.param;
       if Length(tmp)>1 then
          Error("id functionality only for simple LAs");
@@ -2418,8 +2448,11 @@ local nr, mv, nr1, nr2, en;
        else
           Print("    2 is of type so*(8)\n");
           Print("    3 is of type so(4,4)\n");
-          Print("    4 is of type so(",2*r-1,",1)\n");
-          Print("    5 is of type so(3,5)\n");
+          Print("    4 is of type so(3,5)\n");
+          Print("    5 is of type so(1,7)\n");    
+        # Print("    4 is of type so(",2*r-1,",1)\n");
+#       #  Print("    5 is of type so(3,5)\n");
+## corrected (3,5) and (1,7) (swap and typo)
        fi;
        
     elif t = "G" then
@@ -2443,8 +2476,9 @@ local nr, mv, nr1, nr2, en;
           Print("    5 is EIV  = E6(-26), with k_0 of type f_4 (F4)\n");
        elif r=7 then
           Print("    2 is EV   = E7(7), with k_0 of type su(8) (A7)\n");
-          Print("    3 is EVI  = E7(-25), with k_0 of type e_6+R (E6+R)\n"); #so(12)+su(2)\n");
-          Print("    4 is EVII = E7(-5), with k_0 of type so(12)+su(2) (D6+A1)\n");#e_6+R (\n");
+          Print("    3 is EVII  = E7(-25), with k_0 of type e_6+R (E6+R)\n"); #so(12)+su(2)\n");
+### notation swap: EVII and EVI changed
+          Print("    4 is EVI = E7(-5), with k_0 of type so(12)+su(2) (D6+A1)\n");#e_6+R (\n");
        elif r=8 then
           Print("    2 is EVIII = E8(8), with k_0 of type so(16) (D8)\n");
           Print("    3 is EIX   = E8(-24), with k_0 of type e_7+su(2) (E7+A1)\n");
@@ -2459,13 +2493,25 @@ end);
 #####################################################################################
 
 InstallGlobalFunction( RealFormById, function(arg)
-local r,t,id, par,sign,perm,mv,nr,tmp, nr1,nr2, F, cf,testCF, vd, rsc, en, sigma, cg, ct, base;
+local r,t,id, par,sign,perm,mv,nr,tmp, nr1,nr2, F, cf,testCF, vd, rsc, en, sigma, cg, ct, base, L;
+
     if IsField(arg[Length(arg)]) then 
         F := arg[Length(arg)]; 
         arg := arg{[1..Length(arg)-1]};
     else 
         F := SqrtField; 
     fi;
+  
+    if IsList(arg[1]) and IsList(arg[1][1]) and IsList(arg[1][1][1]) then
+        L := RealFormById(arg[1][1],F);
+        for r in [2..Size(arg[1])] do
+           L := DirectSumOfAlgebras(L,RealFormById(arg[1][r],F));
+        od;
+        L!.sstypes := arg[1];
+        return L;
+    fi;
+
+    
     if IsList(arg[1]) and Length(arg[1])>1 then arg := arg[1]; fi;
     t:=arg[1]; r:=arg[2]; id:=arg[3];
     if not id in [0..NumberRealForms(t,r)] then 
@@ -2525,7 +2571,8 @@ local r,t,id, par,sign,perm,mv,nr,tmp, nr1,nr2, F, cf,testCF, vd, rsc, en, sigma
                               if i^perm=i and sign[i]=1 then return "K"; fi; end), 
                     cfsigma:= -sign, 
                     cftheta:= sign));
-  
+       vd!.sstypes := [ [t,r,id] ];
+       tmp!.sstypes := [[t,r,id]];
        SetVoganDiagram(tmp,vd);
        if F=SqrtField then tmp!.std := true; fi;
        SetcorelgCompactDimOfCSA(CartanSubalgebra(tmp),Dimension(CartanSubalgebra(tmp)));
@@ -2607,9 +2654,12 @@ local r,t,id, par,sign,perm,mv,nr,tmp, nr1,nr2, F, cf,testCF, vd, rsc, en, sigma
                               if i^perm=i and sign[i]=1 then return "K"; fi; end), 
                     cfsigma:= -sign, 
                     cftheta:= sign));
+    vd!.sstypes := [ [t,r,id] ]; 
     SetVoganDiagram(tmp,vd);
  
     tmp!.id  := [t,r,id];
+    tmp!.sstypes := [[t,r,id]];
+
     if F = SqrtField then  tmp!.std := true; fi;
     SetcorelgCompactDimOfCSA(CartanSubalgebra(tmp),
              Dimension(Intersection(CartanDecomposition(tmp).K,CartanSubalgebra(tmp))));

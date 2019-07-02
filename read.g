@@ -9,10 +9,12 @@
 
 ReadPackage( "corelg", "gap/sqrt.gi");
 ReadPackage( "corelg", "gap/carrierrtsys.gi");
-ReadPackage( "corelg", "gap/forms.g" );
+ReadPackage( "corelg", "gap/forms.gi" );
 ReadPackage( "corelg", "gap/realforms.gi" );
 ReadPackage( "corelg", "gap/nilpotentOrbits.gi" );
 ReadPackage( "corelg", "gap/cartandecomp.gi" );
 ReadPackage( "corelg", "doc/makedoc.g" );
 ReadPackage( "corelg", "gap/test.gi" );
-ReadPackage( "corelg", "gap/realtheta.g" );
+ReadPackage( "corelg", "gap/realtheta.gi" );
+ReadPackage( "corelg", "gap/affine.gi" );
+ReadPackage( "corelg", "gap/realweyl.gi" );
