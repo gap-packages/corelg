@@ -15,6 +15,7 @@ PackageName := "CoReLG",
 Subtitle := "Computation with real Lie groups",
 Version := "1.50",
 Date := "02/07/2019", # this is in dd/mm/yyyy format
+License := "GPL-2.0-or-later",
 
 Persons := [
 
