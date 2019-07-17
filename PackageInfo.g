@@ -12,7 +12,7 @@
 
 SetPackageInfo( rec(
 PackageName := "CoReLG",
-Subtitle := "Computation with real Lie groups",
+Subtitle := "Computing with real Lie Algebras",
 Version := "1.51",
 Date := "15/07/2019", # this is in dd/mm/yyyy format
 License := "GPL-2.0-or-later",
@@ -26,6 +26,11 @@ IsAuthor := true,
 IsMaintainer := true,
 Email := "heiko.dietrich@monash.edu",
 WWWHome := "http://users.monash.edu.au/~heikod/",
+PostalAddress :=
+"""School of Mathematics
+Monash University
+Wellington Road 1
+VIC 3800, Melbourne, Australia""",
 Place := "Melbourne",
 Institution := "School of Mathematical Sciences, Monash University"
 ),
@@ -35,18 +40,28 @@ LastName := "Faccin",
 FirstNames := "Paolo",
 IsAuthor := true,
 IsMaintainer := true,
-Email := "faccin@science.unitn.it",
+Email := "paolofaccin86@gmail.com",
+PostalAddress :=
+"""Dipartimento di Matematica
+Via Sommarive 14
+I-38050 Povo (Trento), Italy
+""",
 Place := "Trento",
 Institution := "Dipartimento di Matematica, University of Trento"
 ),
 
 rec(
 LastName := "de Graaf",
-FirstNames := "Willem Adriaan",
+FirstNames := "Willem",
 IsAuthor := true,
 IsMaintainer := true,
 Email := "degraaf@science.unitn.it",
 WWWHome := "http://www.science.unitn.it/~degraaf",
+PostalAddress :=
+"""Dipartimento di Matematica
+Via Sommarive 14
+I-38050 Povo (Trento), Italy
+""",
 Place := "Trento",
 Institution := "Dipartimento di Matematica, University of Trento"
 )
@@ -74,7 +89,7 @@ ArchiveURLSubset := ["doc"],
 HTMLStart := "doc/chap0.html",
 PDFFile := "doc/manual.pdf",
 SixFile := "doc/manual.six",
-LongTitle := "Computing with real Lie groups",
+LongTitle := "Computing with real Lie Algebras",
 Autoload := false
 ),
 
@@ -91,7 +106,7 @@ AvailabilityTest := ReturnTrue,
 Autoload := false,
 
 # the banner
-BannerString := "CoReLG\n a package for computing with real Lie groups \n by Heiko Dietrich, Paolo Faccin and Willem de Graaf\n",
+BannerString := "CoReLG\n a package for computing with real Lie algebras \n by Heiko Dietrich, Paolo Faccin and Willem de Graaf\n",
 Keywords := ["real Lie algebras","nilpotent orbits Cartan subalgebras"],
 
 AutoDoc := rec(
@@ -104,9 +119,10 @@ aspects of the theory of real simple Lie algebras.
 Acknowledgements := """
 The research leading to this package has received funding from
 the European Union's Seventh Framework Program FP7/2007-2013
-under grant agreement no 271712.
+under grant agreement no 271712, and from the Australian Research
+Council, grantor code DE140100088 and DP190100317.
 """,
-Copyright := "&copyright; 2014 Heiko Dietrich, Paolo Faccin, and Willem de Graaf",
+Copyright := "&copyright; 2013-2019 Heiko Dietrich, Paolo Faccin, and Willem de Graaf",
 ),
 ),
 
