@@ -70,7 +70,6 @@ The research leading to this package has received funding from the European Unio
 <Body>
 
 
-<!-------------------------------------------------------------------------->
 <Chapter> <Heading>Introduction</Heading>
 
 <Package>CoReLG</Package> (Computing with Real Lie Groups) is a &GAP; package for
@@ -246,19 +245,19 @@ particular square root. Also, computations over <A>SqrtField</A> tend to be sign
 than over, say, <A>CF(4)</A>; see the next example. But that is a price we have to pay 
 (at least, in order to be able to do some computations).
 
-<Example>
+<Example><![CDATA[
 gap> L:=RealFormById("E",8,2);
-&lt;Lie algebra of dimension 248 over SqrtField>
+<Lie algebra of dimension 248 over SqrtField>
 gap> allCSA := CartanSubalgebrasOfRealForm(L);;time;
 67224
 gap> L:=RealFormById("E",8,2,CF(4));
-&lt;Lie algebra of dimension 248 over GaussianRationals>
+<Lie algebra of dimension 248 over GaussianRationals>
 gap> allCSA := CartanSubalgebrasOfRealForm(L);;time;
 7301
 # We remark that both computations are exactly the same; 
 # the difference in timing is caused by the fact that 
 # arithmetic over SqrtField is slower.
-</Example>
+]]></Example>
 
 </Section>
 
@@ -267,8 +266,6 @@ gap> allCSA := CartanSubalgebrasOfRealForm(L);;time;
 
 
 
-
-<!-------------------------------------------------------------------------->
 <Chapter Label="sqrt"> <Heading>The field <A>SqrtField</A></Heading>
 
 <Section> <Heading> Definition of the field </Heading>
@@ -280,7 +277,7 @@ The field <M>\mathbb{Q}^{\sqrt{}}(\imath)</M> with <M>\mathbb{Q}^{\sqrt{}}=\math
       Comm="sqrt"/>
 <Description>
 Here <A>q</A> is an element of <A>SqrtField</A>; this function returns <A>true</A> if and only if <A>q</A> is the product of <A>One(SqrtField)</A> and a Gaussian rational. 
-<Example>
+<Example><![CDATA[
 gap> F := SqrtField;
 SqrtField
 gap> IsField( F ); LeftActingDomain( F ); Size( F ); Characteristic( F );
@@ -299,7 +296,7 @@ gap> a in SqrtField; a in GaussianRationals; SqrtFieldIsGaussRat( a );
 true
 false
 true
-</Example>
+]]></Example>
 </Description>
 </ManSection>
 </Section>
@@ -328,7 +325,7 @@ If <A>f</A> is an element in <A>SqrtField</A>, then <A>CoefficientsOfSqrtFieldEl
       Comm="Sqroot"/>
 <Description>
 If <A>l</A> is a list <M>[[r_1,k_1],\ldots,[r_m,k_m]]</M> with Gaussian rationals <M>r_j</M> and rationals <M>k_j</M>, then <A>SqrtFieldEltByCoeffiients(l)</A> returns the element <M>\sum_{j=1}^m r_j\sqrt{k_j}</M> as an element of <A>SqrtField</A>. Note that here <M>k_1,\ldots,k_m</M> need not to be positive, squarefree, or pairwise distinct.
-<Example>
+<Example><![CDATA[
 gap> Sqroot(-(2*3*4)/(11*13)); Sqroot(245/15); Sqroot(16/9);
 2/143*E(4)*Sqroot(858)
 7/3*Sqroot(3)
@@ -339,7 +336,7 @@ gap> CoefficientsOfSqrtFieldElt(a);
 [ [ 2, 1 ], [ 1, 7 ], [ 3, 11 ] ]
 gap> SqrtFieldEltByCoefficients([[2,9],[1,7],[E(4),13]]);
 6 + Sqroot(7) + E(4)*Sqroot(13)
-</Example>
+]]></Example>
 </Description>
 </ManSection>
 
@@ -355,7 +352,7 @@ If <A>f</A> lies in <A>SqrtField</A> with coefficient vector <M>[[r_1,k_1],\ldot
       Comm="Sqroot"/>
 <Description>
 If <A>c</A> is an element of <M>\mathbb{Q}^{\sqrt{}}(\imath)</M> represented as an element of a cyclotomic field <A>CF(n)</A>, then <A>SqrtFieldEltByCyclotomic(c)</A> returns the corresponding element in <A>SqrtField</A>. Our algorithm for doing this is described in <Cite Key="hdwdg12"/>.
-<Example>
+<Example><![CDATA[
 gap> SqrtFieldEltToCyclotomic( Sqroot(2) );
 E(8)-E(8)^3
 gap> SqrtFieldEltToCyclotomic( Sqroot(2)+E(4)*Sqroot(7) );
@@ -365,7 +362,7 @@ gap> SqrtFieldEltByCyclotomic( E(8)-E(8)^3 );
 Sqroot(2)
 gap> SqrtFieldEltByCyclotomic( 3*E(4)*Sqrt(11)-2/4*Sqrt(-13/7) );
 3*E(4)*Sqroot(11) + (-1/14*E(4))*Sqroot(91)
-</Example>
+]]></Example>
 </Description>
 </ManSection>
 </Section>
@@ -373,7 +370,7 @@ gap> SqrtFieldEltByCyclotomic( 3*E(4)*Sqrt(11)-2/4*Sqrt(-13/7) );
 <Section> <Heading> Basic operations </Heading>
 
 All basic field operations are available. The inverse of an element <M>f</M> in <A>SqrtField</A> as follows: We first compute the minimal polynomial <M>p(X)</M> of <M>f</M> over <M>\mathbb{Q}(\imath)</M>, that is, a non-trivial linear combination <M>0=p(f)=a_0+a_1 f+\ldots a_{i-1}f^{i-1}+f^i</M>. Then <M>f^{-1}=-(a_1+a_2f+\ldots+a_{i-1}f^{i-2}+f^{i-1})/a_0</M>. Although the inverse of <M>f</M> can be computed with linear algebra methods only, the degree of the minimal polynomial of <M>f</M> can become rather large. For example, if <M>f=\sum_{j=1}^m r_i \sqrt{k_j}</M> for rational <M>r_i</M> and pairwise distinct positive squarefree integers <M>k_1,\ldots,k_m</M>, then <M>f</M> is a primitive element of the number field <M>\mathbb{Q}(\sqrt{k_1},\ldots,\sqrt{k_m})</M>, see for example  Lemma A.5 in <Cite Key="hdwdg12"/>. For larger degree, the progress of the computation of the inverse is printed via the InfoClass <A>InfoSqrtField</A>. We remark that the method <A>Random</A> simply returns a sum of a few terms <M>a\sqrt{b}</M> where <M>a,b</M> are random rationals constructed with <A>Random(Rationals)</A>.
-<Example>
+<Example><![CDATA[
 gap> a := Sqroot( 2 ) + 3 * Sqroot( 3/7 ); b := Sqroot( 21 ) - Sqroot( 2 );
 Sqroot(2) + 3/7*Sqroot(21)
 (-1)*Sqroot(2) + Sqroot(21)
@@ -394,10 +391,10 @@ gap> ComplexConjugate(Sqroot(17)+Sqroot(-7));
 (-E(4))*Sqroot(7) + Sqroot(17)
 gap> Random( SqrtField );
 -1 + 1/4*Sqroot(3) + 1/9*Sqroot(6)
-</Example>
+]]></Example>
 
 Most methods for list, matrices, and polynomials also work over <A>SqrtField</A>.
-<Example>
+<Example><![CDATA[
 gap> m:=[[Sqroot(2),Sqroot(3)],[Sqroot(2),Sqroot(5)],[1,0]]*One(SqrootField);
 [ [ Sqroot(2), Sqroot(3) ], [ Sqroot(2), Sqroot(5) ], [ 1, 0 ] ]
 gap> NullspaceMat(m);
@@ -411,7 +408,7 @@ gap> Determinant( m );  DefaultFieldOfMatrix( m );
 SqrtField
 gap> x := Indeterminate( SqrtField, "x" );; f := x^2+x+1;
 x^2+x+1
-</Example>
+]]></Example>
 
 <ManSection>
 <Func Name="SqrtFieldMakeRational" Arg="m"
@@ -441,7 +438,7 @@ If <A>f</A> is a polynomial over the Gaussian rationals, then the function retur
       Comm="Sqroot"/>
 <Description>
 If <A>f</A> is a rational polynomial defined over <A>SqrtField</A>, then the previous two functions are used to obtain its factorisation over <M>\mathbb{Q}</M>. 
-<Example>
+<Example><![CDATA[
 gap> F := SqrtField;; one := One( SqrtField );;                 
 gap> x := Indeterminate( F, "x" );; f := x^5 + 4*x^3 + E(4)*one*x;
 x^5+4*x^3+E(4)*x
@@ -453,7 +450,7 @@ gap> f := x^2-1;; Factors(f);
 [ x-1, x+1 ]
 gap> f := x^2+1;; Factors(f);
 [ x^2+1 ]
-</Example>
+]]></Example>
 </Description>
 </ManSection>
 
@@ -489,12 +486,12 @@ and for each index some information
 is given on the Lie algebra, such as a commonly used name. In all cases the index 0
 refers to the realification of the complex Lie algebra.
 
-<Example>
+<Example><![CDATA[
 gap> RealFormsInformation( "A", 4 );
 
   There are 4 simple real forms with complexification A4
     1 is of type su(5), compact form
-    2 - 3 are of type su(p,5-p) with 1 &lt;= p &lt;= 2
+    2 - 3 are of type su(p,5-p) with 1 <= p <= 2
     4 is of type sl(5,R)
   Index '0' returns the realification of A4
 
@@ -510,7 +507,7 @@ gap> RealFormsInformation( "E", 6 );
 
 gap> NumberRealForms("D",10);
 12
-</Example>
+]]></Example>
 </Description>
 </ManSection>
 
@@ -543,14 +540,14 @@ that the complex unit <A>E(4)</A> is contained in <A>F</A>. The function also ac
 
 If the index <A>ind</A> is 0, then the realification of <M>L</M> is constructed,
 which, strictly speaking is not a real form of <M>L</M>. 
-<Example>
+<Example><![CDATA[
 gap> RealFormById( "A", 4, 2 );
-&lt;Lie algebra of dimension 24 over SqrtField>
+<Lie algebra of dimension 24 over SqrtField>
 gap> RealFormById( "A", 4, 2, CF(4) );
-&lt;Lie algebra of dimension 24 over GaussianRationals>
+<Lie algebra of dimension 24 over GaussianRationals>
 gap> RealFormById( [ ["A", 4, 2], ["D", 5, 2] ], SqrtField);
-&lt;Lie algebra of dimension 69 over SqrtField>
-</Example>
+<Lie algebra of dimension 69 over SqrtField>
+]]></Example>
 </Description>
 </ManSection>
 
@@ -562,14 +559,14 @@ gap> RealFormById( [ ["A", 4, 2], ["D", 5, 2] ], SqrtField);
 Let <M>L</M> be a semisimple real Lie algebra, where each simple summand is a real form of a simple complex Lie algebra. This function returns (a list of) the id(s) of the simple real form(s).
 
 
-<Example>
+<Example><![CDATA[
 gap> L := RealFormById( [ ["A", 4, 2], ["D", 5, 2] ], SqrtField);;
 gap> IdRealForm( L );
 [ [ "A", 4, 2 ], [ "D", 5, 2 ] ]
 gap> K := RealFormById("A",5,2);;
 gap> IdRealForm( K );
 [ "A", 5, 2 ]
-</Example>
+]]></Example>
 </Description>
 </ManSection>
 
@@ -672,20 +669,20 @@ If the program does not succeed in splitting the Cartan subalgebra over the base
 of <A>L</A>, then the computation will not succeed.
 </Description>
 </ManSection>
-<Example>
+<Example><![CDATA[
 gap> L:= RealFormById( "A", 5, 3 );
-&lt;Lie algebra of dimension 35 over SqrtField>
+<Lie algebra of dimension 35 over SqrtField>
 gap> H := CartanSubalgebra(L);;
 gap> K:= LieCentralizer( L, Subalgebra( L, [Basis( H )[1]] ) );
-&lt;Lie algebra of dimension 17 over SqrtField>
+<Lie algebra of dimension 17 over SqrtField>
 gap> DK:= LieDerivedSubalgebra( K );
-&lt;Lie algebra of dimension 15 over SqrtField>
+<Lie algebra of dimension 15 over SqrtField>
 gap> CartanDecomposition( DK );
 rec( CartanInv := function( v ) ... end, 
-K := &lt;Lie algebra of dimension 15 over SqrtField>, 
-P := &lt;vector space over SqrtField, with 0 generators> )
+K := <Lie algebra of dimension 15 over SqrtField>, 
+P := <vector space over SqrtField, with 0 generators> )
 # We see that the semisimple subalgebra DK is compact. 
-</Example>
+]]></Example>
 <ManSection>
 <Attr Name="RealStructure" Arg="L"
       Comm="real forms"/>
@@ -707,19 +704,19 @@ The real structure of the real form <A>L</A> is the (complex) conjugation with r
 <Description>
 Here <A>K</A>, <A>L</A> are two real forms of a semisimple complex Lie algebra.
 This function returns an isomorphism if one exists. Otherwise <A>false</A> is returned. 
-<Example>
+<Example><![CDATA[
 gap> L:=RealFormById("E",6,3);;                            
 gap> H:=CartanSubalgebra(L);;
 gap> K:=LieCentralizer(L,Subalgebra(L,Basis(H){[1,2,4]}));;
 gap> DK:=LieDerivedSubalgebra(K);
-&lt;Lie algebra of dimension 8 over SqrtField>
+<Lie algebra of dimension 8 over SqrtField>
 gap> IdRealForm(DK);          
 [ "A", 2, 2 ]
 gap> M:=RealFormById("A",2,2);
-&lt;Lie algebra of dimension 8 over SqrtField>
+<Lie algebra of dimension 8 over SqrtField>
 gap> IsomorphismOfRealSemisimpleLieAlgebras(DK,M);
-&lt;Lie algebra isomorphism between Lie algebras of dimension 8 over SqrtField>
-</Example>
+<Lie algebra isomorphism between Lie algebras of dimension 8 over SqrtField>
+]]></Example>
 </Description>
 </ManSection>
 
@@ -815,21 +812,21 @@ of the nodes, printed on a line below the diagram.
 <Description>
 Here <A>L</A> is a real semisimple Lie algebra. This function returns 
 the Vogan diagram of <A>L</A>.
-<Example>
+<Example><![CDATA[
 gap> L:= RealFormById( [["E", 6, 3],["A", 3, 2]] );;
 gap>  K:= LieCentralizer( L, Subalgebra( L, Basis( CartanSubalgebra(L) ){[1]} ) );
-&lt;Lie algebra of dimension 51 over SqrtField>
+<Lie algebra of dimension 51 over SqrtField>
 gap>  DK:= LieDerivedSubalgebra( K );
-&lt;Lie algebra of dimension 50 over SqrtField>
+<Lie algebra of dimension 50 over SqrtField>
 gap> vd:= VoganDiagram(DK);
-&lt;Vogan diagram in Lie algebra of type A3+A5>
+<Vogan diagram in Lie algebra of type A3+A5>
 gap>  Display( vd );
 A3:  (1)---2---3
 A5:  4---(5)---6---7---8
 Involution: ()
 Types of direct summands:
 [ [ "A", 3, 2 ], [ "A", 5, 3 ] ]
-</Example>
+]]></Example>
 </Description>
 </ManSection>
 
@@ -838,19 +835,19 @@ Types of direct summands:
 <Description>
 Here <A>L</A> is a real semisimple Lie algebra. This function returns 
 the Satake diagram of <A>L</A>.
-<Example>
+<Example><![CDATA[
 gap> L:= RealFormById( [["E", 6, 3],["A", 3, 2]] );;
 gap> K:= LieCentralizer( L, Subalgebra( L, Basis( CartanSubalgebra(L) ){[1]} ) );
-&lt;Lie algebra of dimension 51 over SqrtField>
+<Lie algebra of dimension 51 over SqrtField>
 gap>  DK:= LieDerivedSubalgebra( K );
-&lt;Lie algebra of dimension 50 over SqrtField>
+<Lie algebra of dimension 50 over SqrtField>
 gap> sd:= SatakeDiagram( DK );
-&lt;Satake diagram in Lie algebra of type A5xA3>
+<Satake diagram in Lie algebra of type A5xA3>
 gap> Display( sd );
 A5:  1---2---(3)---4---5
 A3:  6---(7)---8
 Involution:  (1,5)(2,4)(6,8)
-</Example>
+]]></Example>
 </Description>
 </ManSection>
 
@@ -874,13 +871,13 @@ Here <A>L</A> is a real form of a complex simple Lie algebra of rank up to 8.
 This function returns the list of nilpotent orbits (under the action of the adjoint
 group) of <A>L</A>. For this function to work, <A>L</A> must be defined over 
 <A>SqrtField</A>.
-<Example>
+<Example><![CDATA[
 gap> L:= RealFormById( "F", 4, 3 );;
 gap> no:= NilpotentOrbitsOfRealForm( L );;
 #I CoReLG: read database of real triples ... done
 gap> no[1];
-&lt;nilpotent orbit in Lie algebra>
-</Example>
+<nilpotent orbit in Lie algebra>
+]]></Example>
 </Description>
 </ManSection>
 
@@ -890,11 +887,11 @@ gap> no[1];
 Here <A>o</A> is a nilpotent orbit constructed by  <Ref Attr="NilpotentOrbitsOfRealForm"/>
 of a simple real Lie algebra. This function returns a real Cayley triple <A>[ f, h, e ]</A>
 corresponding to the orbit <A>o</A>. The third element <A>e</A> is a representative of the orbit.
-<Example>
+<Example><![CDATA[
 gap> L:= RealFormById( "F", 4, 2 );;
 gap> no:= NilpotentOrbitsOfRealForm( L );;
 gap> o:= no[10];
-&lt;nilpotent orbit in Lie algebra>
+<nilpotent orbit in Lie algebra>
 gap> t:=RealCayleyTriple(o);;
 gap> theta:= CartanDecomposition(L).CartanInv;
 function( v ) ... end
@@ -904,7 +901,7 @@ gap> theta(t[2]) = -t[2];
 true
 gap> t[3]*t[1] = t[2];
 true
-</Example>
+]]></Example>
 </Description>
 </ManSection>
 
@@ -943,13 +940,13 @@ Here <A>L</A> is a real semisimple Lie algebra with Cartan subalgebra <A>H</A>. 
 <Attr Name="CarrierAlgsForNilpOrbsInZGrading" Arg="type,rank,d"/>
 <Description>
 Gives a record containing (up to conjugacy) the carrier algebras of the real theta group specified by the input: here <A>type</A> and <A>rank</A> are the type and rank of the simple real Lie algebra (split real form) where everything happens; <A>d</A> is a list of degrees of the simple roots, defining a <M>\mathbb{Z}</M> grading on the Lie algebra. The output is a record with the following entries: <A>L</A> the Lie algebra,  <A>grad</A> the grading that was used (different format for Z-grading, <A>L0</A> the 0-component of the grading, <A>Hs</A> the Cartan subalgebras of <A>L0</A> that are used, <A>cars</A> the carrier algebras. Here <A>cars</A> is a list of lists; for each Cartan subalgebra of <A>L0</A> there is one list: the first corresponds to the split Cartan subalgebra, and so has just the complex carrier algebras (which are also real), the other lists contain lists as well, for each complex carrier algebra (i.e., for each element of the first list) there is a list containing the real carrier algebras which are strongly <M>H_i</M>-regular, and over the complex numbers conjugate to the given complex carrier algebra. Furthermore, a carrier algebra is given by a record, containing the fields <A>g0</A>, <A>gp</A> (positive degree), and <A>gn</A> (negative degree). 
-<Example>
+<Example><![CDATA[
 gap> ca:=CarrierAlgsForNilpOrbsInZGrading("G",2,[1,0]);
 rec( 
- Hs  := [ &lt;Lie algebra of dimension 2 over SqrtField>, 
-          &lt;Lie algebra of dimension 2 over SqrtField> ], 
-  L  :=   &lt;Lie algebra of dimension 14 over SqrtField>, 
-  L0 :=   &lt;Lie algebra of dimension 4 over SqrtField>, 
+ Hs  := [ <Lie algebra of dimension 2 over SqrtField>, 
+          <Lie algebra of dimension 2 over SqrtField> ], 
+  L  :=   <Lie algebra of dimension 14 over SqrtField>, 
+  L0 :=   <Lie algebra of dimension 4 over SqrtField>, 
 cars :=  [ 
           [rec( g0 := [ v.13+(3)*v.14 ], gn := [ [ v.9 ] ], gp := [ [ v.3 ] ] )]
             ,[ [  ] ] 
@@ -957,7 +954,7 @@ cars :=  [
 grad := rec( g0 := [ v.2, v.8, v.13, v.14 ], 
                gn := [ [ v.7, v.9 ], [ v.10 ], [ v.11, v.12 ] ], 
                gp := [ [ v.1, v.3 ], [ v.4 ], [ v.5, v.6 ] ] ) )
-</Example>
+]]></Example>
 </Description>
 </ManSection>
 
@@ -966,15 +963,15 @@ grad := rec( g0 := [ v.2, v.8, v.13, v.14 ],
 <Attr Name="CarrierAlgsForNilpOrbsInZmGrading" Arg="type,rank,m0,str,num"/>
 <Description>
 Gives a record (up to conjugacy) containing the carrier algebras of the real theta group specified by the input: here <A>type</A> and <A>rank</A> are the type and rank of the simple real Lie algebra (split real form) where everything happens;  <A>m0</A> is the order of the automorphism defining the grading, <A>str</A> is "inner" or "outer", depending on whether the automorphism is inner or not, <A>num</A> the <A>num</A>-th automorphism in the list <A>FiniteOrderInnerAutomorpisms( type, rank, m0 )</A>  or  <A>FiniteOrderOuterAutomorphisms( type, rank, m0, 2 )</A> which is used to define the grading. The output is as for  <Ref Attr="CarrierAlgsForNilpOrbsInZGrading"/>, with the exception that the record entry <A>grad</A> is a list with <A>m0</A> entries, the <A>i</A>-th entry containing the basis for the  <A>i</A>-th component of the grading.
-<Example>
+<Example><![CDATA[
 gap> gap> ca:=CarrierAlgsForNilpOrbsInZmGrading("G",2,2,"inner",1);
 rec( 
- Hs := [ &lt;Lie algebra of dimension 2 over SqrtField>, 
-         &lt;Lie algebra of dimension 2 over SqrtField>, 
-         &lt;Lie algebra of dimension 2 over SqrtField>, 
-         &lt;Lie algebra of dimension 2 over SqrtField> ], 
-  L  :=  &lt;Lie algebra of dimension 14 over SqrtField>, 
-  L0 :=  &lt;Lie algebra of dimension 6 over SqrtField>, 
+ Hs := [ <Lie algebra of dimension 2 over SqrtField>, 
+         <Lie algebra of dimension 2 over SqrtField>, 
+         <Lie algebra of dimension 2 over SqrtField>, 
+         <Lie algebra of dimension 2 over SqrtField> ], 
+  L  :=  <Lie algebra of dimension 14 over SqrtField>, 
+  L0 :=  <Lie algebra of dimension 6 over SqrtField>, 
 cars := [ 
          [rec( g0 := [ v.13+v.14 ], gn := [ [ v.11 ] ], gp := [ [ v.5 ] ] ), 
           rec( g0 := [ v.13, v.14 ], gn := [ [ v.2, v.10 ] ], 
@@ -992,7 +989,7 @@ cars := [
  grad := [ [ v.1, v.6, v.7, v.12, v.13, v.14 ], 
          [ v.2, v.3, v.4, v.5, v.8, v.9, v.10, v.11 ] ] )
 
-</Example>
+]]></Example>
 </Description>
 </ManSection>
 
