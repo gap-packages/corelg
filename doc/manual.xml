@@ -245,7 +245,7 @@ particular square root. Also, computations over <A>SqrtField</A> tend to be sign
 than over, say, <A>CF(4)</A>; see the next example. But that is a price we have to pay 
 (at least, in order to be able to do some computations).
 
-<Example><![CDATA[
+<Log><![CDATA[
 gap> L:=RealFormById("E",8,2);
 <Lie algebra of dimension 248 over SqrtField>
 gap> allCSA := CartanSubalgebrasOfRealForm(L);;time;
@@ -257,7 +257,7 @@ gap> allCSA := CartanSubalgebrasOfRealForm(L);;time;
 # We remark that both computations are exactly the same; 
 # the difference in timing is caused by the fact that 
 # arithmetic over SqrtField is slower.
-]]></Example>
+]]></Log>
 
 </Section>
 
@@ -356,8 +356,9 @@ If <A>c</A> is an element of <M>\mathbb{Q}^{\sqrt{}}(\imath)</M> represented as 
 gap> SqrtFieldEltToCyclotomic( Sqroot(2) );
 E(8)-E(8)^3
 gap> SqrtFieldEltToCyclotomic( Sqroot(2)+E(4)*Sqroot(7) );
-E(56)^5+E(56)^8+E(56)^13-E(56)^15+E(56)^16-E(56)^23-E(56)^24+E(56)^29-E(56)^31+
-E(56)^32+E(56)^37-E(56)^39-E(56)^40+E(56)^45-E(56)^47-E(56)^48+E(56)^53-E(56)^55
+E(56)^5+E(56)^8+E(56)^13-E(56)^15+E(56)^16-E(56)^23-E(56)^24+E(56)^29-E(56)^31
+ +E(56)^32+E(56)^37-E(56)^39-E(56)^40+E(56)^45-E(56)^47-E(56)^48+E(56)^53
+ -E(56)^55
 gap> SqrtFieldEltByCyclotomic( E(8)-E(8)^3 );
 Sqroot(2)
 gap> SqrtFieldEltByCyclotomic( 3*E(4)*Sqrt(11)-2/4*Sqrt(-13/7) );
@@ -383,19 +384,19 @@ gap> c := ( a - b )^-2;
 gap> a := Sum( List( [2,3,5,7], x -> Sqroot( x ) ) );
 Sqroot(2) + Sqroot(3) + Sqroot(5) + Sqroot(7)
 gap> b := a^-1; a*b;                                  
-37/43*Sqroot(2) + (-29/43)*Sqroot(3) + (-133/215)*Sqroot(5) + 
-27/43*Sqroot(7) + 62/215*Sqroot(30) + (-10/43)*Sqroot(42) + (-34/215)*Sqroot(70) 
-+ 22/215*Sqroot(105)
+37/43*Sqroot(2) + (-29/43)*Sqroot(3) + (-133/215)*Sqroot(5) + 27/43*Sqroot(
+7) + 62/215*Sqroot(30) + (-10/43)*Sqroot(42) + (-34/215)*Sqroot(70) + 22/
+215*Sqroot(105)
 1
 gap> ComplexConjugate(Sqroot(17)+Sqroot(-7));
 (-E(4))*Sqroot(7) + Sqroot(17)
 gap> Random( SqrtField );
--1 + 1/4*Sqroot(3) + 1/9*Sqroot(6)
+E(4) + (-7/6+1/4*E(4))*Sqroot(2) + (-3/2*E(4))*Sqroot(3)
 ]]></Example>
 
 Most methods for list, matrices, and polynomials also work over <A>SqrtField</A>.
 <Example><![CDATA[
-gap> m:=[[Sqroot(2),Sqroot(3)],[Sqroot(2),Sqroot(5)],[1,0]]*One(SqrootField);
+gap> m:=[[Sqroot(2),Sqroot(3)],[Sqroot(2),Sqroot(5)],[1,0]]*One(SqrtField);
 [ [ Sqroot(2), Sqroot(3) ], [ Sqroot(2), Sqroot(5) ], [ 1, 0 ] ]
 gap> NullspaceMat(m);
 [ [ (-5/4)*Sqroot(2) + (-1/4)*Sqroot(30), 3/4*Sqroot(2) + 1/4*Sqroot(30), 1 ] ]
@@ -679,9 +680,9 @@ gap> DK:= LieDerivedSubalgebra( K );
 <Lie algebra of dimension 15 over SqrtField>
 gap> CartanDecomposition( DK );
 rec( CartanInv := function( v ) ... end, 
-K := <Lie algebra of dimension 15 over SqrtField>, 
-P := <vector space over SqrtField, with 0 generators> )
-# We see that the semisimple subalgebra DK is compact. 
+  K := <Lie algebra of dimension 15 over SqrtField>, 
+  P := <vector space of dimension 0 over SqrtField> )
+gap> # We see that the semisimple subalgebra DK is compact. 
 ]]></Example>
 <ManSection>
 <Attr Name="RealStructure" Arg="L"
