@@ -103,8 +103,6 @@ Dependencies := rec(
 AvailabilityTest := ReturnTrue,
 Autoload := false,
 
-# the banner
-BannerString := "CoReLG\n a package for computing with real Lie algebras \n by Heiko Dietrich, Paolo Faccin and Willem de Graaf\n",
 Keywords := ["real Lie algebras","nilpotent orbits Cartan subalgebras"],
 
 AutoDoc := rec(
