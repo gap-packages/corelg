@@ -143,8 +143,9 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SqrtFieldEltToCyclotomic( Sqroot(2) );</span>
 E(8)-E(8)^3
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SqrtFieldEltToCyclotomic( Sqroot(2)+E(4)*Sqroot(7) );</span>
-E(56)^5+E(56)^8+E(56)^13-E(56)^15+E(56)^16-E(56)^23-E(56)^24+E(56)^29-E(56)^31+
-E(56)^32+E(56)^37-E(56)^39-E(56)^40+E(56)^45-E(56)^47-E(56)^48+E(56)^53-E(56)^55
+E(56)^5+E(56)^8+E(56)^13-E(56)^15+E(56)^16-E(56)^23-E(56)^24+E(56)^29-E(56)^31
+ +E(56)^32+E(56)^37-E(56)^39-E(56)^40+E(56)^45-E(56)^47-E(56)^48+E(56)^53
+ -E(56)^55
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SqrtFieldEltByCyclotomic( E(8)-E(8)^3 );</span>
 Sqroot(2)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SqrtFieldEltByCyclotomic( 3*E(4)*Sqrt(11)-2/4*Sqrt(-13/7) );</span>
@@ -171,21 +172,21 @@ Sqroot(2) + 3/7*Sqroot(21)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := Sum( List( [2,3,5,7], x -&gt; Sqroot( x ) ) );</span>
 Sqroot(2) + Sqroot(3) + Sqroot(5) + Sqroot(7)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b := a^-1; a*b;                                  </span>
-37/43*Sqroot(2) + (-29/43)*Sqroot(3) + (-133/215)*Sqroot(5) + 
-27/43*Sqroot(7) + 62/215*Sqroot(30) + (-10/43)*Sqroot(42) + (-34/215)*Sqroot(70) 
-+ 22/215*Sqroot(105)
+37/43*Sqroot(2) + (-29/43)*Sqroot(3) + (-133/215)*Sqroot(5) + 27/43*Sqroot(
+7) + 62/215*Sqroot(30) + (-10/43)*Sqroot(42) + (-34/215)*Sqroot(70) + 22/
+215*Sqroot(105)
 1
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ComplexConjugate(Sqroot(17)+Sqroot(-7));</span>
 (-E(4))*Sqroot(7) + Sqroot(17)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Random( SqrtField );</span>
--1 + 1/4*Sqroot(3) + 1/9*Sqroot(6)
+E(4) + (-7/6+1/4*E(4))*Sqroot(2) + (-3/2*E(4))*Sqroot(3)
 </pre></div>
 
 <p>Most methods for list, matrices, and polynomials also work over <var class="Arg">SqrtField</var>.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m:=[[Sqroot(2),Sqroot(3)],[Sqroot(2),Sqroot(5)],[1,0]]*One(SqrootField);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m:=[[Sqroot(2),Sqroot(3)],[Sqroot(2),Sqroot(5)],[1,0]]*One(SqrtField);</span>
 [ [ Sqroot(2), Sqroot(3) ], [ Sqroot(2), Sqroot(5) ], [ 1, 0 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NullspaceMat(m);</span>
 [ [ (-5/4)*Sqroot(2) + (-1/4)*Sqroot(30), 3/4*Sqroot(2) + 1/4*Sqroot(30), 1 ] ]
