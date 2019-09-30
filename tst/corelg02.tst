@@ -10,7 +10,7 @@
 #
 gap> START_TEST( "corelg02.tst");
 
-# doc/manual.xml:490-511
+# doc/manual.xml:436-457
 gap> RealFormsInformation( "A", 4 );
 
   There are 4 simple real forms with complexification A4
@@ -32,7 +32,7 @@ gap> RealFormsInformation( "E", 6 );
 gap> NumberRealForms("D",10);
 12
 
-# doc/manual.xml:544-551
+# doc/manual.xml:490-497
 gap> RealFormById( "A", 4, 2 );
 <Lie algebra of dimension 24 over SqrtField>
 gap> RealFormById( "A", 4, 2, CF(4) );
@@ -40,7 +40,7 @@ gap> RealFormById( "A", 4, 2, CF(4) );
 gap> RealFormById( [ ["A", 4, 2], ["D", 5, 2] ], SqrtField);
 <Lie algebra of dimension 69 over SqrtField>
 
-# doc/manual.xml:563-570
+# doc/manual.xml:509-516
 gap> L := RealFormById( [ ["A", 4, 2], ["D", 5, 2] ], SqrtField);;
 gap> IdRealForm( L );
 [ [ "A", 4, 2 ], [ "D", 5, 2 ] ]
@@ -48,7 +48,7 @@ gap> K := RealFormById("A",5,2);;
 gap> IdRealForm( K );
 [ "A", 5, 2 ]
 
-# doc/manual.xml:673-686
+# doc/manual.xml:619-632
 gap> L:= RealFormById( "A", 5, 3 );
 <Lie algebra of dimension 35 over SqrtField>
 gap> H := CartanSubalgebra(L);;
@@ -62,7 +62,7 @@ rec( CartanInv := function( v ) ... end,
   P := <vector space of dimension 0 over SqrtField> )
 gap> # We see that the semisimple subalgebra DK is compact. 
 
-# doc/manual.xml:708-720
+# doc/manual.xml:654-666
 gap> L:=RealFormById("E",6,3);;                            
 gap> H:=CartanSubalgebra(L);;
 gap> K:=LieCentralizer(L,Subalgebra(L,Basis(H){[1,2,4]}));;
@@ -75,7 +75,7 @@ gap> M:=RealFormById("A",2,2);
 gap> IsomorphismOfRealSemisimpleLieAlgebras(DK,M);
 <Lie algebra isomorphism between Lie algebras of dimension 8 over SqrtField>
 
-# doc/manual.xml:816-830
+# doc/manual.xml:762-776
 gap> L:= RealFormById( [["E", 6, 3],["A", 3, 2]] );;
 gap>  K:= LieCentralizer( L, Subalgebra( L, Basis( CartanSubalgebra(L) ){[1]} ) );
 <Lie algebra of dimension 51 over SqrtField>
@@ -90,7 +90,7 @@ Involution: ()
 Types of direct summands:
 [ [ "A", 3, 2 ], [ "A", 5, 3 ] ]
 
-# doc/manual.xml:839-851
+# doc/manual.xml:785-797
 gap> L:= RealFormById( [["E", 6, 3],["A", 3, 2]] );;
 gap> K:= LieCentralizer( L, Subalgebra( L, Basis( CartanSubalgebra(L) ){[1]} ) );
 <Lie algebra of dimension 51 over SqrtField>

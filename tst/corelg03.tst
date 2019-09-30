@@ -10,14 +10,14 @@
 #
 gap> START_TEST( "corelg03.tst");
 
-# doc/manual.xml:875-881
+# doc/manual.xml:821-827
 gap> L:= RealFormById( "F", 4, 3 );;
 gap> no:= NilpotentOrbitsOfRealForm( L );;
 #I CoReLG: read database of real triples ... done
 gap> no[1];
 <nilpotent orbit in Lie algebra>
 
-# doc/manual.xml:891-905
+# doc/manual.xml:837-851
 gap> L:= RealFormById( "F", 4, 2 );;
 gap> no:= NilpotentOrbitsOfRealForm( L );;
 gap> o:= no[10];

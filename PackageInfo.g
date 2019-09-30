@@ -11,8 +11,8 @@
 SetPackageInfo( rec(
 PackageName := "CoReLG",
 Subtitle := "Computing with real Lie algebras",
-Version := "1.51",
-Date := "15/07/2019", # this is in dd/mm/yyyy format
+Version := "1.52",
+Date := "30/09/2019", # this is in dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
