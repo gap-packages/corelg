@@ -117,3 +117,15 @@ DeclareGlobalFunction( "IsomorphismOfRealSemisimpleLieAlgebras" );
 #A   CartanSubalgebrasOfRealForm( <L> )
 ##
 DeclareAttribute( "CartanSubalgebrasOfRealForm", IsLieAlgebra );
+
+##############################################################################
+##
+#A   NameRealForm( <L> )
+##
+DeclareAttribute( "NameRealForm", IsLieAlgebra );
+
+#############################################################################
+##
+#O   MaximalReductiveSubalgebras( <type>, <rank>, <no> )
+##
+DeclareOperation( "MaximalReductiveSubalgebras", [ IsString, IsInt, IsInt ] );

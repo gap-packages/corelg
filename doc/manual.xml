@@ -518,6 +518,25 @@ gap> IdRealForm( K );
 </ManSection>
 
 
+<ManSection>
+<Attr Name="NameRealForm" Arg="L"/>
+<Description>
+Here <A>L</A> is a reductive real Lie algebra whose centre is stable under the
+Cartan involution of <A>L</A>. This function returns a string giving the
+names of the real forms of the simple components of the derived subalgebra
+of <A>L</A>, as well as the number of compact and non-compact dimensions of the
+centre of <A>L</A>. For the simple real Lie algebras we use the naming
+conventions as in <Cite Key="knapp"/>.
+
+
+<Example><![CDATA[
+gap> L := RealFormById( [ ["A", 4, 2], ["D", 5, 2] ], SqrtField);;
+gap> NameRealForm( L );
+gap> NameRealForm(L);
+"su(1,4)+so(2,8)"
+]]></Example>
+</Description>
+</ManSection>
 
 
 
@@ -641,6 +660,41 @@ The real structure of the real form <A>L</A> is the (complex) conjugation with r
 </ManSection>
 
 </Section>
+
+<Section> <Heading>Maximal reductive subalgebras</Heading>
+
+<ManSection>
+<Oper Name="MaximalReductiveSubalgebras" Arg="type, rank, id"/>
+<Description>
+Here the input parameters are as in <Ref Func="RealFormById"/>, and
+<A>rank</A> is between 1 and 8. These parameters correspond to a real simple
+Lie algebra <M>L</M>. This function returns a list of maximal reductive
+subalgebras of <M>L</M>. More precisely, it returns a record with two fields,
+<A>liealg</A> and <A>subalgs</A>. The first field contains the Lie algebra
+<M>L</M>, and the second field contains a list of its maximal reductive
+subalgebras. Isomorphic copies of the regular semisimple Lie algebras can
+occur more than once. If that happens then those copies are not conjugate under
+the adjoint group of <M>L</M>. There are no isomorphisms between the
+non-reductive subalgebras. There can be non-conjugate copies of those
+as well, but the database does not contain these.
+
+<Example><![CDATA[
+gap> r:= MaximalReductiveSubalgebras("F",4,3);;
+gap> NameRealForm( r.liealg );
+"F4(-20)"
+gap> for K in r.subalgs do Print( NameRealForm(K), "\n" ); od;
+su(1,2)+su(3)
+su(2)+sp(1,2)
+so(8,1)
+so(9)
+sl(2,R)+G2c
+]]></Example>
+</Description>
+</ManSection>
+
+
+</Section>
+
 
 
 <Section> <Heading> Isomorphisms</Heading>

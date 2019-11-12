@@ -3787,3 +3787,219 @@ InstallMethod( CartanSubalgebrasOfRealForm,
 
 end );
 
+corelg.namesimple:= function( id )    
+    
+local nr, mv, nr1, nr2, en, q, p, t, r;
+
+    t:= id[1]; r:= id[2]; q:= id[3];
+
+    if t = "A" and r=1 then
+       if q=0 then return "sl(2,C)"; fi;
+       if q=1 then return "su(2)"; fi;
+       if q=2 then return "sl(2,R)"; fi;
+    elif t = "A" and r>1 then
+       if q=0 then return Concatenation( "sl(", String(r+1),",C)"); fi;
+       if q=1 then return Concatenation( "su(", String(r+1),")"); fi;
+        nr := First([1..r],x-> x>= r/2);
+        mv := 1; if IsOddInt(r) then mv := 2; fi;
+        p:= Position( [2..nr+1], q );
+        if p <> fail then 
+           return Concatenation( "su(", String(p),",",String(r+1-p),")");
+        fi;
+        if mv = 1 and q = nr+2 then
+           return Concatenation( "sl(", String(r+1),",R)");
+        fi;
+        if mv = 2 and q = nr+2 then 
+           return Concatenation("sl(",String((r+1)/2),",H)");
+        fi;
+        if mv=2 and q = nr+3 then
+           return Concatenation( "sl(",String(r+1),",R)"); 
+        fi;
+    elif t = "B" then
+        if q=0 then return Concatenation( "so(", String(2*r+1),",C)"); fi;
+        if q=1 then return Concatenation( "so(", String(2*r+1),")"); fi;
+        p:= Position( [2..r+1], q );
+        return Concatenation("so(",String(2*p),",",String(2*r-(2*p)+1),")"); 
+    elif t = "C" then
+       if q=0 then return Concatenation( "sp(", String(2*r),",C)"); fi;
+       if q=1 then return Concatenation( "sp(", String(r),")"); fi;    
+       nr := First([1..r],x-> x> r/2)+1;
+       p:= Position( [2..nr-1], q );
+       if p <> fail then 
+          return Concatenation( "sp(",String(p),",",String(r-p),")");
+       fi;
+       if q = nr then 
+          return Concatenation("sp(",String(r),",R)");
+       fi;
+    elif t = "D" then
+       nr1 := First([1..r+1],x-> x> r/2)-1;
+       nr2 := First([1..r+1],x-> x> (r-1)/2)-1;
+       if r = 4 then nr1 := nr1-1; fi;
+       if q=0 then return Concatenation( "so(", String(2*r),",C)"); fi;
+       if q=1 then return Concatenation( "so(", String(2*r),")"); fi;
+       if r > 4 then
+          p:= Position( [2..nr1+1], q );
+          if p <> fail then
+             return Concatenation("so(",String(2*p),",",String(2*r-2*p),")");
+          fi;
+          if q = nr1+2 then
+             return Concatenation("so*(",String(2*r),")");
+          fi;
+          if q = nr1+3 then
+             return Concatenation( "so(",String(2*r-1),",1)");
+          fi;
+          p:= Position( [nr1+4..nr1+r+nr2], q );
+          if p <> fail then
+             return Concatenation("so(",String(2*p+1),",",String(2*r-2*p-1),")");
+          fi;
+       else
+          if q=2 then
+             return "so*(8)";
+          elif q=3 then
+             return "so(4,4)";
+          elif q=4 then
+             return "so(3,5)";
+          elif q=5 then
+             return "so(1,7)";
+          fi;
+       fi;
+       
+    elif t = "G" then
+       if q=0 then return "G2(C)"; fi;
+       if q=1 then return "G2c"; fi;
+       if q=2 then return "G2(2)"; fi;    
+    elif t = "F" then
+       if q=0 then return "F4(C)"; fi;
+       if q=1 then return "F4c"; fi;
+       if q=2 then return "F4(4)"; fi;
+       if q=3 then return "F4(-20)"; fi;
+    elif t = "E" then
+       if q=0 then return Concatenation("E",String(r),"(C)"); fi;
+       if q=1 then return Concatenation("E",String(r),"c"); fi;
+       if r = 6 then
+          if q=2 then return "E6(6)"; fi;
+          if q=3 then return "E6(2)"; fi;
+          if q=4 then return "E6(-14)"; fi;
+          if q=5 then return "E6(-26)"; fi;
+       elif r=7 then
+          if q=2 then return "E7(7)"; fi;
+          if q=3 then return "E7(-25)"; fi;
+          if q=4 then return "E7(-5)"; fi;
+       elif r=8 then
+          if q=2 then return "E8(8)"; fi;
+          if q=3 then return "E8(-24)"; fi;
+       fi;
+    fi;
+    
+end;
+
+InstallMethod( NameRealForm,
+   "for a Lie algebra",
+   true,
+   [ IsLieAlgebra ], 0, function( L )
+
+
+        local C, L0, cd, H, v, id, s, i, k, p;
+
+# we assume that L is reductive!
+
+        C:= LieCentre(L);
+        if Dimension(C) = 0 then
+           L0:= L;
+        else
+           L0:= LieDerivedSubalgebra(L);
+           cd:= CartanDecomposition(L);
+           SetCartanDecomposition( L0, rec( CartanInv:= cd.CartanInv,
+                K:= Intersection( L0, cd.K), P:= Intersection( L0, cd.P ) ) );              if HasMaximallyCompactCartanSubalgebra( L ) then
+               H:= MaximallyCompactCartanSubalgebra( L );
+               SetMaximallyCompactCartanSubalgebra( L0,
+                    Intersection( L0, H ) ); 
+            fi;
+        fi;
+        v:= VoganDiagram(L0);
+        id:= v!.sstypes;
+        s:= "";
+        for i in [1..Length(id)] do
+            s:= Concatenation( s, corelg.namesimple( id[i] ) );
+            if i < Length( id ) then
+               s:= Concatenation( s, "+" );
+            fi;
+        od;
+
+        if Dimension(C) > 0 then
+           k:= Dimension( Intersection( C, cd.K ) );
+           p:= Dimension( Intersection( C, cd.P ) );
+           s:= Concatenation( s, " + a torus of ");
+           if k > 0 then 
+              s:= Concatenation( s, String( k ), " compact dimensions" );
+           fi;
+           if p > 0 then
+              if k > 0 then s:= Concatenation( s, " and" ); fi;
+              s:= Concatenation( s, " ", String(p), " non-compact dimensions");
+           fi;
+        fi;
+        return s;
+end );
+
+InstallMethod( MaximalReductiveSubalgebras,
+ "for type, rank and number", 
+ true, [ IsString, IsInt, IsInt ], 0,   
+
+function( type, rk, no ) 
+
+      local L, b1, b2, c, u, i, F, K, cd, C, H, list, subs, l;
+
+      if not rk in [1..8] then
+         Error("The maximal reductive subalgebras are available for simple real Lie algebras of rank up to 8");
+      fi;
+
+      if not no in [1..NumberRealForms(type,rk)] then
+         Error("There is no real form with the input parameters");
+      fi;
+
+      F:= SqrtField;
+      L:= RealFormById( type, rk, no, F );
+
+      list:= Filtered( corelg.Linc, x -> x[1] = type and x[2] = rk and x[3] = no );
+      subs:= [ ];
+      for l in list do 
+
+          b1:= [ ];
+          for c in l[4] do
+              u:= Zero(L);
+              for i in [1,3..Length(c)-1] do
+                  u:= u + (c[i+1]*One(F))*Basis(L)[c[i]];
+              od;
+              Add( b1, u );
+          od;
+
+          b2:= [ ];
+          for c in l[5] do
+              u:= Zero(L);
+              for i in [1,3..Length(c)-1] do
+                  u:= u + (c[i+1]*One(F))*Basis(L)[c[i]];
+              od;
+              Add( b2, u );
+          od;
+
+          K:= Subalgebra( L, b1, "basis" );
+          if Length(b2) < rk then
+             C:= LieCentralizer( L, K );
+             if Dimension(C) > 0 then
+                Append( b1, BasisVectors( Basis(C) ) );
+                Append( b2, BasisVectors( Basis(C) ) );
+                K:= Subalgebra( L, b1, "basis" );
+             fi;
+          fi;
+
+          cd:= CartanDecomposition(L);
+          SetCartanDecomposition( K, rec( CartanInv:= cd.CartanInv,
+                K:= Intersection( K, cd.K), P:= Intersection( K, cd.P ) ) );              H:= Subalgebra( L, b2, "basis" );
+          SetMaximallyCompactCartanSubalgebra( K, H );      
+
+          Add( subs, K );
+      od;
+
+      return rec( liealg:= L, subalgs:= subs );
+
+end );

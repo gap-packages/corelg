@@ -103,6 +103,4 @@ gap> f := x^2-1;; Factors(f);
 [ x-1, x+1 ]
 gap> f := x^2+1;; Factors(f);
 [ x^2+1 ]
-
-#
 gap> STOP_TEST("corelg01.tst", 1 );
