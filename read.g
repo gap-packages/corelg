@@ -18,3 +18,4 @@ ReadPackage( "corelg", "gap/test.gi" );
 ReadPackage( "corelg", "gap/realtheta.gi" );
 ReadPackage( "corelg", "gap/affine.gi" );
 ReadPackage( "corelg", "gap/realweyl.gi" );
+ReadPackage( "corelg", "gap/realmax.g" );
