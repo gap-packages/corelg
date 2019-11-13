@@ -3903,6 +3903,18 @@ InstallMethod( NameRealForm,
 
 # we assume that L is reductive!
 
+        if IsBound(L!.sstypes) then
+	   id:= L!.sstypes;
+	   s:= "";
+           for i in [1..Length(id)] do
+               s:= Concatenation( s, corelg.namesimple( id[i] ) );
+               if i < Length( id ) then
+                  s:= Concatenation( s, "+" );
+               fi;
+           od;
+	   return s;
+        fi;	   
+
         C:= LieCentre(L);
         if Dimension(C) = 0 then
            L0:= L;
