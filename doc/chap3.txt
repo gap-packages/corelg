@@ -95,7 +95,25 @@
     [4X[28X[ "A", 5, 2 ][128X[104X
   [4X[32X[104X
   
-  [1X3.1-5 AllRealForms[101X
+  [1X3.1-5 NameRealForm[101X
+  
+  [33X[1;0Y[29X[2XNameRealForm[102X( [3XL[103X ) [32X attribute[133X
+  
+  [33X[0;0YHere  [3XL[103X  is  a  reductive  real Lie algebra whose centre is stable under the
+  Cartan  involution  of [3XL[103X. This function returns a string giving the names of
+  the  real  forms of the simple components of the derived subalgebra of [3XL[103X, as
+  well as the number of compact and non-compact dimensions of the centre of [3XL[103X.
+  For  the  simple  real  Lie  algebras  we  use  the naming conventions as in
+  [Kna02].[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XL := RealFormById( [ ["A", 4, 2], ["D", 5, 2] ], SqrtField);;[127X[104X
+    [4X[25Xgap>[125X [27XNameRealForm( L );[127X[104X
+    [4X[25Xgap>[125X [27XNameRealForm(L);[127X[104X
+    [4X[28X"su(1,4)+so(2,8)"[128X[104X
+  [4X[32X[104X
+  
+  [1X3.1-6 AllRealForms[101X
   
   [33X[1;0Y[29X[2XAllRealForms[102X( [3Xtype[103X, [3Xrank[103X ) [32X function[133X
   
@@ -104,7 +122,7 @@
   [2XRealFormById[102X  ([14X3.1-3[114X)  it  is  possible to add the base field as an optional
   third argument.[133X
   
-  [1X3.1-6 RealFormParameters[101X
+  [1X3.1-7 RealFormParameters[101X
   
   [33X[1;0Y[29X[2XRealFormParameters[102X( [3XL[103X ) [32X attribute[133X
   
@@ -115,21 +133,21 @@
   are  the  list  of  signs and the permutation defining the Cartan involution
   (see Section [14X1.1[114X).[133X
   
-  [1X3.1-7 IsRealFormOfInnerType[101X
+  [1X3.1-8 IsRealFormOfInnerType[101X
   
   [33X[1;0Y[29X[2XIsRealFormOfInnerType[102X( [3XL[103X ) [32X property[133X
   
   [33X[0;0YReturns  [3Xtrue[103X  if  and  only  if  the  real  form [3XL[103X is a defined by an inner
   involutive automorphism.[133X
   
-  [1X3.1-8 IsRealification[101X
+  [1X3.1-9 IsRealification[101X
   
   [33X[1;0Y[29X[2XIsRealification[102X( [3XL[103X ) [32X property[133X
   
   [33X[0;0YReturns  [3Xtrue[103X  if  and  only  if  the  real form [3XL[103X is the realification of a
   complex simple Lie algebra.[133X
   
-  [1X3.1-9 CartanDecomposition[101X
+  [1X3.1-10 CartanDecomposition[101X
   
   [33X[1;0Y[29X[2XCartanDecomposition[102X( [3XL[103X ) [32X attribute[133X
   
@@ -159,7 +177,7 @@
     [4X[25Xgap>[125X [27X# We see that the semisimple subalgebra DK is compact. [127X[104X
   [4X[32X[104X
   
-  [1X3.1-10 RealStructure[101X
+  [1X3.1-11 RealStructure[101X
   
   [33X[1;0Y[29X[2XRealStructure[102X( [3XL[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XRealStructure[102X( [3XL:[103X [3Xbasis[103X [3X:=[103X [3XB[103X ) [32X attribute[133X
@@ -175,9 +193,40 @@
   [3XRealstructure(M:basis:=Basis(L))[103X or [3XSetRealStructure(M,RealStructure(L))[103X.[133X
   
   
-  [1X3.2 [33X[0;0YIsomorphisms[133X[101X
+  [1X3.2 [33X[0;0YMaximal reductive subalgebras[133X[101X
   
-  [1X3.2-1 IsomorphismOfRealSemisimpleLieAlgebras[101X
+  [1X3.2-1 MaximalReductiveSubalgebras[101X
+  
+  [33X[1;0Y[29X[2XMaximalReductiveSubalgebras[102X( [3Xtype[103X, [3Xrank[103X, [3Xid[103X ) [32X operation[133X
+  
+  [33X[0;0YHere  the  input  parameters  are  as  in  [2XRealFormById[102X ([14X3.1-3[114X), and [3Xrank[103X is
+  between 1 and 8. These parameters correspond to a real simple Lie algebra [22XL[122X.
+  This  function  returns  a  list of maximal reductive subalgebras of [22XL[122X. More
+  precisely,  it  returns  a  record  with two fields, [3Xliealg[103X and [3Xsubalgs[103X. The
+  first field contains the Lie algebra [22XL[122X, and the second field contains a list
+  of  its  maximal  reductive  subalgebras.  Isomorphic  copies of the regular
+  semisimple Lie algebras can occur more than once. If that happens then those
+  copies  are  not  conjugate  under  the  adjoint  group  of  [22XL[122X. There are no
+  isomorphisms   between   the   non-reductive   subalgebras.   There  can  be
+  non-conjugate  copies  of  those  as well, but the database does not contain
+  these.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xr:= MaximalReductiveSubalgebras("F",4,3);;[127X[104X
+    [4X[25Xgap>[125X [27XNameRealForm( r.liealg );[127X[104X
+    [4X[28X"F4(-20)"[128X[104X
+    [4X[25Xgap>[125X [27Xfor K in r.subalgs do Print( NameRealForm(K), "\n" ); od;[127X[104X
+    [4X[28Xsu(1,2)+su(3)[128X[104X
+    [4X[28Xsu(2)+sp(1,2)[128X[104X
+    [4X[28Xso(8,1)[128X[104X
+    [4X[28Xso(9)[128X[104X
+    [4X[28Xsl(2,R)+G2c[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.3 [33X[0;0YIsomorphisms[133X[101X
+  
+  [1X3.3-1 IsomorphismOfRealSemisimpleLieAlgebras[101X
   
   [33X[1;0Y[29X[2XIsomorphismOfRealSemisimpleLieAlgebras[102X( [3XK[103X, [3XL[103X ) [32X function[133X
   
@@ -199,23 +248,23 @@
   [4X[32X[104X
   
   
-  [1X3.3 [33X[0;0YCartan subalgebras and root systems[133X[101X
+  [1X3.4 [33X[0;0YCartan subalgebras and root systems[133X[101X
   
-  [1X3.3-1 MaximallyCompactCartanSubalgebra[101X
+  [1X3.4-1 MaximallyCompactCartanSubalgebra[101X
   
   [33X[1;0Y[29X[2XMaximallyCompactCartanSubalgebra[102X( [3XL[103X ) [32X attribute[133X
   
   [33X[0;0YHere  [3XL[103X  is a real semisimple Lie algebra. This function returns a maximally
   compact Cartan subalgebra of [3XL[103X.[133X
   
-  [1X3.3-2 MaximallyNonCompactCartanSubalgebra[101X
+  [1X3.4-2 MaximallyNonCompactCartanSubalgebra[101X
   
   [33X[1;0Y[29X[2XMaximallyNonCompactCartanSubalgebra[102X( [3XL[103X ) [32X attribute[133X
   
   [33X[0;0YHere  [3XL[103X  is a real semisimple Lie algebra. This function returns a maximally
   non-compact Cartan subalgebra of [3XL[103X.[133X
   
-  [1X3.3-3 CompactDimensionOfCartanSubalgebra[101X
+  [1X3.4-3 CompactDimensionOfCartanSubalgebra[101X
   
   [33X[1;0Y[29X[2XCompactDimensionOfCartanSubalgebra[102X( [3XL[103X ) [32X function[133X
   [33X[1;0Y[29X[2XCompactDimensionOfCartanSubalgebra[102X( [3XL[103X, [3XH[103X ) [32X function[133X
@@ -226,7 +275,7 @@
   the  Cartan  subalgebra,  so that a new call to this function, with the same
   input, will return the compact dimension immediately.[133X
   
-  [1X3.3-4 CartanSubalgebrasOfRealForm[101X
+  [1X3.4-4 CartanSubalgebrasOfRealForm[101X
   
   [33X[1;0Y[29X[2XCartanSubalgebrasOfRealForm[102X( [3XL[103X ) [32X attribute[133X
   
@@ -234,15 +283,15 @@
   returns  a  list of Cartan subalgebras of [3XL[103X. They are representatives of all
   classes of conjugate (by the adjoint group) Cartan subalgebras of [3XL[103X.[133X
   
-  [1X3.3-5 CartanSubspace[101X
+  [1X3.4-5 CartanSubspace[101X
   
   [33X[1;0Y[29X[2XCartanSubspace[102X( [3XL[103X ) [32X attribute[133X
   
   [33X[0;0YHere  [3XL[103X  is  a  real  semisimple Lie algebra. This function returns a Cartan
   subspace of [3XL[103X. That is a maximal abelian subspace of the subspace [3XP[103X given in
-  the [2XCartanDecomposition[102X ([14X3.1-9[114X) of [3XL[103X.[133X
+  the [2XCartanDecomposition[102X ([14X3.1-10[114X) of [3XL[103X.[133X
   
-  [1X3.3-6 RootsystemOfCartanSubalgebra[101X
+  [1X3.4-6 RootsystemOfCartanSubalgebra[101X
   
   [33X[1;0Y[29X[2XRootsystemOfCartanSubalgebra[102X( [3XL[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XRootsystemOfCartanSubalgebra[102X( [3XL[103X, [3XH[103X ) [32X operation[133X
@@ -258,7 +307,7 @@
   [33X[0;0YThe  root  system  is stored in [3XH[103X, so that a new call to this function, with
   the same input, will return the same root system.[133X
   
-  [1X3.3-7 ChevalleyBasis[101X
+  [1X3.4-7 ChevalleyBasis[101X
   
   [33X[1;0Y[29X[2XChevalleyBasis[102X( [3XR[103X ) [32X attribute[133X
   
@@ -266,7 +315,7 @@
   a Chevalley basis of [3XL[103X, consisting of root vectors of [3XR[103X.[133X
   
   
-  [1X3.4 [33X[0;0YDiagrams[133X[101X
+  [1X3.5 [33X[0;0YDiagrams[133X[101X
   
   [33X[0;0YIn  this  section we document the functionality for computing the Satake and
   Vogan  diagrams of a real semisimple Lie algebra. In both cases the relevant
@@ -278,7 +327,7 @@
   represented  by  a  permutation  of  the  nodes, printed on a line below the
   diagram.[133X
   
-  [1X3.4-1 VoganDiagram[101X
+  [1X3.5-1 VoganDiagram[101X
   
   [33X[1;0Y[29X[2XVoganDiagram[102X( [3XL[103X ) [32X attribute[133X
   
@@ -301,7 +350,7 @@
     [4X[28X[ [ "A", 3, 2 ], [ "A", 5, 3 ] ][128X[104X
   [4X[32X[104X
   
-  [1X3.4-2 SatakeDiagram[101X
+  [1X3.5-2 SatakeDiagram[101X
   
   [33X[1;0Y[29X[2XSatakeDiagram[102X( [3XL[103X ) [32X attribute[133X
   

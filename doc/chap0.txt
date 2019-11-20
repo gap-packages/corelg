@@ -6,10 +6,10 @@
                        [1X Computing with real Lie algebras [101X
   
   
-                                  Version 1.52
+                                  Version 1.53
   
   
-                               30 September 2019
+                                20 November 2019
   
   
                                  Heiko Dietrich
@@ -94,25 +94,28 @@
       3.1-2 NumberRealForms
       3.1-3 RealFormById
       3.1-4 IdRealForm
-      3.1-5 AllRealForms
-      3.1-6 RealFormParameters
-      3.1-7 IsRealFormOfInnerType
-      3.1-8 IsRealification
-      3.1-9 CartanDecomposition
-      3.1-10 RealStructure
-    3.2 [33X[0;0YIsomorphisms[133X
-      3.2-1 IsomorphismOfRealSemisimpleLieAlgebras
-    3.3 [33X[0;0YCartan subalgebras and root systems[133X
-      3.3-1 MaximallyCompactCartanSubalgebra
-      3.3-2 MaximallyNonCompactCartanSubalgebra
-      3.3-3 CompactDimensionOfCartanSubalgebra
-      3.3-4 CartanSubalgebrasOfRealForm
-      3.3-5 CartanSubspace
-      3.3-6 RootsystemOfCartanSubalgebra
-      3.3-7 ChevalleyBasis
-    3.4 [33X[0;0YDiagrams[133X
-      3.4-1 VoganDiagram
-      3.4-2 SatakeDiagram
+      3.1-5 NameRealForm
+      3.1-6 AllRealForms
+      3.1-7 RealFormParameters
+      3.1-8 IsRealFormOfInnerType
+      3.1-9 IsRealification
+      3.1-10 CartanDecomposition
+      3.1-11 RealStructure
+    3.2 [33X[0;0YMaximal reductive subalgebras[133X
+      3.2-1 MaximalReductiveSubalgebras
+    3.3 [33X[0;0YIsomorphisms[133X
+      3.3-1 IsomorphismOfRealSemisimpleLieAlgebras
+    3.4 [33X[0;0YCartan subalgebras and root systems[133X
+      3.4-1 MaximallyCompactCartanSubalgebra
+      3.4-2 MaximallyNonCompactCartanSubalgebra
+      3.4-3 CompactDimensionOfCartanSubalgebra
+      3.4-4 CartanSubalgebrasOfRealForm
+      3.4-5 CartanSubspace
+      3.4-6 RootsystemOfCartanSubalgebra
+      3.4-7 ChevalleyBasis
+    3.5 [33X[0;0YDiagrams[133X
+      3.5-1 VoganDiagram
+      3.5-2 SatakeDiagram
   4 [33X[0;0YReal nilpotent orbits[133X
     4.1 [33X[0;0YNilpotent orbits in real Lie algebras[133X
       4.1-1 NilpotentOrbitsOfRealForm
