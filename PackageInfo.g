@@ -12,7 +12,7 @@ SetPackageInfo( rec(
 PackageName := "CoReLG",
 Subtitle := "Computing with real Lie algebras",
 Version := "1.53",
-Date := "13/11/2019", # this is in dd/mm/yyyy format
+Date := "20/11/2019", # this is in dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
