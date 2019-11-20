@@ -1,6 +1,3 @@
-LoadPackage("singular");
-
-
 # Main functions:
 #
 #
