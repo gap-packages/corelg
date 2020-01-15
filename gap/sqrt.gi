@@ -21,13 +21,13 @@ InstallMethod( NiceBasisNC,
 
 #########################################################################
 
-SqrtField_objectify:= function( type, elm )
+BindGlobal( "SqrtField_objectify", function( elm )
 local u,isrt;
-   isrt:= Length(elm[1]) = 1 and Length(elm[1][1][2])=0;
-   u:= Objectify( type, elm );
+   isrt:= Length(elm) = 1 and Length(elm[1][2])=0;
+   u:= Objectify( SqrtFieldType, [ Immutable(elm) ] );
    u![2]:= isrt;
    return u;
-end; 
+end ); 
 
 #########################################################################
 
@@ -54,7 +54,7 @@ local d, n, fc, cf, ps, i, m, sgn;
    fi;
    if q < 0 then sgn := E(4); q := -q; else sgn := 1; fi;
    if q in [0,1] then 
-      return SqrtField_objectify(SqrtFieldType,Immutable([[[sgn*q,[]]]])); 
+      return SqrtField_objectify([[sgn*q,[]]]); 
    fi;
    d  := DenominatorRat(q);
    n  := NumeratorRat(q);
@@ -69,12 +69,12 @@ local d, n, fc, cf, ps, i, m, sgn;
       if m=1 then Add(ps,fc[i][1]); fi;
    od;
    if ps = [] then return 
-      SqrtField_objectify( SqrtFieldType, Immutable([[[sgn*cf,[]]]])); 
+      SqrtField_objectify([[sgn*cf,[]]]); 
    fi; 
    if ps[1] = 1 then ps := ps{[2..Length(ps)]}; fi;
    Sort(ps);
    MakeImmutable(ps);
-   return SqrtField_objectify( SqrtFieldType,Immutable([[[sgn*cf,ps]]]) );
+   return SqrtField_objectify([[sgn*cf,ps]] );
 end); 
 
 #########################################################################
@@ -252,7 +252,7 @@ local b,i;
       if x = 1 then return y; fi;
       b := List(y![1],ShallowCopy);
       for i in b do i[1] := x*i[1]; od;
-      return SqrtField_objectify( SqrtFieldType, Immutable([b]) );          
+      return SqrtField_objectify( b );          
 end);
 
 #########################################################################
@@ -294,8 +294,7 @@ local a,b,i,j,e,len,pr;
    if y = Zero(SqrtField) then return x; fi;
    if x![2] then
       if y![2] then
-         return SqrtField_objectify(SqrtFieldType, 
-                                    [[[x![1][1][1]+y![1][1][1], []]]]);
+         return SqrtField_objectify([[x![1][1][1]+y![1][1][1], []]]);
       else 
          return x![1][1][1] + y;
       fi;
@@ -317,7 +316,7 @@ local a,b,i,j,e,len,pr;
       while i<= Length(b) and Product(b[i][2])<pr do i := i+1; od;
       if i>Length(b) then 
          Append(b,a{[j..Length(a)]});
-         return SqrtField_objectify( SqrtFieldType, Immutable([b]) ); 
+         return SqrtField_objectify( b ); 
       fi;
       if e[2]=b[i][2] then
          b[i][1] := b[i][1] + e[1];
@@ -334,7 +333,7 @@ local a,b,i,j,e,len,pr;
       fi;
    od;
    if b = [] then return Zero(SqrtField); fi;
-   return SqrtField_objectify( SqrtFieldType, Immutable([b]) );          
+   return SqrtField_objectify( b );          
 end);
 
 #########################################################################
@@ -358,7 +357,7 @@ local t;
       CopyListEntries( t, 1, 1, t, 2, 1, Length(t) );
       t[1] := [x,[]];
    fi;
-   return SqrtField_objectify( SqrtFieldType,Immutable([t]) );
+   return SqrtField_objectify( t );
 end);
 
 #########################################################################
@@ -379,7 +378,7 @@ function(x)
 local a, i;
    a := List(x![1],ShallowCopy);
    for i in a do i[1] := -i[1]; od;
-   return  SqrtField_objectify( SqrtFieldType, Immutable([a]) );   
+   return SqrtField_objectify( a );   
 end);
 
 #########################################################################
@@ -429,7 +428,7 @@ InstallMethod( \*,
       b   := y![1];
 
       if x![2] and y![2] then
-         return SqrtField_objectify(SqrtFieldType,[[[a[1][1]*b[1][1],[]]]]);
+         return SqrtField_objectify([[a[1][1]*b[1][1],[]]]);
       fi; 
 
       mns := [ ];
@@ -467,7 +466,7 @@ InstallMethod( \*,
          fi;
       od;
       if res = [] then return Zero(SqrtField); fi;
-      return SqrtField_objectify( SqrtFieldType, [res]  );
+      return SqrtField_objectify( res );
 end);
 
 
@@ -480,7 +479,7 @@ function(el)
 local b, i, j, bas, mat, elts, a, cfs, l,cf, pos, ns, inv, res, v, nrp, want;
    if el=Zero(SqrtField) then Error("elt must be nonzero"); fi;
    a    := List(el![1],ShallowCopy);
-   a    := SqrtField_objectify( SqrtFieldType,Immutable([a]));
+   a    := SqrtField_objectify( a );
    i    := 1;
    elts := [One(SqrtField)];
    bas  := [[]];
@@ -527,7 +526,7 @@ InstallMethod( \AINV_MUT,
    local a, i;
       a := List(x![1],ShallowCopy);
       for i in a do i[1] := -i[1]; od;
-      return  SqrtField_objectify( SqrtFieldType, Immutable([a]) );
+      return SqrtField_objectify( a );
 end);
 
 #########################################################################
@@ -572,7 +571,7 @@ local b, i, j, bas, mat, elts, a, cfs, l,cf, pos, ns, inv, res, v, nrp,
    fi;
    if el=Zero(SqrtField) then Error("elt must be nonzero"); fi;
    a    := List(el![1],ShallowCopy);
-   a    := SqrtField_objectify( SqrtFieldType, Immutable([a]) );
+   a    := SqrtField_objectify( a );
    i    := 1;
    elts := [One(SqrtField)];
    bas  := [[]];
@@ -726,7 +725,7 @@ function( el )
 local x, i;
    x := List(el![1], ShallowCopy);
    for i in x do i[1] := ComplexConjugate(i[1]); od;
-   return  SqrtField_objectify( SqrtFieldType, Immutable([x]) );
+   return SqrtField_objectify( x );
 end );
 
 ##########################################################################
@@ -765,7 +764,7 @@ local x,i;
       Error("elt must be a real SqrtFieldElt with one summand");
    fi;
    for i in x do i[1] := AbsoluteValue(i[1]); od;
-   return SqrtField_objectify( SqrtFieldType, Immutable([x]) );
+   return SqrtField_objectify( x );
 end );
 
 ##########################################################################
