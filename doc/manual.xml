@@ -532,7 +532,6 @@ conventions as in <Cite Key="knapp"/>.
 <Example><![CDATA[
 gap> L := RealFormById( [ ["A", 4, 2], ["D", 5, 2] ], SqrtField);;
 gap> NameRealForm( L );
-gap> NameRealForm(L);
 "su(1,4)+so(2,8)"
 ]]></Example>
 </Description>

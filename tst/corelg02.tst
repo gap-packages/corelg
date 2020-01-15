@@ -48,13 +48,12 @@ gap> K := RealFormById("A",5,2);;
 gap> IdRealForm( K );
 [ "A", 5, 2 ]
 
-# doc/manual.xml:532-537
+# doc/manual.xml:532-536
 gap> L := RealFormById( [ ["A", 4, 2], ["D", 5, 2] ], SqrtField);;
 gap> NameRealForm( L );
-gap> NameRealForm(L);
 "su(1,4)+so(2,8)"
 
-# doc/manual.xml:638-651
+# doc/manual.xml:637-650
 gap> L:= RealFormById( "A", 5, 3 );
 <Lie algebra of dimension 35 over SqrtField>
 gap> H := CartanSubalgebra(L);;
@@ -68,7 +67,7 @@ rec( CartanInv := function( v ) ... end,
   P := <vector space of dimension 0 over SqrtField> )
 gap> # We see that the semisimple subalgebra DK is compact. 
 
-# doc/manual.xml:681-691
+# doc/manual.xml:680-690
 gap> r:= MaximalReductiveSubalgebras("F",4,3);;
 gap> NameRealForm( r.liealg );
 "F4(-20)"
@@ -79,7 +78,7 @@ so(8,1)
 so(9)
 sl(2,R)+G2c
 
-# doc/manual.xml:708-720
+# doc/manual.xml:707-719
 gap> L:=RealFormById("E",6,3);;                            
 gap> H:=CartanSubalgebra(L);;
 gap> K:=LieCentralizer(L,Subalgebra(L,Basis(H){[1,2,4]}));;
@@ -92,7 +91,7 @@ gap> M:=RealFormById("A",2,2);
 gap> IsomorphismOfRealSemisimpleLieAlgebras(DK,M);
 <Lie algebra isomorphism between Lie algebras of dimension 8 over SqrtField>
 
-# doc/manual.xml:816-830
+# doc/manual.xml:815-829
 gap> L:= RealFormById( [["E", 6, 3],["A", 3, 2]] );;
 gap>  K:= LieCentralizer( L, Subalgebra( L, Basis( CartanSubalgebra(L) ){[1]} ) );
 <Lie algebra of dimension 51 over SqrtField>
@@ -107,7 +106,7 @@ Involution: ()
 Types of direct summands:
 [ [ "A", 3, 2 ], [ "A", 5, 3 ] ]
 
-# doc/manual.xml:839-851
+# doc/manual.xml:838-850
 gap> L:= RealFormById( [["E", 6, 3],["A", 3, 2]] );;
 gap> K:= LieCentralizer( L, Subalgebra( L, Basis( CartanSubalgebra(L) ){[1]} ) );
 <Lie algebra of dimension 51 over SqrtField>
@@ -119,4 +118,6 @@ gap> Display( sd );
 A5:  1---2---(3)---4---5
 A3:  6---(7)---8
 Involution:  (1,5)(2,4)(6,8)
+
+#
 gap> STOP_TEST("corelg02.tst", 1 );
