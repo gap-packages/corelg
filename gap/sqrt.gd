@@ -21,9 +21,8 @@ SqrtFieldType    := NewType( fam_SqrtFieldElt,
 ################################
 # SQRTFIELD
 DeclareCategory( "IsSqrtField", IsField );
-DeclareGlobalVariable( "SqrtField", "SqrtField..." );
 
-InstallValue( SqrtField,  Objectify( NewType( 
+BindGlobal( "SqrtField",  Objectify( NewType( 
                  CollectionsFamily( fam_SqrtFieldElt ),
                  IsField and
                  IsAttributeStoringRep and 
