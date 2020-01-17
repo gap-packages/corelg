@@ -1,5 +1,11 @@
 This file describes changes in the GAP package `CoReLG`.
 
+- Version 1.54 (2020-01-17):
+   - janitorial changes
+
+- Version 1.53 (2019-11-20):
+   - janitorial changes
+
 - Version 1.52 (2019-09-30):
    - added a test suite, based on the manual examples
    - janitorial changes
