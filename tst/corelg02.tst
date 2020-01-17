@@ -71,7 +71,6 @@ gap> # We see that the semisimple subalgebra DK is compact.
 gap> r:= MaximalReductiveSubalgebras("F",4,3);;
 gap> NameRealForm( r.liealg );
 "F4(-20)"
-gap> SetAssertionLevel(1); # HACK to work around buggy assertion in GAP <= 4.10
 gap> for K in r.subalgs do Print( NameRealForm(K), "\n" ); od;
 su(1,2)+su(3)
 su(2)+sp(1,2)
