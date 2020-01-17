@@ -6,10 +6,10 @@
                        [1X Computing with real Lie algebras [101X
   
   
-                                  Version 1.53
+                                  Version 1.54
   
   
-                                20 November 2019
+                                17 January 2020
   
   
                                  Heiko Dietrich
