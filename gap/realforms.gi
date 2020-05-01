@@ -2334,12 +2334,35 @@ local id,vd,pos,tmp;
    if IsBound(L!.id) then return L!.id; fi;
    if IsBound(L!.sstypes) then return L!.sstypes; fi;
 
+  
+  ## note that IdRealForm also works for semisimple Ls
+  ## however, the following piece of code misses multiple simple summands
+  ## because it only picks types[1]
+  ## the correction is below
+  ## 
+  #if (HasIsCompactForm(L) and IsCompactForm(L)) or Dimension(CartanDecomposition(L).P)=0 then
+  #   id := CartanType(CartanMatrix(VoganDiagram(L))).types[1];
+  #   Add(id,1);
+  #   L!.id := id;
+  #   return id;
+  #fi;
+  
    if (HasIsCompactForm(L) and IsCompactForm(L)) or Dimension(CartanDecomposition(L).P)=0 then
-      id := CartanType(CartanMatrix(VoganDiagram(L))).types[1];
-      Add(id,1);
-      L!.id := id;
-      return id;
+      id := CartanType(CartanMatrix(VoganDiagram(L))).types;
+      if Length(id) = 1 then
+         id := id[1];
+         Add(id,1);
+         L!.id := id;
+         return id;
+      else
+         for j in id do Add(j,1); od;
+	 L!.id := id;
+	 return id;
+      fi;
    fi;
+   
+   
+   
    if HasRealFormParameters(L) then
       tmp := RealFormParameters(L);
       pos := Position(tmp[3],-1);
