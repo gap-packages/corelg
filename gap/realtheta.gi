@@ -2944,3 +2944,981 @@ corelg.Cayleytriples:= function( L, L0, c )
    return eqns;
 
 end;
+
+
+#############################################################################
+
+# Here we have a function for deciding whether an automorphism of a
+# semisimple Lie algebra is inner. We use the algorithm of Cohen, Murray,
+# Taylor, for the specific case of the adjoint rep.
+
+weylwordNF:= function( R, path )     
+
+        local   w,  rho,  wt;     
+
+# the WeylWord in lex shortest form...
+
+       w:= WeylWord( path );
+       rho:= List( [1..Length( CartanMatrix(R))], x -> 1 );
+       wt:= ApplyWeylElement( WeylGroup(R), rho, w );
+       return ConjugateDominantWeightWithWord( WeylGroup(R), wt )[2];
+
+end;
+
+mons0:= function( R, hw )
+
+        # R a root system, hw a highest weight
+        # we get monomials in the f-s that applied to the highest weight
+        # vector give a basis of the weight spaces 
+
+        local cg, strings, paths, p, p1, st, word, j, k;
+
+        cg:= CrystalGraph( R, hw );
+        paths:=  cg.points; #Filtered( cg.points, p -> IsZero( EndWeight(p) ) );
+        
+        # For every path we compute its adapted string.
+        strings:= [ ];
+        for p in paths do
+            p1:= p;
+            st:= [];
+            word:= weylwordNF( R, p1 );
+            while word <> [] do
+                j:= 0;
+                k:= word[1];
+                while  WeylWord( p1 ) <> [] and word[1] = k do
+                     p1:= Ealpha( p1, k );
+                     word:= weylwordNF( R, p1 );     
+                     j:= j+1;
+                od;
+                if j > 0 then
+                    Add( st, k );
+                    Add( st, j );
+                fi;
+            od;
+            Add( strings, st );        
+        od;
+
+        return strings;
+
+end;
+
+conformmat:= function( L, BL ) # Lie alg and particular basis...
+
+        # the matrix of the contravariant form of the adjoint rep of L
+        # restricted to the CSA.
+
+        local R, N, hw, st, v0, f, e, bash, s, u, n, j, k, mat, sp, i, l, A, cf;
+
+        R:= RootSystem(L);
+        N:= Length( PositiveRoots(R) );
+        hw:= PositiveRootsAsWeights( R )[N];
+        st:= mons0( R, hw );
+
+        v0:= ChevalleyBasis(L)[1][N];
+        f:= CanonicalGenerators(R)[2];
+        e:= CanonicalGenerators(R)[1];
+
+        bash:= [ ];
+        for s in st do
+
+            u:= v0;
+            n:= Length(s);
+            for j in [n-1,n-3..1] do
+                for k in [1..s[j+1]] do
+                    u:= f[s[j]]*u;
+                od;
+                u:= u/Factorial( s[j+1] );
+            od;
+            Add( bash, u );
+        od;
+
+        mat:= List( bash, x -> [] );
+        sp:= Basis( Subspace( L, [v0] ), [v0] ); 
+        for i in [1..Length(bash)] do
+            s:= st[i];
+            n:= Length(s);
+            for j in [i..Length(bash)] do
+                u:= bash[j];
+                
+                for l in [1,3..n-1] do
+                    for k in [1..s[l+1]] do
+                        u:= e[s[l]]*u;
+                    od;
+                    u:= u/Factorial( s[l+1] );
+                od;
+                cf:= Coefficients( sp, u );
+                if cf = fail then
+                   cf:= 0;
+                else
+                   cf:= cf[1];
+                fi;
+                mat[i][j]:= cf;
+                mat[j][i]:= mat[i][j];
+            od;
+        od;
+
+        sp:= Basis( Subspace( L, bash ), bash );
+        A:= List( BL, h -> Coefficients(sp,h) );
+
+        return A*mat*TransposedMat(A);
+           
+end;
+
+Jmuseq:= function( R, hw )
+
+        local n, mus, J, B, C, sim, lam, J1, W, ref, Jm, r, r0, ind,
+              t, mu;
+
+        n:= Length( CartanMatrix(R) );
+        mus:= [hw];
+        J:= [ [1..n] ];
+
+        B:= BilinearFormMatNF(R);
+        C:= CartanMatrix( R )^-1;
+        sim:= SimpleSystemNF(R);
+        lam:= hw*C;
+        lam:= lam*sim;
+        J1:= Filtered( [1..n], i -> lam*B*sim[i] = 0 );
+        if Length(J1) > 0 then 
+           Add( J, J1 );
+        fi;
+
+
+        W:= WeylGroupAsPermGroup( R );
+        ref:= GeneratorsOfGroup( W );
+
+        while Length(J1) > 0 do
+            Jm:= J[ Length(J) ];
+
+            for r in [1..n] do
+                if not r in Jm then 
+                   ind:= Filtered( [1..n], i -> B[r][i] <> 0 );
+                   if Length( Intersection( Jm, ind ) ) > 0 then
+                      r0:= r;
+                      break;
+                   fi;
+                fi;
+            od;
+
+            t:= 1;
+            while r in J[t] do t:= t+1; od;
+            t:= t-1;
+            mu:= ApplyWeylPermToWeight( R, ref[r0], mus[t] );
+
+            Add( mus, mu ); 
+            lam:= mu*C;
+            J1:= Filtered( Jm, i -> lam*B*sim[i] = 0 );
+            if Length(J1) > 0 then 
+               Add( J, J1 );
+            fi;            
+        od;
+
+        return rec( mus:= mus, J:= J );
+
+end;
+
+shortestrep:= function( R, rts, pi )
+
+        # here pi is an element of the Weyl group (given as permutation)
+        # rts are some simple roots (as indices in the simple roots of R)
+        # generating the reflection subgroup
+        # W0; we output the shortest element of W0.pi
+
+        local W, ref, N, v, vi, pos, u;
+
+        W:= WeylGroupAsPermGroup( R );
+        ref:= GeneratorsOfGroup( W );
+
+        N:= Length( PositiveRoots(R) );
+        v:= pi;
+        u:= pi^0;
+        while true do
+            vi:= v^-1;
+            pos:= PositionProperty( rts, i -> i^vi > N );
+            if pos = fail then return [u,v]; fi;
+            v:= v*ref[rts[pos]];
+            u:= ref[rts[pos]]*u;
+# note that f : W --> S_n is an anti-homomorphism, so if w[p] denotes the word
+# corr to the perm p, then w[v*ref[i]] = w[ref[i]]*w[v], but the latter is
+# exactly what we want...        
+        od;
+
+end;
+
+Jdecofw0:= function( J, R ) # here J is the J-part of the output of Jmuseq.
+
+        local w0, pi, dec, i, r;
+
+        w0:= LongestWeylWord( R );
+        pi:= WeylWordAsPerm( R, w0 );
+        dec:= [ ];
+        for i in [2..Length(J)] do
+            r:= shortestrep( R, J[i], pi );
+            Add( dec, r[2] );
+            pi:= r[1];
+        od;
+        Add( dec, pi );
+
+        return dec;
+end;
+
+AUTS:=[];
+        
+
+IsInnerAut_simple:= function( f )
+
+        local L, ch, bvecs, hw, BL, A, R, rank, N, nw, Ci, J, Om, rtsNF, rvecs,
+              Omvecs, ad, xa, na, conform, CFM, q0, BF, B, m, v, v1, v2, k, s,
+              nu, w1, w2, w, p, Phiw, a, vnu, i, j, r, np, u, cf, t, Bnew,
+              posr, rts, indsim, word;
+
+Add( AUTS, f );
+
+        L:= Source(f);
+
+        ch:= ChevalleyBasis(L);
+        bvecs:= Concatenation( Reversed(ch[1]), ch[3], ch[2] );
+        BL:= Basis( L, bvecs );
+
+        A:= List( BL, x -> Coefficients( BL, Image( f, x ) ) );
+        A:= TransposedMat(A);
+
+        R:= RootSystem(L);
+        rank:= Length( CartanMatrix(R) );
+        N:= Length(PositiveRoots(R));
+        hw:= PositiveRootsAsWeights(R)[N];
+        Ci:= CartanMatrix(R)^-1;
+        J:= Jmuseq( R, hw );
+        Om:= List( J.mus, mu -> mu*Ci );
+        rtsNF:= PositiveRootsNF(R);
+        rtsNF:= Concatenation( rtsNF, -rtsNF );
+        rvecs:= Concatenation( ch[1], ch[2] );
+        Omvecs:= List( Om, a -> rvecs[ Position( rtsNF, a ) ] );
+
+# we note that the all elts of Omvecs are root vectors
+
+
+# the generators of the group
+
+        ad:= List( rvecs, u -> AdjointMatrix( BL, u ) );
+
+        xa:= function( i, t ) # exp (t \ad(x_i) )
+
+            local a, m, b, k;
+ 
+            a:= t*ad[i];
+            m:= a^0;
+            b:= a; k:= 1;
+            while not IsZero(b) do
+                m:= m + b;
+                b:= b*a; k:= k+1; b:= b/k;
+            od;
+            return m;
+        end;
+
+        na:= function( i )
+
+            local a, j;
+
+            a:= xa( i, -1 );
+            if i <= N then
+               j:= i+N;
+            else
+               j:= i-N;
+            fi;
+            return a*xa( j, 1 )*a;
+        end;
+
+        conform:= function( M, u, v )
+        # the value of (u,v); M is the matrix of the form
+        return Coefficients( BL, u )*M*Coefficients( BL, v );
+        end;
+
+
+        CFM:= conformmat( L, BL );
+        q0:= Jdecofw0( J.J, R );
+        # now q0[i] is w_{0,i}...
+
+        BF:= BilinearFormMatNF( R );
+       
+        B:= A;
+        word:= [ ];
+        for m in [1..Length(J.J)] do
+            v:= Coefficients( BL, Omvecs[m] );
+            v:= B*v;
+
+            # we are interested in the lowest weight occurring in this...
+            k:= Length(v);
+            while v[k] = 0 do k:= k-1; od;
+
+            if k <=N then
+               s:= N-k+1;
+            else # i.e., k > N+rk
+               s:= k-rank;
+            fi;
+# so k is the position in the vector corresponding to the s-th root in the
+# normal ordering
+            nu:= rtsNF[s]*CartanMatrix(R);
+
+            # find w in W st w(nu) = J.mus[m];
+
+            w1:= ConjugateDominantWeightWithWord( WeylGroup(R), nu )[2];
+            w2:= ConjugateDominantWeightWithWord( WeylGroup(R), J.mus[m] )[2];
+
+            w:= Concatenation( w2, Reversed( w1 ) );
+            p:= WeylWordAsPerm( R, w );
+            w:= PermAsWeylWord( R, p );
+
+            if not ForAll( w, i -> i in J.J[m] ) then
+               return false;
+            fi;
+
+            Phiw:= Filtered([1..N], i -> i^p > N );
+
+            v1:= v;
+            a:= v[k];
+            vnu:= 0*ShallowCopy(v); vnu[k]:= 1;
+            for i in Phiw do
+                r:= -2*(rtsNF[s]*BF*rtsNF[i])/(rtsNF[i]*BF*rtsNF[i]);
+                np:= na( i )*vnu;
+                j:= PositionProperty( np, x -> x <> 0 );
+
+                cf:= v1[j]/np[j];
+                cf:= cf/(a*(-1)^r);
+                if r <> 1 and cf <> 0 then
+                   Print("Need an ",r,"-th root of ",cf,"\n");
+                fi;
+                if r = 1 then
+                   t:= cf;
+                elif r = 2 then
+                   t:= Sqrt( cf );
+                   v2:= xa( i, -t )*v1;
+                   if v2[j] <> 0 then
+                      v2:= xa( i, t )*v1;
+                      t:= -t;
+                      if v2[j] <> 0 then Print("Still nonzero!!\n"); fi;
+                   fi;
+                else
+                   Print("Higher root needed!!\n");
+                fi;
+                v1:= xa( i, -t )*v1;
+                B:= xa( i, -t )*B;
+                if not IsZero(t) then Add( word, ["xl",[i,-t]] ); fi;
+            od;
+
+            p:= q0[m]^-1;
+            Phiw:= Filtered([1..N], i -> i^p > N );
+            for i in Phiw do
+                r:= 2*(Om[m]*BF*rtsNF[i])/(rtsNF[i]*BF*rtsNF[i]);
+                u:= Coefficients( BL, Omvecs[m] );
+                a:= (B*u)[k];
+                a:= a*CFM[k][k]/conform( CFM, Omvecs[m], Omvecs[m] );
+# note that conform( CFM, vnu, vnu ) = CFM[k][k]...
+
+                u:= na(i)*Coefficients( BL, Omvecs[m] );
+                cf:= (B*u)[k];
+                cf:= cf*CFM[k][k]/(u*CFM*u);
+                cf:= cf/a;
+                if r <> 1 and cf <> 0 then
+                   Print("Need an ",r,"-th root of ",cf,"\n");
+                fi;
+                if r = 1 then
+                   t:= cf;
+                elif r = 2 then
+                   t:= Sqrt( cf );
+                   Bnew:= B*xa( i, -t );
+                   v2:= Bnew*u;
+                   if v2[k] <> 0 then
+                      t:= -t;
+                      Bnew:= B*xa( i, -t );
+                      v2:= Bnew*u;
+                      if v2[k] <> 0 then Print("Still nonzero!!\n"); fi;
+                   fi;
+                else
+                   Print("Higher root needed!!\n");
+                fi;
+                B:= B*xa( i, -t );
+                if not IsZero(t) then Add( word, ["xr",[i,-t]] ); fi;
+            od;
+            
+            B:= Product( w, i -> na(i) )*B;
+            Add( word, ["w",w] );
+
+        od;
+
+        posr:= PositiveRootsNF(R);
+        rts:= Reversed( posr );
+        Append( rts, List( [1..rank], k -> 0*rts[1] ) );
+        Append( rts, -posr );
+        indsim:= List( posr{[1..rank]}, x -> Position( rts, x ) );
+
+        if not IsDiagonalMat(B) then return false; fi;
+
+        v:= List( indsim, i -> B[i][i] );
+        if not ForAll( [1..Length(rts)], i -> Product( [1..Length(rts[i])],
+                j -> v[j]^rts[i][j] ) = B[i][i] ) then
+           return false;
+        else
+           return true;
+        fi;
+
+end;
+
+
+IsInnerAut:= function( f )
+
+
+        local L, d, k, b1, b2, h;
+
+        L:= Source(f);
+        d:= DirectSumDecomposition( L );
+
+        if Length(d) = 1 then return IsInnerAut_simple(f); fi;
+
+        for k in [1..Length(d)] do
+
+            b1:= Basis(d[k]); b2:= List( b1, x -> Image( f, x ) );
+            h:= AlgebraHomomorphismByImagesNC( d[k], d[k], b1, b2 );
+
+            if not IsInnerAut_simple(h) then return false; fi;
+        od;
+
+        return true;
+
+end;
+
+
+# Here we try to implement the algorithm for computing the real
+# carrier algebras of a real theta-group. For the moment we restrict
+# to gradings corresponding to inner automorphisms and Z-gradings of
+# split semisimple Lie algebras, that are created with the command
+# SimpleLieAlgebra. For the moment we work over CF(4), if problems occur
+# then we can also switch to SqrtField.
+
+
+
+weylperm:= function( R, r ) # r a pos root in NF, find the perm of the corr
+                            # reflection
+
+        local rt, B, list, i, s; 
+
+        rt:= PositiveRootsNF(R);
+        rt:= Concatenation( rt, -rt );
+        B:= BilinearFormMat( R );
+        list:= [ ];
+        for i in [1..Length(rt)] do
+            s:= rt[i]-(2*(rt[i]*B*r)/(r*B*r))*r;
+            list[i]:= Position( rt, s );
+        od;
+
+        return PermList( list );
+
+end;
+
+
+
+finddiag:= function( C, lab, rts, B, diag )
+
+        # here C is the Cartan matrix of the root system, lab a list
+        # of labels, indicating from which g_i the i-th simple root
+        # should come, rts is the list of roots corresponding to a
+        # certain CSA, an element is a pair, [alpha,i] where
+        # alpha is the root, i is its label, B is the bilin form mat.
+        # We find a set of roots with the given labeled diagram.
+        # diag is an initial piece (we want to do recursion...)
+        # that is, diag is a set of rts
+
+        local candidates, k, r, good, i, cik, cki, d0, q;
+
+        candidates:= [ ]; # the candidates to be the next node...
+        k:= Length( diag );
+
+        for r in rts do
+            if r[2] = lab[k+1] then
+               good:= true;
+               for i in [1..Length(diag)] do
+                   cik:= 2*(diag[i][1]*B*r[1])/(r[1]*B*r[1]);
+                   cki:= 2*(r[1]*B*diag[i][1])/(diag[i][1]*B*diag[i][1]);
+                   if cik <> C[i][k+1] or cki <> C[k+1][i] then
+                      good:= false; break;
+                   fi;
+               od;
+
+               if good then Add( candidates, r ); fi;
+            fi;
+        od;
+
+        if Length( candidates ) = 0 then return fail; fi;
+
+        if Length( diag ) = Length(C)-1 then
+           Add( diag, candidates[1] );
+           return diag;
+        fi;
+
+        for r in candidates do
+            d0:= ShallowCopy( diag );
+            Add( d0, r );
+            q:= finddiag( C, lab, rts, B, d0 );
+            if q <> fail then
+               return q;
+            fi;
+        od;
+
+        return fail;
+
+end;
+
+diagauts:= function( C ) # from Cartan matrix get the outer auts preserving
+                          # each component.
+
+        # the output is a list of lists, let l be such a list, let
+        # e = Concatenation( CartanType(C).enumeration ). Let c be the
+        # canonical generators of the root system; then mapping c[i]{en} to
+        # c[i]{l} will give an automorphism of the Lie algebra.
+
+        local t, m, auts, i, type, en, rk, s, u, v, a, j, perms, p, q; 
+
+        t:= CartanType( C );
+        m:= Concatenation( t.enumeration ); #List( [1..Length(C)], x -> x );
+        auts:= [ m ];
+        for i in [1..Length(t.types)] do
+            type:= t.types[i][1]; en:= t.enumeration[i]; rk:= Length(en);
+            s:= Sum( t.enumeration{[1..i-1]}, Length );
+            if type = "A" and rk > 1 then
+               u:= Reversed( en );
+               a:= ShallowCopy( m );
+               for j in [1..Length(u)] do
+                   a[s+j]:= u[j];
+               od;
+               Add( auts, a );
+            elif type = "D" and rk = 4 then
+                 perms:= Filtered( Elements(SymmetricGroup(3)), g ->
+                               not IsOne(g) );
+                 for p in perms do
+                     v:= Permuted( en{[1,3,4]}, p );
+                     u:= [ v[1], en[2], v[2], v[3] ];
+                     a:= ShallowCopy( m );
+                     for j in [1..Length(u)] do
+                         a[s+j]:= u[j];
+                     od;
+                     Add( auts, a );
+                 od;
+            elif type = "D" and rk > 4 then
+               u:= ShallowCopy( en );
+               v:= u[ Length(u) ];
+               u[ Length(u) ]:= u[ Length(u) -1 ];
+               u[ Length(u)-1 ]:= v;
+               a:= ShallowCopy( m );
+               for j in [1..Length(u)] do
+                   a[s+j]:= u[j];
+               od;
+               Add( auts, a );
+            elif type = "E" and rk = 6 then
+               u:= Permuted( en, (1,6)*(3,5) );
+               a:= ShallowCopy( m );
+               for j in [1..Length(u)] do
+                   a[s+j]:= u[j];
+               od;
+               Add( auts, a );          
+            fi;
+        od;
+
+        # take the group generated by these...
+        p:= List( auts, x -> PermListList( auts[1], x ) );
+        q:= Elements( Group(p) );
+        return List( q, z -> Permuted( auts[1], z ) );
+        #return auts;
+end;
+
+
+setupI:= function( type, rk, f )
+
+        local L0, L, g, cfs, cd, K0, DK0, cd0, Hs, Rs, C, lab, convdata, V,
+              rr, rv, i, j, nform, rts, sim, sp, weyl, gens, W0, pp, k,
+              realweyl, R0, rk0, Hs0, R, sim0, auts, cg, b0, b1, lam, d0,
+              nrv, incomps, l2, p, C0, ind, en, a, h, l1, l, a0, cg1,
+              B1, C1, t1, en1; 
+
+        #first we trasport the grading of f to a copy of its source Lie algebra
+
+        L0:= Source(f);
+        g:= Grading(f); 
+        cfs:= List( g, u -> List( u, x -> Coefficients(Basis(L0),x) ) );
+
+        C:= CartanMatrix(RootSystem(L0));
+        lab:= List( KacDiagram(f).weights, i -> i+1 );
+
+        L:= SimpleLieAlgebra( type, rk, CF(4) );
+        g:= List( cfs, u -> List( u, x -> x*Basis(L) ) );
+        
+        corelg.cartdecsplit(L);
+        cd:= CartanDecomposition(L);
+        K0:= Subalgebra( L, g[1] );
+
+        DK0:= LieDerivedSubalgebra( K0 );
+        d0:= DirectSumDecomposition( DK0 );
+
+        # the next is to record in which direct sum component of DK0
+        # the i-th simple root has to go, if this i-th simple roots is of
+        # degree 0.
+        R0:= RootSystem(L);
+        incomps:= 0*lab;
+        nrv:= NegativeRootVectors( R0 );
+        rts:= Concatenation( [nrv[Length(nrv)]], CanonicalGenerators(R0)[1] );
+        for i in [1..Length(lab)] do
+            if lab[i] = 1 then
+               incomps[i]:= PositionProperty( d0, U -> rts[i] in U );
+            fi;
+        od;
+
+        cd0:= rec( CartanInv:= cd.CartanInv, K:= Intersection(cd.K,DK0),
+            P:= Intersection(cd.P,DK0) );
+        SetCartanDecomposition( DK0, cd0 );
+
+        Hs0:= CartanSubalgebrasOfRealForm( DK0 );
+        Hs:= List( Hs0, U -> Subalgebra( K0, Concatenation( Basis(U),
+                    Basis(LieCentre(K0)) ) ) );
+
+        # so these are now Cartan subalgebras of L as well...
+
+        Rs:= List( Hs, U -> RootsystemOfCartanSubalgebra( L, U ) );
+
+        convdata:= [ ];
+        V:= List( g, u -> Subspace( L, u ) );
+        weyl:= [ ];
+        realweyl:= [ ];
+
+        R:= RootSystem( L );
+        rr:= PositiveRootsNF(R);
+        rr:= Concatenation( rr, -rr );
+        rv:= Concatenation( PositiveRootVectors(R),
+                    NegativeRootVectors(R) );
+        rts:= [ ];
+        for j in [1..Length(rr)] do
+            Add( rts, [ rr[j], PositionProperty( V, U -> rv[j] in U )] );
+        od;
+        sim:= finddiag( KacDiagram(f).CM, lab, rts,
+                                          BilinearFormMatNF(R), [] );
+
+        l2:= List( sim, x -> PositionProperty( d0,
+                              U -> rv[ Position(rr,x[1]) ] in U ) );
+        for k in [1..Length(l2)] do
+            if l2[k] = fail then l2[k]:= 0; fi;
+        od;
+        p:= PermListList( incomps, l2 );
+
+# this switches components for D6, order 2 3-rd autom
+# and hence the Cartan mat is not the same - should change the order of
+# simple roots st the Cartan mat is C0...
+
+        sim:= Permuted( sim, p );
+
+        ind:= Filtered( [1..Length(lab)], i -> lab[i] = 1 );
+        C0:= KacDiagram(f).CM{ind}{ind};
+        auts:= diagauts( C0 );
+        en:= Concatenation( CartanType( C0 ).enumeration );
+
+        # now we find the canonical basis of DK0 starting from this simple
+        # system...
+
+        sim0:= Filtered( sim, x -> x[2]=1 );
+        sim0:= List( sim0, x -> x[1] );
+        cg:= [ ];
+        cg[1]:= List( sim0, x -> rv[ Position( rr, x ) ] );
+        cg[2]:= List( sim0, x -> rv[ Position( rr, -x ) ] );
+        cg[3]:= List( [1..Length(sim0)], j -> cg[1][j]*cg[2][j] );
+        cg:= List( cg, u -> u{en} );
+
+        b0:= SLAfcts.canbas( DK0, cg );
+
+        for i in [1..Length(Rs)] do
+            rr:= PositiveRootsNF(Rs[i]);
+            rr:= Concatenation( rr, -rr );
+            rv:= Concatenation( PositiveRootVectors(Rs[i]),
+                    NegativeRootVectors(Rs[i]) );
+            rts:= [ ];
+            for j in [1..Length(rr)] do
+                Add( rts, [ rr[j], PositionProperty( V, U -> rv[j] in U )] );
+            od;
+            sim:= finddiag( KacDiagram(f).CM, lab, rts,
+                                          BilinearFormMatNF(Rs[i]), [] );
+
+            l2:= List( sim, x -> PositionProperty( d0, U ->
+                                      rv[ Position(rr,x[1]) ] in U ) );
+            for k in [1..Length(l2)] do
+                if l2[k] = fail then l2[k]:= 0; fi;
+            od;
+            p:= PermListList( incomps, l2 );
+            sim:= Permuted( sim, p );
+
+            sim0:= Filtered( sim, x -> x[2]=1 );
+            sim0:= List( sim0, x -> x[1] );
+
+            # make sure this sim0 has the Cartan matrix C0..
+            B1:= BilinearFormMatNF(Rs[i]);
+            C1:= List( sim0, x -> List( sim0, y -> 2*x*(B1*y)/(y*(B1*y)) ) );
+            t1:= CartanType( C1 );
+            en1:= Concatenation( t1.enumeration );
+            p:= PermListList( en, en1 );
+            sim0:= Permuted( sim0, p );
+
+            cg:= [ ];
+            cg[1]:= List( sim0, x -> rv[ Position( rr, x ) ] );
+            cg[2]:= List( sim0, x -> rv[ Position( rr, -x ) ] );
+
+            for j in [1..Length(cg[2])] do
+                sp:= Basis( Subspace( L, [cg[1][j]] ), [ cg[1][j] ] );
+                lam:= Coefficients( sp, cg[1][j]*( cg[1][j]*cg[2][j] ) )[1];
+                cg[2][j]:= -(2/lam)*cg[2][j];
+            od;
+
+            cg[3]:= List( [1..Length(sim0)], j -> cg[1][j]*cg[2][j] );
+
+            for a in auts do
+
+                cg1:= List( cg, u -> u{a} );
+                b1:= SLAfcts.canbas( DK0, cg1 );
+
+                h:= AlgebraHomomorphismByImages( DK0, DK0,
+                       Concatenation(b0), Concatenation(b1) );
+                # should be NC!!
+
+                if IsInnerAut(h) then
+                   a0:= a;
+                   break;
+                fi;
+            od;
+
+            l:= Filtered( [1..Length(sim)], k -> sim[k][2] = 1 );
+            l1:= l{en};
+            l2:= l{a0};
+
+            # this means: if l1[i] = s and l2[i] = t then the s-th
+            # element of sim should be replaced by its t-th element
+
+            sim0:= ShallowCopy( sim );
+            for k in [1..Length(l1)] do
+                sim[ l1[k] ]:= sim0[ l2[k] ];
+            od;
+
+            sim0:= Filtered( sim, x -> x[2]=1 );
+            sim0:= List( sim0, x -> x[1] );
+
+            # make sure this sim0 has the Cartan matrix C0..
+            B1:= BilinearFormMatNF(Rs[i]);
+            C1:= List( sim0, x -> List( sim0, y -> 2*x*(B1*y)/(y*(B1*y)) ) );
+            t1:= CartanType( C1 );
+            en1:= Concatenation( t1.enumeration );
+            p:= PermListList( en, en1 );
+            sim0:= Permuted( sim0, p );
+
+            cg:= [ ];
+            cg[1]:= List( sim0, x -> rv[ Position( rr, x ) ] );
+            cg[2]:= List( sim0, x -> rv[ Position( rr, -x ) ] );
+
+            for j in [1..Length(cg[2])] do
+                sp:= Basis( Subspace( L, [cg[1][j]] ), [ cg[1][j] ] );
+                lam:= Coefficients( sp, cg[1][j]*( cg[1][j]*cg[2][j] ) )[1];
+                cg[2][j]:= -(2/lam)*cg[2][j];
+            od;
+
+            cg[3]:= List( [1..Length(sim0)], j -> cg[1][j]*cg[2][j] );
+            cg:= List( cg, u -> u{en} );
+            b1:= SLAfcts.canbas( DK0, cg );
+
+            h:= AlgebraHomomorphismByImages( DK0, DK0,
+                       Concatenation(b0), Concatenation(b1) );
+
+if not IsInnerAut(h) then Print("automorphism NOT inner: trouble!!\n"); fi;
+
+            Add( weyl, Group( List( Filtered( sim, u -> u[2]=1 ),
+                  x -> weylperm( Rs[i], x[1] ) ) ) );
+
+            # now we determine the real Weyl group of DK0 corr to
+            # Hs0[i], and transform it to a subgroup of the previously
+            # found Weyl group (which is the complex Weyl group of DK0
+            # wrt Hs0[i]).
+
+            R0:= RootsystemOfCartanSubalgebra( DK0, Hs0[i] );
+            W0:= RealWeylGroup( DK0, Hs0[i] );
+            # first we identify the simple roots of R0 as roots of
+            # Rs[i], and we store the permutation of the roots of Rs[i]
+            # corr to this root.
+
+           
+            rk0:= Length( CartanMatrix( R0 ) );
+            sp:= List( [1..rk0], m -> Subspace( L,
+                                [ PositiveRootVectors(R0)[m] ] ) );
+            pp:= [ ];
+            for j in [1..rk0] do
+                for k in [1..Length(rv)] do
+                    if rv[k] in sp[j] then
+                       Add( pp, weylperm( Rs[i], rr[k] ) );
+                       break;
+                    fi;
+                od;
+            od;
+
+            gens:= List( GeneratorsOfGroup(W0), g -> PermAsWeylWord(R0,g) );
+            if Length(gens) > 0 then
+               W0:= Group( List( gens, l -> Product(Reversed(l), k -> pp[k])));
+            else
+               W0:= Group( () );
+            fi;
+            Add( realweyl, W0 );
+if not IsSubgroup( weyl[i], realweyl[i] ) then
+Print("error ",i,"-th Weyl group not subgroup\n");
+fi;
+
+            sim:= List( sim{[2..rk+1]}, x -> x[1] );
+            sp:= Basis( VectorSpace( Rationals, sim ), sim );
+            nform:= List( rr, u -> Coefficients( sp, u ) );
+
+            Add( convdata, rec( rts:= rr, nrts:= nform, rtvecs:= rv ) );
+        od;
+        return rec( L0:= L0, L:=L, Hs:= Hs, weyl:= weyl, Rs:= Rs, g:=g,
+                    convdata:= convdata, realweyl:= realweyl );
+
+end;        
+
+
+realforms:= function( data, car )
+
+        # data is the output of the previous fct,
+        # car is a carrier algebra as output by the relevant function,
+        # we compute its real forms.
+
+        local sigma, ii, g0, gp, gn, g0V, gpV, gnV, R, rq, rv, i, forms, cv,
+              g0_1, gp_1, gn_1, g0_2, gp_2, gn_2, g0v, gpv, gnv, W, RW, stb, DB,
+              T, t, bbas, K, u, HP, NK, pos, bas, inds, K0, M0, Mp, Mn, gg0,
+              ggp, ggn, j, k;
+
+        K0:= Subalgebra( data.L, data.g[1] );        
+
+        sigma:= RealStructure( data.L );
+        ii:= E(4)*One( LeftActingDomain(data.L) );
+
+        # first we get the roots involved in car
+        g0:= [ ]; gp:= List( car.gp, x -> [] ); gn:= List( car.gn, x -> [] );
+        g0V:= Subspace( data.L0, car.g0 );
+        gpV:= List( car.gp, u -> Subspace( data.L0, u ) );
+        gnV:= List( car.gn, u -> Subspace( data.L0, u ) );
+
+        R:= RootSystem( data.L0 );
+        rq:= PositiveRootsNF( R ); rq:= Concatenation( rq, -rq );
+        rv:= Concatenation( PositiveRootVectors(R), NegativeRootVectors(R) );
+        for i in [1..Length(rv)] do
+            if rv[i] in g0V then
+               Add( g0, rq[i] ); 
+            else       
+               pos:= PositionProperty( gpV, U -> rv[i] in U );
+               if pos <> fail then
+                  Add( gp[pos], rq[i] );
+               else
+                  pos:= PositionProperty( gnV, U -> rv[i] in U );
+                  if pos <> fail then
+                     Add( gn[pos], rq[i] );
+                  fi;
+               fi;
+            fi;
+        od;
+
+        forms:= [ ];
+        for i in [1..Length(data.Hs)] do
+
+            cv:= data.convdata[i];
+            g0_1:= List( g0, x -> Position( cv.nrts, x ) );
+            gp_1:= List( gp, u -> List( u, x -> Position( cv.nrts, x ) ) );
+            gn_1:= List( gn, u -> List( u, x -> Position( cv.nrts, x ) ) );
+
+            W:= data.weyl[i];
+            RW:= data.realweyl[i];
+
+            inds:= g0_1; Sort( inds );
+            stb:= Stabilizer( W, inds, OnSets );
+            inds:= gp_1[1]; Sort( inds );
+            stb:= Stabilizer( stb, inds, OnSets );
+            inds:= gn_1[1]; Sort( inds );
+            stb:= Stabilizer( stb, inds, OnSets );
+
+            DB:= DoubleCosetRepsAndSizes( W, stb, RW );
+            T:= List( DB, x -> x[1] );
+Print("number of double cosets  ",Length(T),"\n");
+            for t in T do
+
+                g0_2:= List( g0_1, x -> x^t );
+                gp_2:= List( gp_1, u -> List( u, x -> x^t ) );
+                gn_2:= List( gn_1, u -> List( u, x -> x^t ) );
+
+                # now this is a candidate for a real form
+                # we see whether it is defined over R, and whether
+                # it is strongly Hs[i]-regular...
+
+                g0v:= List( g0_2, x -> cv.rtvecs[x] );
+                gpv:= List( gp_2, u -> List( u, x -> cv.rtvecs[x] ) );
+                gnv:= List( gn_2, u -> List( u, x -> cv.rtvecs[x] ) );
+
+                M0:= Subspace( data.L, g0v );
+                Mp:= Subspace( data.L, gpv[1] );
+                Mn:= Subspace( data.L, gnv[1] );
+                if ForAll( g0v, x -> sigma(x) in M0 ) and
+                   ForAll( gpv[1], x -> sigma(x) in Mp ) and
+                   ForAll( gnv[1], x -> sigma(x) in Mn ) then
+                   bas:= [ ];
+                   for u in Basis(M0) do
+                       Add( bas, u+sigma(u) );
+                       Add( bas, ii*(u-sigma(u)) );
+                   od;
+                   for u in Basis(Mp) do
+                       Add( bas, u+sigma(u) );
+                       Add( bas, ii*(u-sigma(u)) );
+                   od;
+                   for u in Basis(Mn) do
+                       Add( bas, u+sigma(u) );
+                       Add( bas, ii*(u-sigma(u)) );
+                   od;
+                   K:= Subalgebra(data.L,bas);
+
+                   # check whether K is strongly H-regular
+
+                   HP:= Intersection(data.Hs[i],CartanDecomposition(data.L).P);
+                   NK:= Intersection( LieNormalizer( data.L, K ),
+                            CartanDecomposition(data.L).P );
+                   NK:= Intersection( NK, K0 );
+               
+                   if Intersection( LieCentralizer(data.L,HP), NK ) = HP then
+Print("added carrier alg corr to Cartan no ",i,"\n");
+                      M0:= Subalgebra( data.L, g0v );
+                      bas:= ShallowCopy( BasisVectors( Basis(M0) ) );
+                      for j in [1..Length(Basis(Mp))] do
+                          for k in [1..Length(Basis(Mn))] do
+                              Add( bas, Basis(Mp)[j]*Basis(Mn)[k] );
+                          od;
+                      od;
+
+                      gg0:= BasisVectors( CanonicalBasis( Intersection( K,
+                              Subalgebra( data.L, bas ) ) ) );
+
+                      ggp:= [ ];
+                      for j in [1..Length(gpv)] do
+                          Add( ggp, BasisVectors( CanonicalBasis( Intersection(
+                                K, Subspace( data.L, gpv[j] ) ) ) ) );
+                      od;
+                      ggn:= [ ];
+                      for j in [1..Length(gnv)] do
+                          Add( ggn, BasisVectors( CanonicalBasis( Intersection(
+                                K, Subspace( data.L, gnv[j] ) ) ) ) );
+                      od;
+                      
+                      Add( forms, rec( cartan:= data.Hs[i],
+                                    g0:= gg0, gp:= ggp, gn:= ggn ) );
+                   else
+                      Print("not strongly regular\n"); 
+                   fi;
+                fi;
+            od;
+        od;
+
+        return forms;
+
+end;
