@@ -2339,17 +2339,14 @@ local id,vd,pos,tmp,j;
       if Length(id) = 1 then
          id := id[1];
          Add(id,1);
-         L!.id := id;
-         return id;
       else
+         id := ShallowCopy(id);
          for j in id do Add(j,1); od;
-	 L!.id := id;
-	 return id;
       fi;
+      L!.id := id;
+      return id;
    fi;
-   
-   
-   
+
    if HasRealFormParameters(L) then
       tmp := RealFormParameters(L);
       pos := Position(tmp[3],-1);

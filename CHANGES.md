@@ -4,7 +4,7 @@ This file describes changes in the GAP package `CoReLG`.
    - janitorial changes
 
 - Version 1.53 (2019-11-20):
-   - janitorial changes
+   - added NameRealForm, MaximalReductiveSubalgebras
 
 - Version 1.52 (2019-09-30):
    - added a test suite, based on the manual examples

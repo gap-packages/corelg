@@ -371,7 +371,7 @@ end);
 
 #########################################################################
 
-InstallMethod( \AINV,
+InstallMethod( AINV,
    "for SqrtField elements",
    [IsSqrtFieldElement], 
 function(x)
@@ -519,7 +519,7 @@ end);
 
 #########################################################################
 
-InstallMethod( \AINV_MUT,
+InstallMethod( AINV_MUT,
    "for SqrtField elements",
    [IsSqrtFieldElement],
    function(x)
