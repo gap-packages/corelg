@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/gap-packages/corelg.svg)](https://travis-ci.org/gap-packages/corelg)
+[![Build Status](https://travis-ci.com/gap-packages/corelg.svg)](https://travis-ci.com/gap-packages/corelg)
 [![Code Coverage](https://codecov.io/github/gap-packages/corelg/coverage.svg)](https://codecov.io/gh/gap-packages/corelg)
 
 # CoReLG
