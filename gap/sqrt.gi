@@ -371,7 +371,7 @@ end);
 
 #########################################################################
 
-InstallMethod( AINV,
+InstallMethod( AdditiveInverseSameMutability,
    "for SqrtField elements",
    [IsSqrtFieldElement], 
 function(x)
@@ -519,7 +519,7 @@ end);
 
 #########################################################################
 
-InstallMethod( AINV_MUT,
+InstallMethod( AdditiveInverseMutable,
    "for SqrtField elements",
    [IsSqrtFieldElement],
    function(x)
