@@ -6,10 +6,10 @@
                        [1X Computing with real Lie algebras [101X
   
   
-                                  Version 1.54
+                                  Version 1.55
   
   
-                                17 January 2020
+                                10 February 2022
   
   
                                  Heiko Dietrich
@@ -38,7 +38,7 @@
   
   Willem de Graaf
       Email:    [7Xmailto:degraaf@science.unitn.it[107X
-      Homepage: [7Xhttp://www.science.unitn.it/~degraaf[107X
+      Homepage: [7Xhttps://www.science.unitn.it/~degraaf[107X
       Address:  [33X[0;14YDipartimento di Matematica[133X
                 [33X[0;14YVia Sommarive 14[133X
                 [33X[0;14YI-38050 Povo (Trento), Italy[133X

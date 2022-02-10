@@ -11,8 +11,8 @@
 SetPackageInfo( rec(
 PackageName := "CoReLG",
 Subtitle := "Computing with real Lie algebras",
-Version := "1.54",
-Date := "17/01/2020", # this is in dd/mm/yyyy format
+Version := "1.55",
+Date := "10/02/2022", # this is in dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -54,7 +54,7 @@ Persons := [
   IsAuthor := true,
   IsMaintainer := true,
   Email := "degraaf@science.unitn.it",
-  WWWHome := "http://www.science.unitn.it/~degraaf",
+  WWWHome := "https://www.science.unitn.it/~degraaf",
     PostalAddress :=
     """Dipartimento di Matematica
     Via Sommarive 14
