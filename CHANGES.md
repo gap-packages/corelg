@@ -1,5 +1,9 @@
 This file describes changes in the GAP package `CoReLG`.
 
+- Version 1.55 (2022-02-10):
+   - fixed bug in `IdRealForm` for semisimple compact form
+   - janitorial changes
+
 - Version 1.54 (2020-01-17):
    - janitorial changes
 
