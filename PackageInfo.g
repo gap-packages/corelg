@@ -11,8 +11,8 @@
 SetPackageInfo( rec(
 PackageName := "CoReLG",
 Subtitle := "Computing with real Lie algebras",
-Version := "1.55",
-Date := "10/02/2022", # this is in dd/mm/yyyy format
+Version := "1.56",
+Date := "24/02/2022", # this is in dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -88,7 +88,6 @@ PackageDoc := rec( BookName  := "CoReLG" ,
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "Computing with real Lie algebras",
-  Autoload  := false
 ),
 
 AbstractHTML := "The package <span class=\"pkgname\">CoReLG</span> contains \
@@ -101,7 +100,8 @@ Dependencies := rec(
   ExternalConditions := []
 ),
 AvailabilityTest := ReturnTrue,
-Autoload := false,
+
+TestFile := "tst/testall.g",
 
 Keywords := ["real Lie algebras","nilpotent orbits Cartan subalgebras"],
 
