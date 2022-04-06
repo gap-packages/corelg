@@ -1,6 +1,6 @@
 name: CoReLG
-version: 1.55
-date: 2022-02-10
+version: 1.56
+date: 2022-02-24
 description: |
     Computing with real Lie algebras
 
@@ -33,7 +33,7 @@ packageinfo: https://gap-packages.github.io/corelg/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/gap-packages/corelg/releases/download/v1.55/corelg-1.55.tar.gz
+      url: https://github.com/gap-packages/corelg/releases/download/v1.56/corelg-1.56.tar.gz
 
 abstract: |
     The package <span class="pkgname">CoReLG</span> contains functionality for working with real semisimple Lie algebras.
@@ -47,7 +47,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>DFG22</span>]   <b class='BibAuthor'>Dietrich, H., Faccin, P. and de Graaf, W.</b>,
      <i class='BibTitle'>CoReLG, Computing with real Lie algebras,
-             Version 1.55</i>
+             Version 1.56</i>
      (<span class='BibYear'>2022</span>)<br />
     (<span class='BibNote'>Refereed GAP package</span>),
     <span class='BibHowpublished'><a href="https://gap-packages.github.io/corelg/">https://gap-packages.github.io/corelg/</a></span>.
@@ -55,14 +55,13 @@ citeas: |
     
 
 bibtex: |
-    @misc{ CoReLG1.55,
+    @misc{ CoReLG1.56,
       author =           {Dietrich, H. and Faccin, P. and de Graaf, W.},
-      title =            {{CoReLG},  Computing with real Lie algebras, {V}ersion
-                          1.55},
+      title =            {{CoReLG}, Computing with real Lie algebras, {V}ersion 1.56},
       month =            {Feb},
       year =             {2022},
       note =             {Refereed GAP package},
-      howpublished =     {\href         {https://gap-packages.github.io/corelg/}
+      howpublished =     {\href                    {https://gap-packages.github.io/corelg/}
                           {\texttt{https://gap-packages.github.io/}\discretionary
                           {}{}{}\texttt{corelg/}}},
       keywords =         {real Lie algebras; nilpotent orbits Cartan subalgebras},
