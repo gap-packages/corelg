@@ -84,7 +84,7 @@ ArchiveFormats := ".tar.gz",
 
 PackageDoc := rec( BookName  := "CoReLG" ,
   ArchiveURLSubset := ["doc"],
-  HTMLStart := "doc/chap0.html",
+  HTMLStart := "doc/chap0_mj.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "Computing with real Lie algebras",
