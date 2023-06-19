@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/gap-packages/corelg.svg)](https://travis-ci.com/gap-packages/corelg)
+[![Build Status](https://github.com/gap-packages/corelg/workflows/CI/badge.svg?branch=master)](https://github.com/gap-packages/corelg/actions?query=workflow%3ACI+branch%3Amaster)
 [![Code Coverage](https://codecov.io/github/gap-packages/corelg/coverage.svg)](https://codecov.io/gh/gap-packages/corelg)
 
 # CoReLG
