@@ -1,5 +1,8 @@
 This file describes changes in the GAP package `CoReLG`.
 
+- Version 1.57 (2024-07-07):
+   - janitorial changes
+
 - Version 1.56 (2022-02-24):
    - set TestFile in PackageInfo.g
 
