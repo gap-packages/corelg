@@ -11,7 +11,7 @@
   (2013), 349--379.
   
   [[20XGra12[120X]  [16XGraaf,  W.  A.  d.[116X,  [17X\sf  SLA  - computing with Simple Lie Algebras[117X
-  (2012), (({\tt http://science.unitn.it/~degraaf/sla.html}, version 0.12)), a
+  (2012),  ({\tt  http://science.unitn.it/~degraaf/sla.html}, version 0.12), a
   {\sf GAP} package.
   
   [[20XKna02[120X] [16XKnapp, A. W.[116X, [17XLie groups beyond an introduction[117X, Birkh\"auser Boston

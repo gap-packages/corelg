@@ -11,8 +11,8 @@
 SetPackageInfo( rec(
 PackageName := "CoReLG",
 Subtitle := "Computing with real Lie algebras",
-Version := "1.56",
-Date := "24/02/2022", # this is in dd/mm/yyyy format
+Version := "1.57",
+Date := "07/07/2024", # this is in dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -84,7 +84,7 @@ ArchiveFormats := ".tar.gz",
 
 PackageDoc := rec( BookName  := "CoReLG" ,
   ArchiveURLSubset := ["doc"],
-  HTMLStart := "doc/chap0.html",
+  HTMLStart := "doc/chap0_mj.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "Computing with real Lie algebras",

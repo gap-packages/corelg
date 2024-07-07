@@ -1,7 +1,7 @@
 name: CoReLG
-version: "1.56"
+version: "1.57"
 license: "GPL-2.0-or-later"
-date: 2022-02-24
+date: 2024-07-07
 description: |
     Computing with real Lie algebras
 
@@ -34,39 +34,39 @@ packageinfo: https://gap-packages.github.io/corelg/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/gap-packages/corelg/releases/download/v1.56/corelg-1.56.tar.gz
+      url: https://github.com/gap-packages/corelg/releases/download/v1.57/corelg-1.57.tar.gz
 
 abstract: |
     The package <span class="pkgname">CoReLG</span> contains functionality for working with real semisimple Lie algebras.
 
 status: accepted
-doc-html: doc/chap0.html
+doc-html: doc/chap0_mj.html
 doc-pdf: doc/manual.pdf
 keywords: |
     real Lie algebras, nilpotent orbits Cartan subalgebras.
 citeas: |
     <p class='BibEntry'>
-    [<span class='BibKey'>DFG22</span>]   <b class='BibAuthor'>Dietrich, H., Faccin, P. and de Graaf, W.</b>,
+    [<span class='BibKey'>DFG24</span>]   <b class='BibAuthor'>Dietrich, H., Faccin, P. and de Graaf, W.</b>,
      <i class='BibTitle'>CoReLG, Computing with real Lie algebras,
-             Version 1.56</i>
-     (<span class='BibYear'>2022</span>)<br />
-    (<span class='BibNote'>Refereed GAP package</span>),
+             Version 1.57</i>
+     (<span class='BibYear'>2024</span>)<br />
+    (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://gap-packages.github.io/corelg/">https://gap-packages.github.io/corelg/</a></span>.
     </p>
     
 
 bibtex: |
-    @misc{ CoReLG1.56,
+    @misc{ CoReLG,
       author =           {Dietrich, H. and Faccin, P. and de Graaf, W.},
       title =            {{CoReLG},  Computing with real Lie algebras, {V}ersion
-                          1.56},
-      month =            {Feb},
-      year =             {2022},
-      note =             {Refereed GAP package},
+                          1.57},
+      month =            {Jul},
+      year =             {2024},
+      note =             {GAP package},
       howpublished =     {\href         {https://gap-packages.github.io/corelg/}
-                          {\texttt{https://gap-packages.github.io/}\discretionary
+                          {\texttt{https://gap\texttt{\symbol{45}}packages.github.io/}\discretionary
                           {}{}{}\texttt{corelg/}}},
       keywords =         {real Lie algebras; nilpotent orbits Cartan subalgebras},
-      printedkey =       {DFG22}
+      printedkey =       {DFG24}
     }
 
