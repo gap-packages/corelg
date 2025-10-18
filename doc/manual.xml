@@ -471,11 +471,11 @@ rank <A>rank</A>.
 <ManSection>
 
 <Func Name="RealFormById" Arg="type, rank, id"/>
-<Func Name="RealFormById" Arg="type, rank, id, F"/>
-<Func Name="RealFormById" Arg="[type, rank, id]"/>
-<Func Name="RealFormById" Arg="[type, rank, id], F"/>
-<Func Name="RealFormById" Arg="list"/>
-<Func Name="RealFormById" Arg="list, F"/>
+<Func Name="RealFormById" Arg="type, rank, id, F" Label="RealFormByIdField"/>
+<Func Name="RealFormById" Arg="[type, rank, id]" Label="RealFormByIdTriple"/>
+<Func Name="RealFormById" Arg="[type, rank, id], F" Label="RealFormByIdTripleField"/>
+<Func Name="RealFormById" Arg="list" Label="RealFormByIdList"/>
+<Func Name="RealFormById" Arg="list, F" Label="RealFormByIdListField"/>
 <Description>
 Let <M>L</M> be the complex Lie algebra of type <A>type</A> and rank <A>rank</A>.
 This function constructs the real form of <M>L</M> with index <A>id</A> (see
@@ -652,7 +652,8 @@ gap> # We see that the semisimple subalgebra DK is compact.
 <Attr Name="RealStructure" Arg="L"
       Comm="real forms"/>
 <Attr Name="RealStructure" Arg="L:basis:=B"
-      Comm="real forms"/>
+      Comm="real forms"
+      Label="RealStructureBasis"/>
 <Description>
 The real structure of the real form <A>L</A> is the (complex) conjugation with respect to <A>L</A>, that is, the function which maps an element in <A>L</A> to the element constructed as follows: write it as a linear combination of the basis elements of <A>L</A> and replace each coefficient by its complex conjugate. If the optional argument <A>basis:=B</A> is given, then <A>B</A> has to be a basis whose span contains <A>L</A> (which is not checked by the code); in this case the linear combination is done with respect to <A>B</A>. The latter construction is important when one considers a subalgebra <A>M</A> of a real form <A>L</A>; here one could either do <A>Realstructure(M:basis:=Basis(L))</A> or <A>SetRealStructure(M,RealStructure(L))</A>.  
 </Description>
@@ -743,7 +744,7 @@ non-compact Cartan subalgebra of <A>L</A>.
 
 <ManSection>
 <Func Name="CompactDimensionOfCartanSubalgebra" Arg="L"/>
-<Func Name="CompactDimensionOfCartanSubalgebra" Arg="L, H"/>
+<Func Name="CompactDimensionOfCartanSubalgebra" Arg="L, H" Label="CompactDimensionOfCartanSubalgebraTwoArgs"/>
 <Description>
 Here <A>L</A> is a real semisimple Lie algebra. This function returns the compact dimension of the Cartan subalgebra <A>H</A>. If <A>H</A> is not given, then <A>CartanSubalgebra(L)</A> will be taken. The compact dimension will be stored in the Cartan subalgebra, so that a new call to this function, with the same input, will return the compact dimension immediately.
 </Description>
@@ -771,7 +772,7 @@ given in the <Ref Attr="CartanDecomposition"/> of <A>L</A>.
 
 <ManSection>
 <Oper Name="RootsystemOfCartanSubalgebra" Arg="L"/>
-<Oper Name="RootsystemOfCartanSubalgebra" Arg="L, H"/>
+<Oper Name="RootsystemOfCartanSubalgebra" Arg="L, H" Label="RootsystemOfCartanSubalgebraTwoArgs"/>
 <Description>
 Here <A>L</A> is a semisimple Lie algebra, and <A>H</A> is a Cartan subalgebra. (If <A>H</A> is not given, then <A>CartanSubalgebra(L)</A> will be taken.)
 This function returns the root system of <A>L</A> with respect to <A>H</A>.
@@ -928,7 +929,7 @@ Let <M>L=\bigoplus_{i\in \mathbb{Z}_m} L_i</M> be a real semisimple Lie algebra,
 
 <ManSection>
 <Func Name="RealWeylGroup" Arg="L"/>
-<Func Name="RealWeylGroup" Arg="L, H"/>
+<Func Name="RealWeylGroup" Arg="L, H" Label="RealWeylGroupTwoArgs"/>
 <Description>
 Here <A>L</A> is a real semisimple Lie algebra with Cartan subalgebra <A>H</A>.  (If <A>H</A> is not given, then <A>CartanSubalgebra(L)</A> will be taken.) This function returns the real Weyl group <M>N_G(H)/C_G(H)</M> associated with  <A>H</A>, where <M>G</M> is the connected component of the group of real points of the complex adjoint group of <A>L</A>. The real Weyl group will be stored in the Cartan subalgebra, so that a new call to this function, with the same input, will return the real Weyl group  immediately.
 </Description>
