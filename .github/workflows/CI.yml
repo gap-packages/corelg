@@ -36,6 +36,17 @@ jobs:
         with:
           GAPBRANCH: ${{ matrix.gap-branch }}
       - uses: gap-actions/build-pkg@v1
+      - run: |
+          # Install newer version of SLA
+          gap -A << GAPInput
+            pkg := "sla";
+            ver := "1.6";
+            if TestPackageAvailability( pkg, ver, true ) = fail then
+              LoadPackage( "PackageManager" : OnlyNeeded );
+              QuitGap( InstallPackage( pkg, Concatenation( "=", ver ) ) );
+            fi;
+            QUIT;
+          GAPInput
       - uses: gap-actions/run-pkg-tests@v3
       - uses: gap-actions/run-pkg-tests@v3
         with:
