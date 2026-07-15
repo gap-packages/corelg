@@ -197,7 +197,7 @@ InstallGlobalFunction( RootsystemOfCartanSubalgebra, function( arg )
           Rvecs,      # The root vectors.
           x,y,        # Canonical generators.
           noPosR,     # Number of positive roots.
-          facs0, num, fam, f, b, c, r, F0, Mold, one, t1, t2, t3, L; 
+          facs0, num, fam, f, b, c, r, F0, Mold, one, ev, L, inds, cfs, en; 
 
     # Let a and b be two roots of the rootsystem R.
     # Let s and t be the largest integers such that a-s*b and a+t*b
@@ -247,11 +247,9 @@ InstallGlobalFunction( RootsystemOfCartanSubalgebra, function( arg )
     basH := BasisVectors( Basis( H ) );
 
     for i in basH do
-     #Print("now ",Position(basH,i)," of basH\n");
 
       newB := [ ];
       for j in B do
-          #Print("  now ",Position(B,j)," of B\n");
 
         if Length(j) = 1 then
            Add( newB, j ); 
@@ -264,58 +262,15 @@ InstallGlobalFunction( RootsystemOfCartanSubalgebra, function( arg )
               return fail;
            fi;
 
-           if IsSqrtField(F) then
-              M    := SqrtFieldMakeRational(Mold);
-              if M = false then 
-                #Error("matrix we want to compute char pol of cannot be made rationals");
-                #Print(" matrix cannot be made rations; use CharPol for SqrtField\n");
-                 M    := Mold;
-                 f    := CharacteristicPolynomial( M );
-                 facs := Set(Factors( f ));
-              else
-                 f    := CharacteristicPolynomial( M );
-                 facs := Set(Factors( f ));
-                 f    := SqrtFieldRationalPolynomialToSqrtFieldPolynomial(f);
-                 facs := Set(List(facs,SqrtFieldRationalPolynomialToSqrtFieldPolynomial));
-              fi;
-           else
-              M    := Mold;
-              f    := CharacteristicPolynomial( M );
-              facs := Set(Factors( f ));
+           ev:= eigenvalues( F, Mold );
+	   if ev = fail then
+	       Info(InfoCorelg,1,"Extension of base field would be necessary; have to return fail");
+              return fail;
            fi;
 
-           num  := IndeterminateNumberOfUnivariateLaurentPolynomial(f);
-           fam  := FamilyObj( f );
-
-           facs0:= [ ];
-
-           for l in facs do
-               if Degree(l) = 1 then
-                  Add( facs0, l );
-               elif Degree(l) = 2 then # we just take square roots...
-                  cf := CoefficientsOfUnivariatePolynomial(l);
-                  b  := cf[2];
-                  c  := cf[1];
-                  r  := (-b+Sqrt(b^2-4*c))/2;  #have Sqrt method for rat in SqrtField!
-                  if not r in F then Error("cannot do this over ",F); fi;
-                  Add( facs0, PolynomialByExtRep( fam, [ [], -r, [num,1], one] ) );
-                  r  := (-b-Sqrt(b^2-4*c))/2;
-                  if not r in F then Error("cannot do this over ",F); fi;
-                  Add( facs0, PolynomialByExtRep( fam, [ [], -r, [num,1], one] ) );
-
-               else
-                  Error("not split");
-                  return fail;
-               fi;
-           od;
-
-           for l in facs0 do
-             #t1 := Runtime();
-              V := NullspaceMat( Value( l, Mold ) );
-             #t2 := Runtime();
+           for l in ev do
+              V := NullspaceMat( Mold-l*Mold^0 );
               Add( newB, List( V, x -> LinearCombination( j, x ) ) );
-             #t3 := Runtime();
-             #Print("ns, lc",t2-t1," ", t3-t2,"\n");
            od;
         fi;
 
@@ -332,7 +287,7 @@ InstallGlobalFunction( RootsystemOfCartanSubalgebra, function( arg )
 
    for i in [ 1 .. Length(B) ] do
       if Length( B[i] ) <> 1 then
-         Error("the Cartan subalgebra of <L> in not split" );
+          Info(InfoCorelg,1,"Extension of base field would be necessary; have to return fail");
          return fail;
       fi;
    od;
@@ -409,7 +364,7 @@ InstallGlobalFunction( RootsystemOfCartanSubalgebra, function( arg )
   # positive roots.
   # We calculate the set of simple roots fundR.
 
-    fundR:= [ ];
+   fundR:= [ ];
    for a in posR do
       issum:= false;
       for i in [1..Length(posR)] do
@@ -427,20 +382,35 @@ InstallGlobalFunction( RootsystemOfCartanSubalgebra, function( arg )
   # Now we calculate the Cartan matrix C of the root system.
 
    C:= List( fundR, i -> List( fundR, j -> CartInt( S, i, j ) ) );
+   en:= Concatenation( CartanType(C).enumeration );
+   fundR:= fundR{en};
+   C:= C{en}{en};
 
   # Every root can be written as a sum of the simple roots.
   # The height of a root is the sum of the coefficients appearing
   # in that expression.
   # We order the roots according to increasing height.
 
-   V    := BasisNC( VectorSpace( F, fundR ), fundR );
-   hts  := List( posR, r -> Sum( Coefficients( V, r ) ) );
-   sorh := Set( hts );
+   V := BasisNC( VectorSpace( F, fundR ), fundR );
+   cfs:= List( posR, r -> Coefficients(V,r) );
+   if IsQQBarField(F) then
+      cfs:= List( cfs, c -> List( c, corelg.QQBarRatToGap ) );
+   fi;
+   if IsSqrtField(F) then
+      cfs:= SqrtFieldMakeRational(cfs);
+   fi;
+   hts  := List( cfs, Sum );
+   #sorh := Set( hts );
 
-   sorR:= [ ];
-   for i in [1..Length(sorh)] do
-      Append( sorR, Filtered( posR, r -> hts[Position(posR,r)] = sorh[i] ) );
-   od;
+   inds:= [1..Length(posR)]; 
+   SortParallel( inds, posR, function(i,j) if hts[i]<hts[j] then
+      return true; elif hts[i]=hts[j] then return cfs[i] > cfs[j]; fi;
+      return false; end );
+
+   sorR:= ShallowCopy(posR);
+   #for i in [1..Length(sorh)] do
+   #   Append( sorR, Filtered( posR, r -> hts[Position(posR,r)] = sorh[i] ) );
+   #od;
    Append( sorR, -1*sorR );
    Rvecs:= List( sorR, r -> Rvecs[ Position(S,r) ] );
     
@@ -483,6 +453,10 @@ InstallGlobalFunction( RootsystemOfCartanSubalgebra, function( arg )
    if IsSqrtField(F) then
       posR := List(posR, x-> List(x, SqrtFieldEltToCyclotomic));
    fi;
+
+   if IsQQBarField(F) then
+      posR := List(posR, x-> List(x, corelg.QQBarRatToGap));
+   fi; 
  
    SetPositiveRoots( R, posR );
    SetNegativeRoots( R, -posR ); 
@@ -706,7 +680,7 @@ InstallGlobalFunction( RootSystemOfZGradedLieAlgebra, function( arg )
           Rvecs,      # The root vectors.
           x,y,        # Canonical generators.
           noPosR,     # Number of positive roots.
-          facs0, num, fam, f, b, c, r, possp, g0, F0, Mold, one, L, g; 
+          facs0, num, fam, f, b, c, r, possp, g0, F0, Mold, one, L, g, ev; 
 
     # Let a and b be two roots of the rootsystem R.
     # Let s and t be the largest integers such that a-s*b and a+t*b
@@ -739,10 +713,10 @@ InstallGlobalFunction( RootSystemOfZGradedLieAlgebra, function( arg )
 
     F   := LeftActingDomain( L );
     one := One(F);
-    if DeterminantMat( KillingMatrix( Basis( L ) ) ) = Zero( F ) then
-      Error("the Killing form of <L> is degenerate" );
-      return fail;
-    fi;
+    #if DeterminantMat( KillingMatrix( Basis( L ) ) ) = Zero( F ) then
+    #  Error("the Killing form of <L> is degenerate" );
+    #  return fail;
+    #fi;
 
 
     # First we compute the common eigenvectors of the adjoint action of a
@@ -754,64 +728,38 @@ InstallGlobalFunction( RootSystemOfZGradedLieAlgebra, function( arg )
     B:= [ ShallowCopy( BasisVectors( BL ) ) ];
     basH:= BasisVectors( Basis( H ) );
 
-   
     for i in basH do
 
-      newB:= [ ];
+      newB := [ ];
       for j in B do
 
-         if Length(j) = 1 then
+        if Length(j) = 1 then
            Add( newB, j ); 
-         else
+        else
            V    := Basis( VectorSpace( F, j, "basis" ), j );
            Mold := List( j, x -> Coefficients( V, i*x ) );
-           if IsSqrtField(F) then
-              M    := List(Mold,x->List(x,SqrtFieldEltToCyclotomic));
-              f    := CharacteristicPolynomial( M );
-              facs := Set(Factors( f ));
-              f    := SqrtFieldRationalPolynomialToSqrtFieldPolynomial(f);
-              facs := Set(List(facs,SqrtFieldRationalPolynomialToSqrtFieldPolynomial));
-           else
-              M    := Mold;
-              f    := CharacteristicPolynomial( M );
-              facs := Set(Factors( f ));
+
+           if fail in Flat(Mold) then
+              Info(InfoCorelg,1,"Extension of base field would be necessary; have to return fail");
+              return fail;
            fi;
 
-           num  := IndeterminateNumberOfUnivariateLaurentPolynomial(f);
-           fam  := FamilyObj( f );
+           ev:= eigenvalues( F, Mold );
+	   if ev = fail then
+	       Info(InfoCorelg,1,"Extension of base field would be necessary; have to return fail");
+              return fail;
+           fi;
 
-           facs0:= [ ];
-
-           for l in facs do
-               if Degree(l) = 1 then
-                  Add( facs0, l );
-               elif Degree(l) = 2 then # we just take square roots...
-                  cf := CoefficientsOfUnivariatePolynomial(l);
-                  b  := cf[2]; 
-                  c  := cf[1]; 
-                  r  := (-b+Sqrt(b^2-4*c))/2;
-                   if not r in F then Error("cannot do this over ",F); fi;
-                  Add( facs0, PolynomialByExtRep( fam, [ [], -r, [num,1], one] ) );
-                  r  := (-b-Sqrt(b^2-4*c))/2;
-                  if not r in F then Error("cannot do this over ",F); fi;
-                  Add( facs0, PolynomialByExtRep( fam, [ [], -r, [num,1], one] ) );
-
-               else
-                  Error("not split!");
-                  return fail;
-               fi;
-           od;
-
-           for l in facs0 do
-             V := NullspaceMat( Value( l, Mold ) );
-             Add( newB, List( V, x -> LinearCombination( j, x ) ) );
+           for l in ev do
+              V := NullspaceMat( Mold-l*Mold^0 );
+              Add( newB, List( V, x -> LinearCombination( j, x ) ) );
            od;
         fi;
 
       od;
       B:= newB;
 
-    od;
+   od;
 
     # Now we throw away the subspace H.
 

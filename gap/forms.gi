@@ -5,6 +5,602 @@
 #
 #
 
+
+# the next function is from the library; we correct the order of simple
+# roots of F4...
+
+corelg.simliealg:= function( type, n, F )
+
+    local T,               # The table of the Lie algebra constructed.
+          i,j,k,l,         # Loop variables.
+          lst,             # A list.
+          R,               # Positive roots
+          cc,              # List of coefficients.
+          lenR,            # length of 'R'
+          Rij,             # The sum of two roots from 'R'.
+          eps,             # The so-called "epsilon"-function.
+          epsmat,          # A matrix used to calculate the eps-function.
+          dim,             # The dimension of the Lie algebra.
+          C,               # Cartan matrix
+          L,               # Lie algebra, result
+          vectors,         # vectors spanning a Cartan subalgebra
+          CSA,             # List of indices of the basis vectors of a Cartan
+                           # subalgebra.
+          e,
+          inds,            # List of indices.
+          r,r1,r2,         # Roots.
+          roots,           # List of roots.
+          primes,          # List of lists of corresponding roots.
+          B,               # Basis of a vector space.
+          cfs,             # List of coefficient lists.
+          d,               # Order of the diagram automorphism.
+          found,           # Boolean.
+          a,
+          q,
+          perm,            # Permutation representing the diagram automorphism.
+          shorts,
+          posR,            # Positive roots.
+          CartanMatrixToPositiveRoots; # Function for determining the
+                                       # positive roots.
+
+
+    CartanMatrixToPositiveRoots:= function( C )
+
+        local   rank,  posr,  ready,  ind,  le,  i,  a,  j,  ej,  r,  b,
+                q;
+
+        rank:= Length( C );
+
+        # `posr' will be a list of the positive roots. We start with the
+        # simple roots, which are simply unit vectors.
+
+        posr:= IdentityMat( rank );
+
+        ready:= false;
+        ind:= 1;
+        le:= rank;
+        while ind <= le  do
+
+            # We loop over those elements of `posR' that have been found in
+            # the previous round, i.e., those at positions ranging from
+            # `ind' to `le'.
+
+            le:= Length( posr );
+            for i in [ind..le] do
+                a:= posr[i];
+
+                # We determine whether a+ej is a root (where ej is the j-th
+                # simple root.
+                for j in [1..rank] do
+                    ej:= posr[j];
+
+                    # We determine the maximum number `r' such that a-r*ej is
+                    # a root.
+                    r:= -1;
+                    b:= ShallowCopy( a );
+                    while b in posr do
+                        b:= b-ej;
+                        r:=r+1;
+                    od;
+                    q:= r-LinearCombination( TransposedMat( C )[j], a );
+                    if q>0 and (not a+ej in posr ) then
+                        Add( posr, a+ej );
+                    fi;
+                od;
+            od;
+            ind:= le+1;
+            le:= Length( posr );
+        od;
+
+        return posr;
+    end;
+
+
+    # The following function is the so-called epsilon function.
+    eps:= function( a, b, epm )
+        local rk;
+
+        rk:= Length( epm );
+        return Product( [1..rk],i ->
+                       Product( [1..rk], j ->
+                               epm[i][j] ^ ( a[i]*b[j] ) ) );
+    end;
+
+    if type in [ "A", "D", "E" ] then
+
+        # We are in the simply-laced case. Here we construct the root
+        # system and the matrix of the epsilon function. Then we can
+        # fill the multiplication table directly.
+
+        C:= 2*IdentityMat( n );
+        if type = "A" then
+            for i in [1..n-1] do
+                C[i][i+1]:= -1;
+                C[i+1][i]:= -1;
+            od;
+        elif type = "D" then
+            if n < 4 then
+                Error("<n> must be >= 4");
+            fi;
+            for i in [1..n-2] do
+                C[i][i+1]:= -1;
+                C[i+1][i]:= -1;
+            od;
+            C[n-2][n]:=-1;
+            C[n][n-2]:= -1;
+        else
+
+            C:= [
+                 [ 2, 0, -1, 0, 0, 0, 0, 0 ], [ 0, 2, 0, -1, 0, 0, 0, 0 ],
+                 [ -1, 0, 2, -1, 0, 0, 0, 0 ], [ 0, -1, -1, 2, -1, 0, 0, 0 ],
+                 [ 0, 0, 0, -1, 2, -1, 0, 0 ], [ 0, 0, 0, 0, -1, 2, -1, 0 ],
+                 [ 0, 0, 0, 0, 0, -1, 2, -1 ], [ 0, 0, 0, 0, 0, 0, -1, 2 ] ];
+
+            if n = 6 then
+                C:= C{ [ 1 .. 6 ] }{ [ 1 .. 6 ] };
+            elif n = 7 then
+                C:= C{ [ 1 .. 7 ] }{ [ 1 .. 7 ] };
+            elif n < 6 or 8 < n then
+                Error( "<n> must be one of 6, 7, 8" );
+            fi;
+        fi;
+        R:= CartanMatrixToPositiveRoots( C );
+
+
+        # We conctruct `epsmat', which satisfies
+        #                  /
+        #                 |-1 if i=j,
+        #  epsmat[i][j] = |-1 if i and j are connected, and i>j
+        #                 | 1 if i and j are not connected or i<j.
+        #                  \
+        # (where `connected' means connected in the Dynkin diagram.
+
+        epsmat:= [];
+        for i in [ 1 .. n ] do
+            epsmat[i]:= [];
+            for j in [ 1 .. i-1 ] do
+                epsmat[i][j]:= 1;
+            od;
+            epsmat[i][i]:= -1;
+            for j in [ i+1 .. n ] do
+                epsmat[i][j]:= (-1)^C[i][j];
+            od;
+        od;
+
+        lenR:= Length( R );
+        dim:= 2*lenR + n;
+
+        posR:= List( R, r -> Zero(F)*r );
+
+        # Initialize the s.c. table
+        T:= EmptySCTable( dim, Zero(F), "antisymmetric" );
+
+        lst:= [ 1 .. n ] + 2 * lenR;
+
+        for i in [1..lenR] do
+            for j in [i..lenR] do
+                Rij:= R[i]+R[j];
+                if Rij in R then
+                    k:= Position(R,Rij);
+                    e:= eps(R[i],R[j],epsmat)*One(F);
+                    SetEntrySCTable( T, i, j, [ e, k ] );
+                    SetEntrySCTable( T, i+lenR, j+lenR, [ -e, k+lenR ] );
+                fi;
+                if i = j and T[i][j+lenR] = [[],[]] then
+                    # We form the product x_{\alpha_i}*x_{-\alpha_i}, which
+                    # will be an element of the Cartan subalgebra.
+
+                    inds:= Filtered( [1..n], x -> R[i][x] <> 0 );
+                    T[i][j+lenR]:= [ lst{inds}, R[i]{inds}*One(F) ];
+                    T[j+lenR][i]:= [ lst{inds}, -R[i]{inds}*One(F) ];
+                fi;
+            od;
+        od;
+        for i in [1..lenR] do
+            for j in [1..lenR] do
+                Rij:= R[i]-R[j];
+                if Rij in R then
+                    k:= Position(R,Rij);
+                    SetEntrySCTable( T, i, j+lenR,
+                            [-One(F)*eps(R[i],-R[j],epsmat),k] );
+                elif -Rij in R then
+                    k:= Position(R,-Rij);
+                    SetEntrySCTable( T, i, j+lenR,
+                            [One(F)*eps(R[i],-R[j],epsmat),k+lenR] );
+                fi;
+            od;
+            for j in [1..n] do
+
+                # We take care of the comutation relations of the form
+                # [h_j,x_{\beta_i}]= < \beta_i, \alpha_j > x_{\beta_i}.
+                cc:= LinearCombination( R[i], C[j] );
+                if cc <> 0*cc then
+
+                    posR[i][j]:= One(F)*cc;
+
+                    T[2*lenR+j][i]:=[[i],[One(F)*cc]];
+                    T[i][2*lenR+j]:=[[i],[-One(F)*cc]];
+                    T[2*lenR+j][i+lenR]:=[[i+lenR],[-One(F)*cc]];
+                    T[i+lenR][2*lenR+j]:=[[i+lenR],[One(F)*cc]];
+                fi;
+            od;
+        od;
+
+        L:= LieAlgebraByStructureConstants( F, T );
+
+        # A Cartan subalgebra is spanned by the last 'n' basis elements.
+        CSA:= [ dim-n+1 .. dim ];
+        vectors:= BasisVectors( CanonicalBasis( L ) ){ CSA };
+        SetCartanSubalgebra( L, SubalgebraNC( L, vectors, "basis" ) );
+        SetIsRestrictedLieAlgebra( L, Characteristic( F ) > 0 );
+
+    elif type in [ "B", "C", "F", "G" ] then
+
+        # Now we are in the non simply laced case. In each case we construct
+        # a simply laced root system, which has a diagram automorphism.
+        # We take an epsilon function which is invariant under the diagram
+        # automorphism. Furthermore, the permutation `perm' will represent
+        # the diagram aotomorphism as acting on the roots (so that
+        # Permuted( r, perm ) is the result of applying the diagram
+        # automorphism to the root r).
+
+        if type = "B" then
+
+            # In this case we construct D_{n+1}.
+            if n <= 1 then
+                Error( "<n> must be >= 2");
+            fi;
+            C:= 2*IdentityMat( n+1 );
+            for i in [1..n-1] do
+                C[i][i+1]:= -1;
+                C[i+1][i]:= -1;
+            od;
+            C[n-1][n+1]:=-1;
+            C[n+1][n-1]:= -1;
+            R:= CartanMatrixToPositiveRoots( C );
+
+            epsmat:= NullMat( n+1, n+1 ) + 1;
+            for i in [ 1 .. n-1 ] do
+                epsmat[i+1][i]:= -1;
+                epsmat[i][i]:= -1;
+            od;
+            epsmat[n+1][n-1]:= -1;
+            epsmat[n][n]:= -1;
+            epsmat[n+1][n+1]:= -1;
+
+            perm:= (n,n+1);
+            d:= 2;
+
+        elif type = "C" then
+
+            # In this case we construct A_{2n-1}.
+            if n < 2 then
+                Error( "<n> must be >= 3");
+            fi;
+            C:= 2*IdentityMat( 2*n-1 );
+            for i in [1..2*n-2] do
+                C[i][i+1]:= -1;
+                C[i+1][i]:= -1;
+            od;
+            R:= CartanMatrixToPositiveRoots( C );
+
+            epsmat:= NullMat( 2*n-1, 2*n-1 ) + 1;
+            for i in [ 1 .. n-1 ] do
+                epsmat[i][i+1]:= -1;
+                epsmat[i][i]:= -1;
+            od;
+            for i in [n..2*n-2] do
+                epsmat[i+1][i]:= -1;
+                epsmat[i][i]:= -1;
+            od;
+            epsmat[2*n-1][2*n-1]:= -1;
+
+            perm:= ();
+            for i in [1..n-1] do
+                perm:= perm*(i,2*n-i);
+            od;
+            d:= 2;
+
+        elif type = "F" then
+
+            # In this case we construct E_6.
+            if n <> 4 then
+                Error( "<n> must be equal to 4");
+            fi;
+
+            C:= IdentityMat( 6 );
+            C[1][3]:=-1; C[2][4]:=-1; C[3][4]:=-1; C[4][5]:=-1; C[5][6]:=-1;
+            C:= C+TransposedMat( C );
+            R:= CartanMatrixToPositiveRoots( C );
+
+            epsmat:= NullMat( 6, 6 ) + 1;
+            for i in [1..6] do epsmat[i][i]:= -1; od;
+            epsmat[1][3]:=-1; epsmat[3][4]:=-1; epsmat[5][4]:=-1;
+            epsmat[6][5]:=-1; epsmat[2][4]:=-1;
+
+            perm:= (1,6)*(3,5);
+            d:= 2;
+
+        elif type = "G" then
+
+            # In this case we conctruct D_4.
+            if n <> 2 then
+                Error( "<n> must be equal to 2");
+            fi;
+
+            C:= IdentityMat( 4 );
+            C[1][2]:=-1; C[2][3]:=-1; C[2][4]:=-1;
+            C:= C+TransposedMat( C );
+            R:= CartanMatrixToPositiveRoots( C );
+
+            epsmat:= NullMat( 4, 4 ) + 1;
+            for i in [1..4] do epsmat[i][i]:= -1; od;
+            epsmat[1][2]:=-1; epsmat[4][2]:=-1; epsmat[3][2]:=-1;
+
+            perm:= (1,3,4);
+            d:= 3;
+
+        fi;
+
+        # Now `roots' will be the list of positive roots of the resulting Lie
+        # algebra. They are formed from the roots in `R' by applying the
+        # diagram automorphism. If a r\in R is invariant under the
+        # automorphism, then it is added to `roots' (and its prime is
+        # the root itself). Otherwise we add \frac{1}{d}(r+\phi(r)+\cdots
+        # + \phi^{d-1}(r)), where \phi is the diagram automorphism.
+        # In this case the prime of the root are all \phi^i(r).
+
+        if d = 2 then
+
+            roots:= [ ];
+            primes:= [ ];
+            for r in R do
+                r1:= Permuted( r, perm );
+                if r = r1 then
+                    Add( roots, r );
+                    Add( primes, [ r ] );
+                else
+                    if not (r+r1)/2 in roots then
+                        Add( roots, (r+r1)/2 );
+                        Add( primes, [ r, r1 ] );
+                    fi;
+                fi;
+            od;
+
+
+           if type = "F" then
+              roots:= Permuted( roots, (1,4,2) );
+              primes:= Permuted( primes, (1,4,2) );
+              C:= Permuted( C, (1,4,2) );
+           fi;
+
+            B:= Basis( VectorSpace( Rationals, roots{[1..n]} ),roots{[1..n]});
+            cfs:= List( roots, x -> Coefficients( B, x ) );
+
+        elif d = 3 then
+            roots:= [ ];
+            primes:= [ ];
+            for r in R do
+                r1:= Permuted( r, perm );
+                if r = r1 then
+                    Add( roots, r );
+                    Add( primes, [ r ] );
+                else
+                    r2:= (r+r1+Permuted(r1,perm))/3;
+                    if not r2 in roots then
+                        Add( roots, r2 );
+                        Add( primes, [ r, r1, Permuted( r1, perm ) ] );
+                    fi;
+                fi;
+            od;
+
+            B:= Basis( VectorSpace( Rationals, roots{[1..n]} ),roots{[1..n]});
+            cfs:= List( roots, x -> Coefficients( B, x ) );
+        fi;
+
+        # `shorts' will be a list of indices indicating where the
+        # short simple roots are. The coefficients on those places
+        # in `cfs' need to be divided by `d'.
+
+        shorts:= Filtered( [1..n], ii -> Length( primes[ii] ) > 1 );
+        for i in [1..Length(cfs)] do
+            for j in shorts do
+                cfs[i][j]:= cfs[i][j]/d;
+            od;
+        od;
+
+        Append( R, -R );
+        lenR:= Length( roots );
+        dim:= 2*lenR + n;
+
+        posR:= List( [1..lenR], ii -> List( [1..n], jj -> Zero( F ) ) );
+
+        # Initialize the s.c. table
+        T:= EmptySCTable( dim, Zero(F), "antisymmetric" );
+
+        lst:= [ 1 .. n ] + 2 * lenR;
+
+        for i in [1..lenR] do
+            for j in [i..lenR] do
+                Rij:= roots[i]+roots[j];
+                if Rij in roots then
+
+                    # We look for `r' in `primes[i]' and `r1' in `primes[j]'
+                    # such that `r+r1' lies in `R'.
+                    found:= false;
+                    for k in [1..Length(primes[i])] do
+                        if found then break; fi;
+                        r:= primes[i][k];
+                        for l in [1..Length(primes[j])] do
+                            r1:= primes[j][l];
+                            if r+r1 in R then
+                                found := true; break;
+                            fi;
+                        od;
+                    od;
+
+                    # `q' will be the maximal integer such that `roots[i]-
+                    # roots[j]' is a root.
+
+                    k:= Position( roots, Rij );
+                    q:=0; a:= roots[i] - roots[j];
+                    while a in roots or -a in roots do
+                        q:=q+1;
+                        a:= a-roots[j];
+                    od;
+
+                    e:= eps(r,r1,epsmat)*(q+1)*One(F);
+                    SetEntrySCTable( T, i, j, [ e, k ] );
+                    SetEntrySCTable( T, i+lenR, j+lenR, [ -e, k+lenR ] );
+                fi;
+                if i = j and T[i][j+lenR] = [[],[]] then
+                    # We form the product x_{\alpha_i}*x_{-\alpha_i}, which
+                    # will be an element of the Cartan subalgebra.
+
+                    inds:= Filtered( [1..n], x -> cfs[i][x] <> 0 );
+                    if Length( primes[i] ) = 1 then
+                        T[i][j+lenR]:= [ lst{inds}, cfs[i]{inds}*One(F) ];
+                        T[j+lenR][i]:= [ lst{inds}, -cfs[i]{inds}*One(F) ];
+                    else
+                        T[i][j+lenR]:= [ lst{inds}, cfs[i]{inds}*d*One(F) ];
+                        T[j+lenR][i]:= [ lst{inds}, -cfs[i]{inds}*d*One(F) ];
+                    fi;
+                fi;
+            od;
+        od;
+        for i in [1..lenR] do
+            for j in [1..lenR] do
+                Rij:= roots[i]-roots[j];
+                if Rij in roots then
+
+                    found:= false;
+                    for k in [1..Length(primes[i])] do
+                        if found then break; fi;
+                        r:= primes[i][k];
+                        for l in [1..Length(primes[j])] do
+                            r1:= primes[j][l];
+                            if r-r1 in R then
+                                found := true; break;
+                            fi;
+                        od;
+                    od;
+
+                    k:= Position( roots, Rij );
+                    q:=0; a:= roots[i] + roots[j];
+                    while a in roots or -a in roots do
+                        q:=q+1;
+                        a:= a+roots[j];
+                    od;
+
+                    SetEntrySCTable( T, i, j+lenR,
+                            [-One(F)*(q+1)*eps(r,-r1,epsmat),k] );
+
+                elif -Rij in roots then
+
+                    found:= false;
+                    for k in [1..Length(primes[i])] do
+                        if found then break; fi;
+                        r:= primes[i][k];
+                        for l in [1..Length(primes[j])] do
+                            r1:= primes[j][l];
+                            if r-r1 in R then
+                                found := true; break;
+                            fi;
+                        od;
+                    od;
+
+                    k:= Position( roots, -Rij );
+                    q:=0; a:= roots[i] + roots[j];
+                    while a in roots or -a in roots do
+                        q:=q+1;
+                        a:= a+roots[j];
+                    od;
+                    SetEntrySCTable( T, i, j+lenR,
+                            [One(F)*(q+1)*eps(r,-r1,epsmat),k+lenR] );
+                fi;
+            od;
+            for j in [1..n] do
+
+                # Now we take care of the relations [h,x_{\beta}]....
+
+                cc:= LinearCombination( roots[i], C[j] );
+                if Length( primes[j] ) > 1 then
+                    # i.e., `roots[j]' is "short".
+                    cc:= d*cc;
+                fi;
+
+                if cc <> 0*cc then
+
+                    posR[i][j]:= One(F)*cc;
+
+                    T[2*lenR+j][i]:=[[i],[One(F)*cc]];
+                    T[i][2*lenR+j]:=[[i],[-One(F)*cc]];
+                    T[2*lenR+j][i+lenR]:=[[i+lenR],[-One(F)*cc]];
+                    T[i+lenR][2*lenR+j]:=[[i+lenR],[One(F)*cc]];
+                fi;
+            od;
+        od;
+
+        L:= LieAlgebraByStructureConstants( F, T );
+
+        # A Cartan subalgebra is spanned by the last 'n' basis elements.
+        CSA:= [ dim-n+1 .. dim ];
+        vectors:= BasisVectors( CanonicalBasis( L ) ){ CSA };
+        SetCartanSubalgebra( L, SubalgebraNC( L, vectors, "basis" ) );
+        SetIsRestrictedLieAlgebra( L, Characteristic( F ) > 0 );
+
+    fi;
+
+    R:= Objectify( NewType( NewFamily( "RootSystemFam", IsObject ),
+                IsAttributeStoringRep and IsRootSystemFromLieAlgebra ),
+                rec() );
+    SetUnderlyingLieAlgebra( R, L );
+    SetPositiveRoots( R, posR );
+    SetNegativeRoots( R, -posR );
+    SetSimpleSystem( R, posR{[1..n]} );
+    SetCanonicalGenerators( R, [ CanonicalBasis( L ){[1..n]},
+                                 CanonicalBasis( L ){[lenR+1..lenR+n]},
+                                 vectors ] );
+    SetPositiveRootVectors( R, CanonicalBasis(L){[1..lenR]} );
+    SetNegativeRootVectors( R, CanonicalBasis(L){[lenR+1..2*lenR]} );
+    SetChevalleyBasis( L, [ PositiveRootVectors( R ),
+                            NegativeRootVectors( R ),
+                            vectors ] );
+
+    if not ( Characteristic( F ) in [ 2, 3 ] ) then
+
+        C:= 2*IdentityMat( n );
+        for i in [1..n] do
+            for j in [1..n] do
+                if i <> j then
+                    q:= 0;
+                    r:= posR[i]+posR[j];
+                    while r in posR do
+                        q:=q+1;
+                        r:= r+posR[j];
+                    od;
+                    C[i][j]:= -q;
+                fi;
+            od;
+        od;
+
+        SetCartanMatrix( R, C );
+
+        SetSemiSimpleType( L, Concatenation( type, String( n ) ) );
+    fi;
+
+    SetRootSystem( L, R );
+
+    if Characteristic( F ) = 0 then
+       SetIsSimpleAlgebra( L, true );
+    fi;
+
+    return L;
+
+
+end;
+
+
 corelg.SuperLie:=function(arg)
 
 
@@ -22,7 +618,7 @@ fi;
 
 t:= ShallowCopy(t0);
 
-Lo:=SimpleLieAlgebra(q,n,Rationals);
+Lo:=corelg.simliealg(q,n,Rationals);
 To:= StructureConstantsTable(Basis(Lo));;
 #T:=Sub3( a, n);
 #L:=LieAlgebraByStructureConstants( Rationals,T);
@@ -10619,6 +11215,11 @@ od;
     if IsSqrtField(F0) then
       rts := List(rts, x-> List(x, SqrtFieldEltToCyclotomic));
     fi;
+
+   if IsQQBarField(F0) then
+      rts := List(rts, x-> List(x, corelg.QQBarRatToGap));
+   fi; 
+ 
 
     SetPositiveRoots( R, rts );
 

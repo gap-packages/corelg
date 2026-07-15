@@ -17,7 +17,7 @@
 InstallMethod( RealStructure,
     "for a Lie algebra",
     true,
-    [ IsLieAlgebra ], 0, 
+    [ IsFreeLeftModule ], 0, 
  function(L)
 
     local bas, sigma;
@@ -71,7 +71,7 @@ corelg.specialrtsys:= function( L, H, spaces, hh, h0 )
           Rvecs,      # The root vectors.
           x,y,        # Canonical generators.
           noPosR,     # Number of positive roots.
-          facs0, num, fam, f, b, c, r, F0, Mold, one, t1, t2, t3; 
+          facs0, num, fam, f, b, c, r, F0, Mold, one, ev; 
 
     # Let a and b be two roots of the rootsystem R.
     # Let s and t be the largest integers such that a-s*b and a+t*b
@@ -106,69 +106,37 @@ corelg.specialrtsys:= function( L, H, spaces, hh, h0 )
     B    := spaces;
 
     newB := [ ];
+
     for j in B do
 
         if Length(j) = 1 then
            Add( newB, j ); 
         else
-
            V    := Basis( VectorSpace( F, j, "basis" ), j );
            Mold := List( j, x -> Coefficients( V, h0*x ) );
-           if IsSqrtField(F) then
-              M    := SqrtFieldMakeRational(Mold);
-              if M = false then 
-                 #Error("matrix we want to compute char pol of cannot be made rationals");
-                 M    := Mold;
-                 f    := CharacteristicPolynomial( M );
-                 facs := Set(Factors( f ));
-              else
-                 f    := CharacteristicPolynomial( M );
-                 facs := Set(Factors( f ));
-                 f    := SqrtFieldRationalPolynomialToSqrtFieldPolynomial(f);
-                 facs := Set(List(facs,SqrtFieldRationalPolynomialToSqrtFieldPolynomial));
-              fi;
-           else
-              M    := Mold;
-              f    := CharacteristicPolynomial( M );
-              facs := Set(Factors( f ));
+
+           if fail in Flat(Mold) then
+              Info(InfoCorelg,1,"Extension of base field would be necessary; have to return fail");
+              return fail;
            fi;
 
-           num  := IndeterminateNumberOfUnivariateLaurentPolynomial(f);
-           fam  := FamilyObj( f );
+           ev:= eigenvalues( F, Mold );
+	   if ev = fail then
+	       Info(InfoCorelg,1,"Extension of base field would be necessary; have to return fail");
+              return fail;
+           fi;
 
-           facs0:= [ ];
-
-           for l in facs do
-               if Degree(l) = 1 then
-                  Add( facs0, l );
-               elif Degree(l) = 2 then # we just take square roots...
-                  cf := CoefficientsOfUnivariatePolynomial(l);
-                  b  := cf[2];
-                  c  := cf[1];
-                  r  := (-b+Sqrt(b^2-4*c))/2;  #have Sqrt method for rat in SqrtField! 
-                  if not r in F then Error("cannot do this over ",F); fi;
-                  Add( facs0, PolynomialByExtRep( fam, [ [], -r, [num,1], one] ) );
-                  r  := (-b-Sqrt(b^2-4*c))/2;
-                  if not r in F then Error("cannot do this over ",F); fi;
-                  Add( facs0, PolynomialByExtRep( fam, [ [], -r, [num,1], one] ) );
-
-               else
-                  Error("not split");
-                  return fail;
-               fi;
-           od;
-
-           for l in facs0 do
-              V := NullspaceMat( Value( l, Mold ) );
+           for l in ev do
+              V := NullspaceMat( Mold-l*Mold^0 );
               Add( newB, List( V, x -> LinearCombination( j, x ) ) );
            od;
         fi;
 
-  od;
-  B:= newB;
+      od;
+      B:= newB;
+
 
   # Now we throw away the subspace H.
-  #B:= Filtered( B, x -> ( not corelg.eltInSubspace(L,BasisVectors(Basis(H)),x[1])));
    B:= Filtered( B, x -> not x[1] in H );
 
   # If an element of B is not one dimensional then H does not split
@@ -341,6 +309,54 @@ end;
 #
 # constructs a maximally compact CSA
 #
+
+corelg.realcsa:= function( L )  # we assume L is a real semsim alg; we construct
+                                # a real Cartan subalgebra
+
+        local B, n, a, i, j, ad, M, sol, K, D, bas, H;
+
+        B:= RealBasis(L);
+        n:= Dimension(L);
+	a:= fail;
+        for i in [1..n] do
+	    ad:= AdjointMatrix( B, B[i] );
+	    M:= JordanDecomposition(ad)[1];
+	    if not IsZero(M) then
+	       a:= M;
+	       break;
+	    fi;
+	od;
+	if a = fail then
+	   for i in [1..n] do
+	       for j in [i+1..n] do
+	           ad:= AdjointMatrix( B, B[i]+B[j] );
+		   M:= JordanDecomposition(ad)[1];
+	           if not IsZero(M) then
+	              a:= M; break;
+	           fi;
+	       od;
+	       if a <> fail then break; fi;
+	   od;
+	fi;
+
+        sol:= NullspaceMat( TransposedMat(a) );
+	K:= Subalgebra( L, List( sol, x -> x*Basis(L) ), "basis" );
+	D:= LieDerivedSubalgebra( K );
+	if Dimension(D) = 0 then
+	   SetRealStructure(K,RealStructure(L));
+	   return K;
+	fi;
+
+        SetRealStructure( D, RealStructure(L) );
+	H:= corelg.realcsa(D);
+	bas:= Concatenation( Basis(H), Basis(LieCentre(K)) );
+	H:= Subalgebra( L, bas, "basis" );
+	SetRealStructure( H, RealStructure(L) );
+	return H;
+
+end;
+
+
 InstallMethod( MaximallyCompactCartanSubalgebra,
    "for a Lie algebra",
    true,
@@ -358,8 +374,8 @@ local F, sigma, H, R, pr, cb, cg, cbH, testIt, decomposeCSA, realRoot,
    sigma := RealStructure(L); 
    H     := CartanSubalgebra(L);
 
-   if not ForAll(Basis(H),x->x=sigma(x)) then 
-      Error("need basis of CSA which is fixed by sigma"); 
+   if not ForAll(Basis(H),x->sigma(x) in H) then 
+      H:= corelg.realcsa(L);
    fi;
    
    R   := RootsystemOfCartanSubalgebra(L,H);
@@ -491,6 +507,8 @@ local F, sigma, H, R, pr, cb, cg, cbH, testIt, decomposeCSA, realRoot,
    if not HasCartanSubalgebra(L) then 
       SetCartanSubalgebra(L,H); 
    fi;
+
+   SetRealStructure(H,RealStructure(L));
    
    return H;
 end );
@@ -514,8 +532,8 @@ local F, sigma, H, R, pr, cb, cg, cbH, testIt, decomposeCSA, imagRoot, nr, tau, 
    sigma := RealStructure(L); 
    H     := CartanSubalgebra(L);
 
-   if not ForAll(Basis(H),x->x=sigma(x)) then 
-      Error("need basis of CSA which is fixed by sigma"); 
+   if not ForAll(Basis(H),x->sigma(x) in H) then 
+      H:= corelg.realcsa(L);
    fi;
    
    R   := RootsystemOfCartanSubalgebra(L,H);
@@ -627,6 +645,7 @@ local F, sigma, H, R, pr, cb, cg, cbH, testIt, decomposeCSA, imagRoot, nr, tau, 
    SetcorelgCompactDimOfCSA(H,Length(decH.basHK));
 
    if not HasCartanSubalgebra(L) then SetCartanSubalgebra(L,H); fi;
+   SetRealStructure( H, RealStructure(L) );
   
    return H;
 end;
@@ -774,6 +793,8 @@ local csa, h, R, cb, sigma, hs, es, found, h0, vals, pr, posr, i, sums, base, B,
    od;
    if F=SqrtField then
       cf := List(cf,x-> -One(F)* SignInt(SqrtFieldMakeRational(x)));
+   elif IsQQBarField(F) then
+       cf := List(cf,x-> -One(F)* SignInt(corelg.QQBarRatToGap(x)));
    else
       cf := List(cf,x-> -SignInt(x));
    fi;

@@ -44,6 +44,48 @@
 #  corelg.prntdg
 
 
+
+############################################################################
+#
+# RealBasis:
+
+InstallMethod( RealBasis,
+        "for a vector space",
+        true, [ IsFreeLeftModule ], 0,
+        function( V )
+
+     local sigma, F, i, b0, sp, x, u; 
+
+     sigma:= RealStructure(V);
+     F:= LeftActingDomain(V);
+     i:= E(4)*One( F );
+     b0:= [ ];
+     sp:= MutableBasis( F, [], Zero(V) );
+     for x in Basis(V) do
+         if sigma(x) = x then
+            if not IsContainedInSpan( sp, x ) then
+               Add( b0, x );
+               CloseMutableBasis( sp, x );
+            fi;
+         else
+            u:= x+sigma(x);
+            if not IsContainedInSpan( sp, u ) then
+               Add( b0, u );
+               CloseMutableBasis( sp, u );
+            fi;
+            u:= i*(x-sigma(x));
+            if not IsContainedInSpan( sp, u ) then
+               Add( b0, u );
+               CloseMutableBasis( sp, u );
+            fi;
+         fi;
+     od;
+
+     return BasisNC( V, b0 );
+end );
+
+      
+
 ############################################################################
 ###########################################################################
 #
@@ -229,7 +271,7 @@ local sc, scn, i, j, k, F, type, rank, L, cg, cb, rs, bas, dim, rts, cbn, n, prs
    if Length(arg)=3 then F:=arg[3]; fi;
   
  ##this is complex simple LA and its data
-   L    := SimpleLieAlgebra(type,rank,GaussianRationals);
+   L    := corelg.simliealg(type,rank,GaussianRationals);
    rs   := RootSystem(L);;
    cg   := CanonicalGenerators(rs);;
    cb   := ChevalleyBasis(L);; ##changed this!
@@ -307,17 +349,25 @@ local sc, scn, i, j, k, F, type, rank, L, cg, cb, rs, bas, dim, rts, cbn, n, prs
   ##new chevalley basis
    cbn := [[],[],[]];
    l   := Length(cb[1]);
-   for i in [1..l] do
-      Add(cbn[1], 1/2*One(F)*( basn[i]+E(4)*One(F)*basn[i+dim]   ) );
-      Add(cbn[1], 1/2*One(F)*( basn[i]-E(4)*One(F)*basn[i+dim]   ) );
-      Add(cbn[2],  1/2*One(F)*( basn[i+l]+E(4)*One(F)*basn[i+dim+l]   ) );
-      Add(cbn[2],  1/2*One(F)*( basn[i+l]-E(4)*One(F)*basn[i+dim+l]   ) );
-      if i <= rank then
-         Add(cbn[3], (1/2)*One(F)*(basn[2*l+i]+E(4)*One(F)*basn[2*l+i+dim]));
-         Add(cbn[3],  (1/2)*One(F)*(basn[2*l+i]-E(4)*One(F)*basn[2*l+i+dim]));
-      fi;
+   for i in [1..rank] do
+       Add(cbn[1], 1/2*One(F)*( basn[i]+E(4)*One(F)*basn[i+dim]   ) );
+       Add(cbn[2],  1/2*One(F)*( basn[i+l]+E(4)*One(F)*basn[i+dim+l]   ) );
+       Add(cbn[3], (1/2)*One(F)*(basn[2*l+i]+E(4)*One(F)*basn[2*l+i+dim]));
    od;
-
+   for i in [1..rank] do
+       Add(cbn[1], 1/2*One(F)*( basn[i]-E(4)*One(F)*basn[i+dim]   ) );
+       Add(cbn[2],  1/2*One(F)*( basn[i+l]-E(4)*One(F)*basn[i+dim+l]   ) );
+       Add(cbn[3], (1/2)*One(F)*(basn[2*l+i]-E(4)*One(F)*basn[2*l+i+dim]));
+   od;
+   for i in [rank+1..l] do
+      Add(cbn[1], 1/2*One(F)*( basn[i]+E(4)*One(F)*basn[i+dim]   ) );
+      Add(cbn[2],  1/2*One(F)*( basn[i+l]+E(4)*One(F)*basn[i+dim+l]   ) );
+   od;
+   for i in [rank+1..l] do
+      Add(cbn[1], 1/2*One(F)*( basn[i]-E(4)*One(F)*basn[i+dim]   ) );
+      Add(cbn[2],  1/2*One(F)*( basn[i+l]-E(4)*One(F)*basn[i+dim+l]   ) );
+   od;
+   
     n   := 2*rank;
     rts := [ ]; 
     for v in cbn[1] do 
@@ -355,7 +405,9 @@ local sc, scn, i, j, k, F, type, rank, L, cg, cb, rs, bas, dim, rts, cbn, n, prs
     
     #roots are rationals
     if IsSqrtField(F) then
-       rts := List(rts, x-> List(x, SqrtFieldEltToCyclotomic));
+       rts := List(rts, x-> List( x, SqrtFieldEltToCyclotomic));
+    elif IsQQBarField(F) then
+       rts:=  List( rts, x -> List( x, corelg.QQBarRatToGap ) );
     fi;
 
     SetPositiveRoots( R, rts );
@@ -436,7 +488,7 @@ corelg.signs:= function( type, n )
            sgn:= [ [ -1, 1, 1, 1, 1, 1, 1, 1 ], [ 1, 1, 1, 1, 1, 1, 1, -1 ] ];
         fi;
      elif type = "F" then
-        sgn:= [ [ 1, 1, 1, -1 ], [ 1, 1, -1, 1 ] ];
+        sgn:= [ [ 1, -1, 1, 1 ], [ 1, 1, -1, 1 ] ];
      else
         sgn:= [ [ 1, -1 ] ];
      fi;
@@ -505,7 +557,7 @@ else
 fi;
 
 #R:=[]; P:=[]; S:=[]; C:=[]; T:=[]; TT:=[]; D:=[]; U:=[]; c:=[]; w:=[];  
-L:= SimpleLieAlgebra( a,  n,  Rationals);
+L:= corelg.simliealg( a,  n,  Rationals);
 R:= RootSystem(L);
 P:= PositiveRoots(R);
 S:= SimpleSystem(R);
@@ -708,6 +760,8 @@ od;
     #roots are rationals
     if IsSqrtField(F0) then
        rts := List(rts, x-> List(x, SqrtFieldEltToCyclotomic));
+    elif IsQQBarField(F) then
+       rts:= List( rts, x -> List( x, corelg.QQBarRatToGap ) );
     fi;
  
 
@@ -780,49 +834,28 @@ InstallOtherMethod( CartanSubspace,
    # e would lie in a hom sl_2 triple, with h\in K, not possible. So a subspace C
    # is a Cartan subspace iff its centralizer in P is equal to C.
 
-   local P, found, b, V, C, k;
+   local P, B, b, V, C, u;
 
    P:= CartanDecomposition(L).P;
-   # first we determine the rank by computing any Cartan subspace...
 
-   found:= false;
-   b:= ShallowCopy( BasisVectors( Basis( Intersection( P, CartanSubalgebra(L) ) ) ) );
-   # first try with just basis elements...
-   V:= SubspaceNC( P, b );
-   C:= Filtered( Basis(P), x -> ForAll( b, y -> IsZero(x*y) ) and not x in V ); 
-   while Length(C) > 0 do
-      Add( b, C[1] );
-      V:= SubspaceNC( P, b );
-      C:= Filtered( C, x -> ForAll( b, y -> IsZero(x*y) ) and not x in V ); 
-   od;
+   if not HasRealStructure(P) then SetRealStructure(P,RealStructure(L)); fi;
 
-   if Dimension( Intersection( LieCentralizer( L, V ), P ) ) = Length(b) then
-      return V;
-   fi;
+   B:= RealBasis(P);
 
-   b:= ShallowCopy( BasisVectors( Basis( Intersection( P, CartanSubalgebra(L) ) ) ) );
+   b:= [ B[1] ];
    V:= SubspaceNC( P, b );
    C:= Intersection( LieCentralizer( L, V ), P );
-   while not found do
-      k:= 1;
-      while k <= Dimension(C) do
-         if not Basis(C)[k] in V then
-            Add( b, Basis(C)[k] );
-            break;
-         else
-            k:= k+1;
-         fi;
-      od;
-      C:= Intersection( LieCentralizer( L, SubalgebraNC( L, b ) ), P );
-      if Dimension(C) = Length(b) then
-         found:= true;
-      else
-         V:= SubspaceNC( P, b );
-      fi;
+   SetRealStructure( C, RealStructure(L) );
+   while Dimension(C) > Length(b) do
+       B:= RealBasis(C);
+       u:= First( B, x -> not x in V );
+       Add( b, u );
+       V:= SubspaceNC( P, b );
+       C:= Intersection( LieCentralizer( L, V ), P );
+       SetRealStructure( C, RealStructure(L) );
    od;
-
    return C;
-
+   
 end );
 
 
@@ -1043,7 +1076,7 @@ local makeCartInv, L, ch, i, k0, p0, k, K, P, bas, T, M, R, im, cg,F;
 
    if IsList(theta) then
       if Length(theta)=4 then F:=theta[4]; else F:=GaussianRationals; fi;
-      L  := SimpleLieAlgebra(theta[1],theta[2],F);
+      L  := corelg.simliealg(theta[1],theta[2],F);
       cg := CanonicalGenerators(RootSystem(L));
       im := [List([1..theta[2]],x-> theta[3][x]*cg[1][x]),
              List([1..theta[2]],x-> theta[3][x]*cg[2][x]),
@@ -1266,9 +1299,9 @@ local res, rank, cd, h, r, c, cg, e, sigma, cf, cb, newcg, iso, wh, phi, i, test
       C    := List( base, x -> List( base, y -> 2*(x*B*y)/(y*B*y) ) );
       ct   := CartanType(C);
       en   := Concatenation( CartanType(C).enumeration );
-      if ct.types[1] = ["F",4] then
-           en := en{[4,1,3,2,   8,5,7,6]};
-      fi;             
+      #if ct.types[1] = ["F",4] then
+      #     en := en{[4,1,3,2,   8,5,7,6]};
+      #fi;             
       base := base{en};
        
      #now construct corresponding canonical generators
@@ -1390,7 +1423,7 @@ local res, rank, cd, h, r, c, cg, e, sigma, cf, cb, newcg, iso, wh, phi, i, test
          en    := Concatenation( CartanType(CartanMatrix(R)).enumeration );
          base  := base{en};
         #now enumeration is [1...r]; for F4 make it [2,4,3,1]:
-         if ct.types[1]=["F",4] then base := base{[4,1,3,2]}; fi;
+         #if ct.types[1]=["F",4] then base := base{[4,1,3,2]}; fi;
         #now construct corresponding canonical generators
          cg := corelg.makeCanGenByBase(pr,cb,base);
 
@@ -1510,9 +1543,9 @@ local res, rank, cd, h, r, c, cg, e, sigma, cf, cb, newcg, iso, wh, phi, i, test
          base  := base{en};
 
         #now enumeration is [1...r]; for F4 make it [2,4,3,1]:
-         if ct.types[1]=["F",4] then 
-            base := base{[4,1,3,2]};
-         fi;
+         #if ct.types[1]=["F",4] then 
+         #   base := base{[4,1,3,2]};
+         #fi;
 
         #now construct corresponding canonical generators
          newcg := corelg.makeCanGenByBase(pr,cb,base);
@@ -2119,13 +2152,13 @@ local cd, h, rank, theta, sigma, R, C, base, cg, pr, ct, cb, algs, cgs,
 
   #adjust type F4
    for i in [1..Length(ct.types)] do
-      if ct.types[i][1] = "F" then
-         if ct.types[i][3] = 1 then
-            ct.enumeration[i] := ct.enumeration[i]{[4,1,3,2]};
-         elif ct.types[i][3] = 2 then
-            ct.enumeration[i] := ct.enumeration[i]{[4,1,3,2,8,5,7,6]};
-         fi;
-      fi;
+      #if ct.types[i][1] = "F" then
+      #   if ct.types[i][3] = 1 then
+      #      ct.enumeration[i] := ct.enumeration[i]{[4,1,3,2]};
+      #   elif ct.types[i][3] = 2 then
+      #      ct.enumeration[i] := ct.enumeration[i]{[4,1,3,2,8,5,7,6]};
+      #   fi;
+      #fi;
    od;
 
   #first sort by types
@@ -2533,7 +2566,7 @@ local r,t,id, par,sign,perm,mv,nr,tmp, nr1,nr2, F, cf,testCF, vd, rsc, en, sigma
        tmp := corelg.realification(t,r,F);
        sigma := RealStructure(tmp);
        tmp!.id  := [t,r,0];
-       if F = SqrtField then tmp!.std := true; fi;
+       if IsSqrtField(F) or IsQQBarField(F) or F=Cyclotomics then tmp!.std := true; fi;
        SetIsRealFormOfInnerType(tmp,false);
        SetIsCompactForm(tmp,false);
        SetIsRealification(tmp,true);
@@ -2541,9 +2574,9 @@ local r,t,id, par,sign,perm,mv,nr,tmp, nr1,nr2, F, cf,testCF, vd, rsc, en, sigma
 
        ct   := CartanType(CartanMatrix(rsc));
        en   := Concatenation( ct.enumeration );
-       if ct.types[1] = ["F",4] then
-          en := en{[4,1,3,2,   8,5,7,6]};
-       fi;             
+       #if ct.types[1] = ["F",4] then
+       #   en := en{[4,1,3,2,   8,5,7,6]};
+       #fi;             
        base := SimpleSystem(rsc){en};
        cg := corelg.makeCanGenByBase(PositiveRoots(rsc),ChevalleyBasis(rsc),base);
 
@@ -2581,7 +2614,7 @@ local r,t,id, par,sign,perm,mv,nr,tmp, nr1,nr2, F, cf,testCF, vd, rsc, en, sigma
        vd!.sstypes := [ [t,r,id] ];
        tmp!.sstypes := [[t,r,id]];
        SetVoganDiagram(tmp,vd);
-       if F=SqrtField then tmp!.std := true; fi;
+       if IsSqrtField(F) or IsQQBarField(F) or F=Cyclotomics then tmp!.std := true; fi;
        SetcorelgCompactDimOfCSA(CartanSubalgebra(tmp),Dimension(CartanSubalgebra(tmp)));
        return tmp;
     fi;
@@ -2624,7 +2657,7 @@ local r,t,id, par,sign,perm,mv,nr,tmp, nr1,nr2, F, cf,testCF, vd, rsc, en, sigma
        sign[2] := -One(F);
     elif t = "F" then
        perm     := ();
-       if id = 2 then sign := [1,1,1,-1]*One(F); fi;
+       if id = 2 then sign := [1,-1,1,1]*One(F); fi;
        if id = 3 then sign := [1,1,-1,1]*One(F); fi;
     elif t = "E" then
        perm := ();
@@ -2644,12 +2677,13 @@ local r,t,id, par,sign,perm,mv,nr,tmp, nr1,nr2, F, cf,testCF, vd, rsc, en, sigma
    #tmp := corelg.NonCompactRealFormsOfSimpleLieAlgebra([t,r,sign,perm],F);
     tmp := corelg.SuperLie( t, r, sign, perm, F );
     SetRealFormParameters(tmp, [t,r,sign,perm]);
-    if E(4) in F or IsSqrtField(F) then sigma := RealStructure(tmp); fi;  
+    if E(4) in F or IsSqrtField(F) or IsQQBarField(F) then sigma := RealStructure(tmp); fi;  
 
 
     if perm=() then SetIsRealFormOfInnerType(tmp,true); else SetIsRealFormOfInnerType(tmp,false); fi;
     SetIsRealification(tmp,false);
    #attach Vogan diagram if not compact form
+
     rsc := RootsystemOfCartanSubalgebra(tmp);
     vd  := corelg.VoganDiagramOfRealForm(tmp,
                 rec(cg   := CanonicalGenerators(rsc), 
@@ -2667,7 +2701,7 @@ local r,t,id, par,sign,perm,mv,nr,tmp, nr1,nr2, F, cf,testCF, vd, rsc, en, sigma
     tmp!.id  := [t,r,id];
     tmp!.sstypes := [[t,r,id]];
 
-    if F = SqrtField then  tmp!.std := true; fi;
+ if IsSqrtField(F) or IsQQBarField(F) or F=Cyclotomics then tmp!.std := true; fi;
     SetcorelgCompactDimOfCSA(CartanSubalgebra(tmp),
              Dimension(Intersection(CartanDecomposition(tmp).K,CartanSubalgebra(tmp))));
 
@@ -2769,17 +2803,17 @@ local H1, H2, cd1, cd2, mkWhere, L, cd, whs, K1, K2, phi, l, cf,rank, res, vd,
    if not ForAll(cf,x-> x in LeftActingDomain(L1)) then Error("cannot do this over ",LeftActingDomain(L1)); fi;
    if not ForAll(cf,x-> x = ComplexConjugate(x)) then Error("ups, not real"); fi;
 
-   if not ForAll(cf,x-> x in Rationals or not SqrtFieldMakeRational(x)=false) 
-         and not cf[1] in SqrtField then
-      Print("(isom would have to be defined over SqrtField!)\n");
-      return fail;
-   else
+#   if not ForAll(cf,x-> x in Rationals or not SqrtFieldMakeRational(x)=false) 
+#         and not cf[1] in SqrtField then
+#      Print("(isom would have to be defined over SqrtField!)\n");
+#      return fail;
+#   else
       for l in [1..rank] do 
          K2.cg[1][l] := cf[l]*K2.cg[1][l];
          K2.cg[2][l] := cf[l]^-1*K2.cg[2][l];
       od;
       phi := LieAlgebraIsomorphismByCanonicalGenerators(K1.L,K1.cg,K2.L,K2.cg);
-   fi;
+#   fi;
       
   #Info(InfoCorelg,1,"  now test isom");
   #cd1 := CanonicalGenerators(VoganDiagram(L1));
@@ -3962,11 +3996,11 @@ end );
 
 InstallMethod( MaximalReductiveSubalgebras,
  "for type, rank and number", 
- true, [ IsString, IsInt, IsInt ], 0,   
+ true, [ IsString, IsInt, IsInt, IsFreeLeftModule ], 0,   
 
-function( type, rk, no ) 
+function( type, rk, no, F ) 
 
-      local L, b1, b2, c, u, i, F, K, cd, C, H, list, subs, l;
+      local L, b1, b2, c, u, i, K, cd, C, H, list, subs, l;
 
       if not rk in [1..8] then
          Error("The maximal reductive subalgebras are available for simple real Lie algebras of rank up to 8");
@@ -3976,7 +4010,6 @@ function( type, rk, no )
          Error("There is no real form with the input parameters");
       fi;
 
-      F:= SqrtField;
       L:= RealFormById( type, rk, no, F );
 
       list:= Filtered( corelg.Linc, x -> x[1] = type and x[2] = rk and x[3] = no );
@@ -3987,7 +4020,7 @@ function( type, rk, no )
           for c in l[4] do
               u:= Zero(L);
               for i in [1,3..Length(c)-1] do
-                  u:= u + (c[i+1]*One(F))*Basis(L)[c[i]];
+                  u:= u + SqrtFieldToF( F, (c[i+1]*One(SqrtField)))*Basis(L)[c[i]];
               od;
               Add( b1, u );
           od;
@@ -3996,7 +4029,7 @@ function( type, rk, no )
           for c in l[5] do
               u:= Zero(L);
               for i in [1,3..Length(c)-1] do
-                  u:= u + (c[i+1]*One(F))*Basis(L)[c[i]];
+                  u:= u +  SqrtFieldToF( F, (c[i+1]*One(SqrtField)))*Basis(L)[c[i]];
               od;
               Add( b2, u );
           od;
@@ -4020,5 +4053,962 @@ function( type, rk, no )
       od;
 
       return rec( liealg:= L, subalgs:= subs );
+
+end );
+
+
+repdata:= function( L )
+
+        local F, H, R, C, ct, t, e, M, i, e1, b1, b2, cg1, cg2, data, M0;
+
+# record with lots of data for constructing reps
+# for the isomorphism we take the maximally non-compact CSA
+
+        if IsBound( L!.rpdata ) then
+           return L!.rpdata;
+        fi;
+
+        data:= rec();
+
+        F:= LeftActingDomain(L);
+        H:= MaximallyNonCompactCartanSubalgebra( L );
+        R:= RootsystemOfCartanSubalgebra( L, H );
+        C:= CartanMatrix( R );
+
+        ct:= CartanType( C );
+        t:= ShallowCopy( ct.types );
+        e:= ShallowCopy( ct.enumeration );
+        SortParallel( t, e );
+        e:= Concatenation( e );
+        data.Lenum:= e;
+        data.CM:= C{e}{e};
+
+        M:= corelg.simliealg( t[1][1], t[1][2], F );
+        for i in [2..Length(t)] do
+            M:= DirectSumOfAlgebras( M, corelg.simliealg(t[i][1],t[i][2],F) );
+        od;
+
+        M0:= corelg.simliealg( t[1][1], t[1][2], Rationals );
+        for i in [2..Length(t)] do
+            M0:= DirectSumOfAlgebras( M0,
+                           corelg.simliealg(t[i][1],t[i][2],Rationals) );
+        od;
+
+        data.M0:= M0;
+        
+        C:= CartanMatrix( RootSystem(M) );
+        ct:= CartanType( C );
+        e1:= ct.enumeration;
+        e1:= Concatenation( e1 );
+        data.Menum:= e1;
+
+        cg1:= List( CanonicalGenerators( R ), u -> u{e} );
+        cg2:= List( CanonicalGenerators( RootSystem(M) ), u -> u{e1} );    
+
+        b1:= SLAfcts.canbas( L, cg1 );
+        b2:= SLAfcts.canbas( M, cg2 );
+
+        data.isomtosplit:= AlgebraHomomorphismByImagesNC( L, M, Concatenation(b1),
+                           Concatenation(b2) );
+
+        L!.rpdata:= data;
+        return data;
+        
+
+# later this should be NC!! 
+
+end;
+
+########################################################################
+#
+#  Functions for working with representations of real semisimple
+#  Lie algebras.
+
+corelg.specialrootsys:= function( L )
+
+       local CartInt, F, H, R, th, cg, sp, B, M, sol, hh, xx, found, h0, vals,
+             posR, posRv, negRv, i, j, S, rvecs, fundR, a, issum, C, en,
+	     V, cfs, hts, inds, sorR, Rvecs, x, y, h, noPosR;
+
+ CartInt := function( R, a, b )
+       local s,t,rt;
+       s:=0; t:=0;
+       rt:=a-b;
+       while (rt in R) or (rt=0*R[1]) do
+         rt:=rt-b;
+         s:=s+1;
+       od;
+       rt:=a+b;
+       while (rt in R) or (rt=0*R[1]) do
+         rt:=rt+b;
+         t:=t+1;
+       od;
+       return s-t;
+    end;
+
+       F:= LeftActingDomain(L);
+       H:= MaximallyCompactCartanSubalgebra(L);
+       R:= RootsystemOfCartanSubalgebra(L);
+       th:= CartanDecomposition(L).CartanInv;
+       cg:= CanonicalGenerators(R);
+       if ForAll( cg[1], x -> (th(x) in cg[1]) or (-th(x) in cg[1]) ) then
+	  return R;
+       fi;
+
+       sp:= Subspace( L, cg[3] );
+       B:= Basis( sp, cg[3] );
+       M:= List( B, x -> Coefficients( B, th(x) ) );
+       sol:= NullspaceMat( M-M^0 );
+       hh:= List( sol, x -> x*B );
+       xx:= ChevalleyBasis(R)[1];
+       found:= false;
+       while not found do
+           h0:= Sum( List( hh, h -> Random([-Dimension(L)..Dimension(L)])*h ) );
+	   if ForAll( h0*xx, x -> not IsZero(x) ) then found:= true; fi;
+       od;
+
+       sp:= List( xx, x -> Basis( Subspace( L, [x] ), [x] ) );
+       vals:= List( [1..Length(xx)], i -> Coefficients( sp[i], h0*xx[i] )[1] );
+       if IsSqrtField(F) then
+          vals := List(vals, SqrtFieldEltToCyclotomic );
+       elif IsQQBarField(F) then
+          vals:= List( vals, corelg.QQBarRatToGap );
+       fi;
+
+       posR:= [ ];
+       posRv:= [ ];
+       negRv:= [ ];
+       for i in [1..Length(vals)] do 
+           if vals[i] > 0 then
+	      Add( posR,  PositiveRoots(R)[i] );
+	      Add( posRv, PositiveRootVectors(R)[i] );
+	      Add( negRv, NegativeRootVectors(R)[i] );
+	   else
+	      Add( posR,  -PositiveRoots(R)[i] );
+	      Add( negRv, PositiveRootVectors(R)[i] );
+	      Add( posRv, NegativeRootVectors(R)[i] );
+	   fi;
+       od;
+
+       S:= Concatenation( posR, -posR );
+       rvecs:= Concatenation( posRv, negRv );
+
+       fundR:= [ ];
+       for a in posR do
+           issum:= false;
+           for i in [1..Length(posR)] do
+               for j in [i+1..Length(posR)] do
+                    if a = posR[i]+posR[j] then
+                       issum:=true;
+                    fi;
+               od;
+           od;
+           if not issum then
+              Add( fundR, a );
+           fi;
+       od;
+
+       # Now we calculate the Cartan matrix C of the root system.
+
+       C:= List( fundR, i -> List( fundR, j -> CartInt( S, i, j ) ) );
+       en:= Concatenation( CartanType(C).enumeration );
+       fundR:= fundR{en};
+       C:= C{en}{en};
+
+  # Every root can be written as a sum of the simple roots.
+  # The height of a root is the sum of the coefficients appearing
+  # in that expression.
+  # We order the roots according to increasing height.
+
+       V := BasisNC( VectorSpace( F, fundR ), fundR );
+       cfs:= List( posR, r -> Coefficients(V,r) );
+       if IsQQBarField(F) then
+          cfs:= List( cfs, c -> List( c, corelg.QQBarRatToGap ) );
+       fi;
+       if IsSqrtField(F) then
+          cfs:= SqrtFieldMakeRational(cfs);
+       fi;
+       hts  := List( cfs, Sum );
+
+       inds:= [1..Length(posR)]; 
+       SortParallel( inds, posR, function(i,j) if hts[i]<hts[j] then
+          return true; elif hts[i]=hts[j] then return cfs[i] > cfs[j]; fi;
+          return false; end );
+
+       sorR:= ShallowCopy(posR);
+       Append( sorR, -1*sorR );
+
+       Rvecs:= List( sorR, r -> rvecs[ Position(S,r) ] );
+    
+  # We calculate a set of canonical generators of L. Those are elements
+  # x_i, y_i, h_i such that h_i=x_i*y_i, h_i*x_j = c_{ij} x_j,
+  # h_i*y_j = -c_{ij} y_j for i \in {1..rank}
+    
+   x:= Rvecs{[1..Length(C)]};
+   noPosR:= Length( Rvecs )/2;
+   y:= Rvecs{[1+noPosR..Length(C)+noPosR]};
+   for i in [1..Length(x)] do
+      V:= VectorSpace( F, [ x[i] ] );
+      B:= Basis( V, [x[i]] );
+      y[i]:= y[i]*2/Coefficients( B, (x[i]*y[i])*x[i] )[1];
+   od;
+    
+   h:= List([1..Length(C)], j -> x[j]*y[j] );
+    
+  # Now we construct the root system, and install as many attributes
+  # as possible. The roots are represented als lists [ \alpha(h_1),....
+  # ,\alpha(h_l)], where the h_i form the Cartan part of the canonical
+  # generators.
+    
+   R:= Objectify( NewType( NewFamily( "RootSystemFam", IsObject ),
+               IsAttributeStoringRep and IsRootSystemFromLieAlgebra ), 
+               rec() );
+   SetCanonicalGenerators( R, [ x, y, h ] );
+   SetUnderlyingLieAlgebra( R, L );
+   SetPositiveRootVectors( R, Rvecs{[1..noPosR]});
+   SetNegativeRootVectors( R, Rvecs{[noPosR+1..2*noPosR]} );
+   SetCartanMatrix( R, C );
+    
+   posR:= [ ];
+   for i in [1..noPosR] do
+      B:= Basis( VectorSpace( F, [ Rvecs[i] ] ), [ Rvecs[i] ] );
+      posR[i]:= List( h, hj ->  Coefficients( B, hj*Rvecs[i] )[1] );
+   od;
+
+  #roots are rationals
+   if IsSqrtField(F) then
+      posR := List(posR, x-> List(x, SqrtFieldEltToCyclotomic));
+   fi;
+
+   if IsQQBarField(F) then
+      posR := List(posR, x-> List(x, corelg.QQBarRatToGap));
+   fi;
+
+ 
+   SetPositiveRoots( R, posR );
+   SetNegativeRoots( R, -posR ); 
+   SetSimpleSystem( R, posR{[1..Length(C)]} );
+   
+   return R;
+end;
+
+InstallMethod( SpecialRootSystem,
+ "for Lie algebra", 
+ true, [ IsLieAlgebra ], 0,   
+
+function( L  )
+
+    return corelg.specialrootsys(L);
+
+end );
+
+corelg.repdata:= function( L )
+
+        local F, H, R, C, ct, t, e, M, i, e1, b1, b2, cg1, cg2, data, M0;
+
+# record with lots of data for constructing reps
+# for the isomorphism we take the maximally compact CSA
+
+        if IsBound( L!.rpdata ) then
+           return L!.rpdata;
+        fi;
+
+        data:= rec();
+
+        F:= LeftActingDomain(L);
+        H:= MaximallyCompactCartanSubalgebra( L );
+        R:= SpecialRootSystem(L);
+        C:= CartanMatrix( R );
+
+        ct:= CartanType( C );
+	t:= ShallowCopy( ct.types );
+        e:= ShallowCopy( ct.enumeration );
+        e:= Concatenation( e );
+        data.Lenum:= e;
+        data.CM:= C{e}{e};
+
+        M:= corelg.simliealg( t[1][1], t[1][2], F );
+        for i in [2..Length(t)] do
+            M:= DirectSumOfAlgebras( M, corelg.simliealg(t[i][1],t[i][2],F) );
+        od;
+
+        M0:= corelg.simliealg( t[1][1], t[1][2], Rationals );
+        for i in [2..Length(t)] do
+            M0:= DirectSumOfAlgebras( M0,
+                           corelg.simliealg(t[i][1],t[i][2],Rationals) );
+        od;
+
+        data.M0:= M0;
+        
+        C:= CartanMatrix( RootSystem(M) );
+        ct:= CartanType( C );
+        e1:= ct.enumeration;
+        e1:= Concatenation( e1 );
+        data.Menum:= e1;
+
+        cg1:= List( CanonicalGenerators( R ), u -> u{e} );
+        cg2:= List( CanonicalGenerators( RootSystem(M) ), u -> u{e1} );    
+
+        b1:= SLAfcts.canbas( L, cg1 );
+        b2:= SLAfcts.canbas( M, cg2 );
+
+        data.isomtosplit:= AlgebraHomomorphismByImagesNC( L, M, Concatenation(b1),
+                           Concatenation(b2) );
+
+        L!.rpdata:= data;
+        return data;
+        
+end;
+
+
+corelg.hwmodule:= function( L, hw )
+
+        local f, M, V, d, M0, U, act, act_sqf, one, enum;
+
+        d:= corelg.repdata(L);
+        f:= d.isomtosplit;
+        M:= Range(f);
+
+        M0:= d.M0;
+        enum:= d.Menum;
+
+        V:= HighestWeightModule( M0, hw{enum} );
+
+        U:= FullSparseRowSpace( LeftActingDomain(L), Dimension(V) );
+        one:= One (LeftActingDomain(L) );
+
+        act_sqf:= function( x, v )
+
+            local cfx, cfv, u, i, j, w, cf;
+
+            cfx:= Coefficients( Basis(M), Image( f, x ) );
+            cfv:= Coefficients( Basis(U), v );
+            u:= Zero( U );
+            for i in [1..Length(cfx)] do
+                if not IsZero(cfx[i]) then
+                   for j in [1..Length(cfv)] do
+                       if not IsZero(cfv[j]) then
+                          w:= Basis(M0)[i]^Basis(V)[j];
+                          cf:= Coefficients( Basis(V), w )*one;
+                          u:= u+cfx[i]*cfv[j]*(cf*Basis(U));
+                       fi;
+                   od;
+                fi;
+            od;
+
+            return u;
+
+        end;
+
+        return LeftAlgebraModule( L, act_sqf, U );
+
+
+end;
+
+corelg.realification_V:= function( V )
+
+        # this is slightly complicated  because in reality it is the
+        # complexification of the realification of V...
+
+        local i0, n, W, act_real, act, L, sig, one, realpart;
+
+        realpart:= function(z)
+	    return (z+ComplexConjugate(z))/2;
+	end;
+
+        i0:= E(4)*One( LeftActingDomain(V) );
+        one:= One( LeftActingDomain(V) );
+        n:= Dimension( V );
+        W:= FullSparseRowSpace( LeftActingDomain(V), 2*n );
+
+        act_real:= function( x, w )
+
+             local cf, cfr, cfi, vr, vi, i, a, b;
+
+             cf:= Coefficients( Basis(W), w );
+             cfr:= List( cf, RealPart );
+             cfi:= List( [1..Length(cf)], i -> (cf[i]-cfr[i])/i0 );
+             vr:= Zero( V );
+             vi:= Zero( V );
+             for i in [1..n] do
+                 vr:= vr + (cfr[i]+cfr[n+i]*i0)*Basis(V)[i];
+                 vi:= vi + (cfi[i]+cfi[n+i]*i0)*Basis(V)[i];
+             od;
+
+
+             cfr:= Coefficients( Basis(V), x^vr );
+             cfi:= Coefficients( Basis(V), x^vi );
+
+             vr:= Zero( W );
+             vi:= Zero( W ) ;
+             for i in [1..n] do
+                 a:= realpart(cfr[i]);
+                 b:= (cfr[i]-a)/i0;
+                 vr:= vr + a*Basis(W)[i]+b*Basis(W)[n+i];
+                 a:= realpart(cfi[i]);
+                 b:= (cfi[i]-a)/i0;
+                 vi:= vi + a*Basis(W)[i]+b*Basis(W)[n+i];
+             od;
+
+             return vr+i0*vi;
+        end;
+
+        L:= LeftActingAlgebra( V );
+        sig:= RealStructure( L );
+
+        act:= function( x, v )
+
+              local a,b;
+
+              a:= (x+sig(x))/(2*one);
+              b:= (x-sig(x))/(2*i0);
+
+              return act_real( a, v ) + i0*act_real( b, v );
+
+        end;
+
+        return LeftAlgebraModule( L, act, W );
+
+end;
+
+corelg.decomp_C:=function( V )
+
+   # this computes the highest weights and corr highest weight spaces
+
+   local L, R, e, sp, x, m, c, sp0, K, h, U, es, H, wts, B, u, t0, ev;
+
+   L:= LeftActingAlgebra( V );
+   H:= MaximallyCompactCartanSubalgebra( L );
+
+   R:= SpecialRootSystem(L);
+   if R = fail then return fail; fi;
+   e:= CanonicalGenerators( R )[1];
+
+   sp:= V;
+
+
+   m:= List( e, u -> TransposedMatDestructive( MatrixOfAction( Basis(V), u )));
+   m:= List( [1..Dimension(V)], i -> Concatenation( List( m, u -> u[i] ) ) );
+   c:= NullspaceMatDestructive(m);
+   sp:= Subspace( V, List( c, u -> u*Basis(V) ), "basis" );
+
+
+   # in sp find a basis of weight vectors
+   h:= CanonicalGenerators( R )[3];
+   sp:= [ sp ];
+
+   for x in h do
+       sp0:= [ ];
+       for U in sp do
+           m:= List( Basis(U), a -> Coefficients( Basis(U), x^a ) );
+           ev:= eigenvalues(LeftActingDomain(L),m);
+	   if ev = fail then return fail; fi;
+	   es:= List( ev, v -> NullspaceMat( m-v*m^0 ) );
+	       
+           Append( sp0, List( es, M -> Subspace( V, List( M, v ->
+                                          v*Basis(U) ) ) ) );
+       od;
+       sp:= sp0;
+   od;
+
+   sp0:= [ ];
+   wts:= [ ];
+   for U in sp do
+
+       # find the weight...
+       u:= Basis(U)[1];
+       B:= Basis( Subspace(V, [u] ), [u] );
+       Add( wts, List( h, x -> Coefficients( B, x^u )[1] ) );
+       Add( sp0, BasisVectors(Basis(U)) );
+   od;
+
+   if LeftActingDomain(L) = SqrtField then
+      wts:= SqrtFieldMakeRational( wts );
+   fi;
+   if IsQQBarField(LeftActingDomain(L)) then
+      wts:= List( wts, w -> List( w, corelg.QQBarRatToGap ) );
+   fi;
+
+   return rec( wts:= wts, spaces:= sp0 );
+    
+
+end;
+
+corelg.sigma_rts:= function( L )
+
+        local sig, R, h, ch, rvcs, rts, rtsperm, i, B, v, list, p, wd,
+              simref, N, rd, H;
+
+        sig:= RealStructure( L );
+        H:= MaximallyCompactCartanSubalgebra(L);
+        R:= SpecialRootSystem(L);
+        h:= CanonicalGenerators( R )[3];
+        ch:= ChevalleyBasis(R);
+        rvcs:= Concatenation( ch[1], ch[2] );
+        rts:= [ ]; rtsperm:= [ ];
+
+        for i in [1..Length(rvcs)] do
+            B:= Basis( Subspace( L, [rvcs[i]] ), [rvcs[i]] );
+            v:= List( h, x -> Coefficients( B, x*rvcs[i] ) );
+            Add( rts, v );
+            v:= List( h, x -> Coefficients( B, sig(x)*rvcs[i] ) );
+            v:= List( v, ComplexConjugate );
+            Add( rtsperm, v );
+        od;
+
+        list:= List( rtsperm, x -> Position( rts, x ) );
+        p:= PermList( list );
+
+        # now compute a corresponding Weyl word
+
+        wd:= [ ];
+        simref:= GeneratorsOfGroup( WeylGroupAsPermGroup(R) );
+        N:= Length(ch[1]);
+        i:= PositionProperty( [1..Length(h)], j -> j^p > N );
+        while i <> fail do
+            Add( wd, i );
+            p:= simref[i]*p;
+            i:= PositionProperty( [1..Length(h)], j -> j^p > N );
+        od;
+
+        return rec( perm:= PermList( list ), word:= wd );
+
+end;
+
+
+corelg.Theta:= function( L )
+
+        # the function Theta, relative to the max noncpt CSA
+
+        local H, r, R, w, sim, pos, N, sp, inds, simims, i, t, F;
+
+        if IsBound( L!.Theta ) then return L!.Theta; fi;
+
+        F:= LeftActingDomain(L);
+        H:= MaximallyCompactCartanSubalgebra(L);
+        r:= corelg.sigma_rts( L );
+        R:= SpecialRootSystem(L);
+        w:= WeylWordAsPerm( R, Reversed( r.word ) );
+        sim:= SimpleRootsAsWeights(R);
+        pos:= PositiveRootsAsWeights(R);
+        N:= Length(pos);
+        sp:= Basis( VectorSpace( Rationals, sim ), sim );
+
+        inds:= List( [1..Length(sim)], i -> i^r.perm );
+        simims:= [ ];
+        for i in inds do
+            if i <= N then
+               Add( simims, pos[i] );
+            else
+               Add( simims, -pos[i-N] );
+            fi;
+        od;
+
+        t:= function( lam )
+            return ApplyWeylPermToWeight(R,w,Coefficients( sp, lam )*simims);
+        end;
+
+        L!.Theta:= t;
+
+       return t;
+end;
+
+
+corelg.fundvals:= function(L)
+
+       local R, C, s, i, sp, lam, v, cg, th;
+
+       if IsBound(L!.fundvals) then return L!.fundvals; fi;
+       
+       R:= SpecialRootSystem(L);
+       C:= CartanMatrix( R );
+
+       cg:= CanonicalGenerators(R);
+       th:= CartanDecomposition(L).CartanInv;
+       s:= [ ];
+       for i in [1..Length(cg[1])] do
+           if th(cg[1][i]) in cg[1] then
+	      s[i]:=1;
+	   else
+	      s[i]:=-1;
+	   fi;
+       od;
+
+       for i in [1..Length(s)] do
+           if s[i]=1 then s[i]:= 0; fi;
+           if s[i]=-1 then s[i]:= 2; fi;
+       od;
+
+       sp:= Basis( VectorSpace( Rationals, C ), C );
+       lam:= List( C^0, x -> Coefficients( sp, x ) );
+
+       v:= List( lam, u -> 2*Sum(u) + s*u );
+       L!.fundvals:= v;
+       return v;
+end;
+
+corelg.CartInd:= function( L, lam )
+
+       return (-1)^( lam*corelg.fundvals(L) );
+end;
+
+corelg.omegainv:= function( V, w, v )
+
+     
+
+    # w is the word from sigma_rts, V a module over a real semisimple Lie
+    # algebra, v in V. We apply w_\rho^{-1} to the complex conjugate of v;
+    # complex conjugate being wrt the given basis of V.
+
+    local apply_exp, L, H, R, c, i, v0;
+
+    apply_exp:= function( x, u )
+
+         local z, k, vec, fc;
+
+         z:= u;
+         k:= 1;
+         fc:= 1;
+         vec:= x^z;
+         while not IsZero( vec ) do
+             z:= z + vec/fc;
+             vec:= x^vec;
+             k:= k+1;
+             fc:= fc*k;
+         od;
+         return z;
+    end;
+    
+
+    L:= LeftActingAlgebra(V);
+    H:= MaximallyCompactCartanSubalgebra( L );
+    R:= SpecialRootSystem(L);
+    c:= CanonicalGenerators( R );
+
+    v0:= ComplexConjugate( Coefficients( Basis(V), v ) )*Basis(V);
+
+    for i in w do
+        v0:= apply_exp( -c[1][i], v0 );
+        v0:= apply_exp(  c[2][i], v0 );
+        v0:= apply_exp( -c[1][i], v0 );
+    od;
+
+    return v0;
+
+end;
+
+corelg.canbas:= function( V, hwv ) # hwv hw vec
+local   L,  R,  hw,  cg,  paths,  strings,  p,  p1, word, k, b,
+        st,  i,  j,  a,  y,  v,  bas, s1, i1, n1,  w,  sim, pos, posR, yy, 
+        weylwordNF, e, sp, x, m, c, sp0, h, H;
+
+   weylwordNF:= function( R, path )
+   local   w,  rho,  wt, w1;        
+    # the WeylWord in lex shortest form...
+      w:= WeylWord( path );
+      rho:= List( [1..Length( CartanMatrix(R))], x -> 1 );
+      wt:= ApplyWeylElement( WeylGroup(R), rho, w );
+      w1:= ConjugateDominantWeightWithWord( WeylGroup(R), wt )[2];
+      return w1; 
+   end;
+
+   L:= LeftActingAlgebra( V );
+   H:= MaximallyCompactCartanSubalgebra( L );
+   R:= SpecialRootSystem(L);
+   h:= CanonicalGenerators( R )[3];
+   sp:= Basis( VectorSpace( LeftActingDomain(L), [hwv] ), [hwv] );
+   hw:= List( h, x -> Coefficients( sp, x^hwv )[1] );
+   if LeftActingDomain(L) = SqrtField then
+      hw:= SqrtFieldMakeRational(hw);
+   fi;
+   if IsQQBarField(LeftActingDomain(L)) then
+      hw:= List( hw, corelg.QQBarRatToGap );
+   fi;
+
+
+   cg:= CrystalGraph( R, hw );
+   paths:= cg.points;
+   # For every path we compute its adapted string.
+   strings:= [ ];
+   for p in paths do
+      p1:= p;
+      st:= [];
+      word:= weylwordNF( R, p1 );
+      while word <> [] do
+         j:= 0;
+         k:= word[1];
+         while  WeylWord( p1 ) <> [] and word[1] = k do
+            p1:= Ealpha( p1, k );
+            word:= weylwordNF( R, p1 );     
+            j:= j+1;
+         od;
+         if j > 0 then
+             Add( st, k );
+             Add( st, j );
+         fi;
+      od;
+      Add( strings, st );        
+   od;
+
+   y:= ChevalleyBasis(R)[2];
+   sim:= SimpleSystem( R );
+   posR:= PositiveRoots( R );
+   yy:= [];
+   for a in sim do
+      pos:= Position( posR, a );
+      Add( yy, y[pos] );
+   od;
+   y:= yy;
+   bas:= [ hwv ];
+
+   for i in [2..Length(strings)] do
+     s1:= ShallowCopy( strings[i] );
+     i1:= s1[1];
+     n1:= s1[2];
+     if n1 > 1 then
+        s1[2]:= n1-1;
+     else
+        Unbind( s1[1] ); Unbind( s1[2] );
+        s1:= Filtered( s1, x -> IsBound(x) );
+     fi;
+     pos:= Position( strings, s1 );
+     w:= bas[pos];
+     w:= yy[i1]^w;
+     w:= w/n1;
+     Add( bas, w );
+  od;
+
+  return bas;
+end;
+
+
+corelg.decrep:= function( V )
+
+        # V a rep of a real semisimple Lie algebra, we decompose...
+
+        local r, L, s, t, pairsdw, pairssw, selfconj, i, j, k, w1, u, v, sp,
+              cb, theta, mu, modules, sigstab, t0, S, A, B, sp0, v1, v2, eps,
+              types, ss0, ST, sig, F;
+
+        sig:= RealStructure(V);
+
+        sigstab:= function( bas )
+
+             # bas spans a self-conjugate subspace of V, we get a basis of the
+             # space of real elements
+
+             local elts, u, v, sp, t0;
+
+             elts:= [ ];
+             sp:= MutableBasis( LeftActingDomain(V), [], Zero(V) );
+             for u in bas do
+                 v:= sig(u);
+                 if not IsContainedInSpan( sp, u+v ) then
+                    CloseMutableBasis( sp, u+v );
+                 fi;
+                 if not IsContainedInSpan( sp, E(4)*(u-v) ) then
+                    CloseMutableBasis( sp, E(4)*(u-v) );
+                 fi;
+             od;
+
+             return BasisVectors( sp );
+        end;
+
+
+        r:= corelg.decomp_C( V );
+
+        L:= LeftActingAlgebra( V );
+	F:= LeftActingDomain(L);
+        s:= corelg.sigma_rts( L );
+        t:= corelg.Theta( L );
+
+        modules:= [ ];
+        types:= [ ];
+        for i in [1..Length(r.wts)] do
+
+            w1:= t( r.wts[i] );
+            if w1 = r.wts[i] then
+
+               u:= r.spaces[i][1];
+               v:= corelg.omegainv( V, s.word, u );
+               if v in Subspace( V, [u] ) then
+                  eps:= 1;
+               else
+                  sp0:= Basis( Subspace( V, [u] ), [u] );
+                  theta:= Coefficients( sp0, corelg.omegainv(V,s.word,v) )[1];
+                  if ComplexConjugate(theta)=theta and theta > 0 then
+                     eps:= 1;
+                  else
+                     eps:= -1;
+                  fi;
+               fi;
+
+               if eps = 1 then
+                  sp:= MutableBasis( LeftActingDomain(L), [ ], Zero(V) );
+                  S:= [ ];
+                  for j in [1..Length(r.spaces[i])] do
+                      u:= r.spaces[i][j];
+                      v:= corelg.omegainv( V, s.word, u );
+
+                      # is v a multiple of u?
+
+                      if v in Subspace( V, [u] ) then
+                         # self-conjugate
+                         if not IsContainedInSpan( sp, u ) then
+                            Add( S, u );
+                            CloseMutableBasis( sp, u );
+                         fi;
+                      else
+                         sp0:= Basis( Subspace( V, [u] ), [u] );
+                         theta:= Coefficients( sp0,
+			                   corelg.omegainv(V,s.word,v) )[1];
+			 if IsSqrtField(F) then
+			    theta:= SqrtFieldMakeRational(theta);
+			    if theta = false then
+			       Error("Canot do this over SqrtField.");
+			    else
+			       mu:= 1/Sqroot(theta);
+			    fi;
+			 elif F=Cyclotomics then
+			    if IsRat(theta) then
+			       mu:= 1/Sqrt(theta);
+			    else
+			       Error("Canot do this over SqrtField.");
+			    fi;
+			 elif IsQQBarField(F) then
+			    mu:= 1/Sqrt(theta);
+			 else
+                            mu:= 1/Sqrt(theta);
+                            if not mu in LeftActingDomain(L) then 
+                               Error("Cannot do this over the base field.");
+			    fi;
+                         fi;
+                         v1:= u+mu*v; v2:= u-mu*v;
+                         if not IsContainedInSpan( sp, v1 ) then
+                            Add( S, v1 );
+                            CloseMutableBasis( sp, v1 );
+                         fi;
+                         if not IsContainedInSpan( sp, v2 ) then
+                            Add( S, v2 );
+                            CloseMutableBasis( sp, v2 );
+                         fi;
+                      fi;
+                  od;
+                  for u in S do
+
+                      cb:= corelg.canbas( V, u );
+                      Add( modules, SubAlgebraModule(V,sigstab(cb),"basis"));
+                      Add( types, ["I",r.wts[i]] );
+                  od;
+               else
+                  A:= [ ]; B:= [ ];
+                  sp:= MutableBasis( LeftActingDomain(L), [ ], Zero(V) );
+                  for j in [1..Length(r.spaces[i])] do
+                      u:= r.spaces[i][j];
+                      if not IsContainedInSpan(sp,u) then
+                          v:= corelg.omegainv( V, s.word, u );
+                          Add( A, u ); Add( B, v );
+                          CloseMutableBasis( sp, u );
+                          CloseMutableBasis( sp, v );
+                      fi;
+                  od;
+                  for j in [1..Length(A)] do
+                     cb:= corelg.canbas( V, A[j] );
+                     Append( cb, corelg.canbas( V, B[j] ) );
+                     Add( modules, SubAlgebraModule(V,sigstab(cb),"basis"));
+                     Add( types, ["II",r.wts[i]] );
+                  od;
+               fi;
+
+            else
+
+               # look where w1 is:
+               for j in [1..Length(r.wts)] do
+                   if r.wts[j]=w1 and j <> i then
+                      k:= j;
+                   fi;
+               od;
+
+               if not Length( r.spaces[i] ) = Length( r.spaces[k] ) then
+                  Print("ERROR, spaces different lengths...\n");
+               fi;
+
+               if k > i then # otherwise already done...
+                  for u in r.spaces[i] do
+                      v:= corelg.omegainv( V, s.word, u );
+                      cb:= corelg.canbas( V, u );
+                      Append( cb, corelg.canbas( V, v ) );
+                      Add( modules, SubAlgebraModule(V,sigstab(cb),"basis"));
+                      Add( types, ["III",r.wts[i]] );
+                  od;
+               fi;
+
+            fi;
+        od;
+
+        return rec( modules:= modules, types:= types );    
+
+end;
+
+
+InstallMethod( HighestWeightOfConjugateModule,
+ "for Lie algebra and list", 
+ true, [ IsLieAlgebra, IsList ], 0,   
+
+function( L, lam )
+
+    return corelg.Theta(L)(lam);
+
+end );
+
+InstallMethod( CartanIndex,
+ "for Lie algebra and list", 
+ true, [ IsLieAlgebra, IsList ], 0,   
+
+function( L, lam )
+
+    return corelg.CartInd(L,lam);
+
+end );
+
+
+InstallMethod( DirectSumDecompositionOfRealModule,
+ "for a module over a real semisimple Lie algebra", 
+ true, [ IsAlgebraModule and IsLeftAlgebraModuleElementCollection ], 0,   
+
+function( V )
+
+    local r, dec, i;
+    
+    r:= corelg.decrep(V);
+    dec:= r.modules;
+    for i in [1..Length(dec)] do
+        SetHighestWeight( dec[i], r.types[i][2] );
+    od;
+    return dec;
+
+end );
+
+InstallMethod( IrreducibleRealModule,
+ "for Lie algebra and list", 
+ true, [ IsLieAlgebra, IsList ], 0,   
+
+function( L, lam )
+
+    local V, U, d;
+
+    V:= corelg.hwmodule( L, lam );
+    U:= corelg.realification_V(V);
+    SetHighestWeight( U, lam );
+    if HighestWeightOfConjugateModule( L, lam ) = lam then
+       if CartanIndex(L,lam) = 1 then
+          d:= DirectSumDecompositionOfRealModule(U);
+          return d[1];
+       else
+          return U;
+       fi;
+    else
+       return U;
+    fi;
 
 end );

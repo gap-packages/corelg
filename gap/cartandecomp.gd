@@ -13,7 +13,7 @@ DeclareAttribute( "CartanDecomposition", IsLieAlgebra );
 ##
 ##   returns the complex conjugation wrt the real Lie algebra <L>
 ##
-DeclareAttribute( "RealStructure", IsLieAlgebra );
+DeclareAttribute( "RealStructure", IsFreeLeftModule );
 
 ##############################################################################
 ##

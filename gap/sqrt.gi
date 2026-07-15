@@ -5,6 +5,101 @@
 #
 #
 
+#########################################################################
+#
+#  Some general functions for fields
+#
+#
+SqrtFieldToF:= function( F, x )
+
+      # x in SqrtField, map it to F
+
+      local a, ex, i;
+
+      a:= Zero(F);
+      ex:= x![1];
+      for i in [1..Length(ex)] do
+          if Length(ex[i][2])=0 then
+	     a:= a+ex[i][1]*One(F);
+	  else
+	     a:= a+(ex[i][1]*One(F))*Product( ex[i][2], u -> Sqrt( u*One(F) ));
+	  fi;
+      od;
+
+      return a;
+end;
+
+if not IsBound( IsQQBarField ) then
+   IsQQBarField:= function(F) return false; end;
+   JuliaPointer:= function(a) return a; end;
+   Julia:= rec();
+   GAP_jl:= rec();
+fi;
+
+corelg.QQBarRatToGap:= function(a)
+
+        local b;
+
+        b:= JuliaPointer(a);
+        if Julia.is_rational( b ) then
+           return GAP_jl.GapObj( Julia.Rational(b) );
+        else
+           return fail;
+        fi;
+end;
+
+
+
+eigenvalues:= function( F, mat )
+
+      local M, f, facs, zeros, h, cf, b, c, D;
+
+      if IsQQBarField(F) then
+         return Eigenvalues( F, mat );
+      fi;
+
+      if IsSqrtField(F) then
+         M:= SqrtFieldMakeRational(mat);
+         if M = false then 
+            M:= mat;
+            f:= CharacteristicPolynomial( M );
+            facs:= Set(Factors( f ));
+         else
+            f:= CharacteristicPolynomial( M );
+            facs := Set(Factors( f ));
+            facs := Set(List(facs,
+	              SqrtFieldRationalPolynomialToSqrtFieldPolynomial));
+         fi;
+      else
+         M:= mat;
+         f:= CharacteristicPolynomial( M );
+         facs := Set(Factors( f ));
+      fi;
+
+      zeros:= [ ];
+      for h in facs do
+          if Degree(h) = 1 then
+	     Add( zeros, RootsOfPolynomial(h)[1] );
+	  elif Degree(h) = 2 then
+	       cf := CoefficientsOfUnivariatePolynomial(h);
+               b  := cf[2];
+               c  := cf[1];
+	       if IsSqrtField(F) then
+	          D:= Sqroot(b^2-4*c);
+	       else
+	          D:= Sqrt(b^2-4*c);
+	       fi;
+	       Add( zeros, (-b+D)/2 );
+	       Add( zeros, (-b-D)/2 );
+	  else
+	       return fail;
+          fi;
+      od;
+
+      return zeros;
+end;
+
+
 ###############################################
 # Do deal with Flat for lists of matrices
 #

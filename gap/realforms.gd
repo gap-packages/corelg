@@ -126,6 +126,19 @@ DeclareAttribute( "NameRealForm", IsLieAlgebra );
 
 #############################################################################
 ##
-#O   MaximalReductiveSubalgebras( <type>, <rank>, <no> )
+#O   MaximalReductiveSubalgebras( <type>, <rank>, <no>, <F> )
 ##
-DeclareOperation( "MaximalReductiveSubalgebras", [ IsString, IsInt, IsInt ] );
+DeclareOperation( "MaximalReductiveSubalgebras", [ IsString, IsInt, IsInt, IsFreeLeftModule] );
+
+
+DeclareAttribute( "RealBasis", IsFreeLeftModule );
+
+DeclareOperation( "HighestWeightOfConjugateModule", [ IsLieAlgebra, IsList ] );
+
+DeclareOperation( "CartanIndex", [ IsLieAlgebra, IsList ] );
+
+DeclareAttribute( "SpecialRootSystem", IsLieAlgebra );
+
+DeclareAttribute( "DirectSumDecompositionOfRealModule", IsAlgebraModule and IsLeftAlgebraModuleElementCollection );
+
+DeclareOperation( "IrreducibleRealModule", [ IsLieAlgebra, IsList ] );

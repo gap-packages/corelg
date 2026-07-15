@@ -334,7 +334,9 @@ end;
 #Input:  slightly mod version of SLAfct.canbas
 ################################################
 corelg.mySLAfctCanBas := function ( L, c )
-    local  x, y, x1, y1, done, levelx, levely, newlevx, newlevy, sp, i, j, u, tmp;
+    local  x, y, x1, y1, done, levelx, levely, newlevx, newlevy, sp, i, j, u, tmp, F;
+
+    F:= LeftActingDomain(L);
     x := c[1];
     y := c[2];
     x1 := ShallowCopy( x );
@@ -345,7 +347,7 @@ corelg.mySLAfctCanBas := function ( L, c )
     while not done  do
         newlevx := [  ];
         newlevy := [  ];
-        sp  := MutableBasis( SqrtField, [  ], Zero(SqrtField)*c[1][1]);
+        sp  := MutableBasis( F, [  ], Zero(F)*c[1][1]);
         for i  in [ 1 .. Length( x ) ]  do
             for j  in [ 1 .. Length( levelx ) ]  do
                 u := x[i] * levelx[j];         
@@ -1252,15 +1254,18 @@ end;
 corelg.RealNilpotentOrbitsFromDatabase := function(LL)
 local type, rank, pars,param, i,  res, kacs, L, LSF, form, new, dim,orb, neworb,
       K, P, ff, ee, hh, tmp, sigma, theta, n, k, makeVec, o, forms, iso, cd,cg, H,
-      h,e,f,cf, db;
+      h,e,f,cf, db, F;
 
    Info(InfoCorelg,1,"start RealNilpotentOrbitsFromDatabase");
    if Length(corelg.realtriplesDB)=0 then
       corelg.readDBTriples();
    fi;
 
-   if not LeftActingDomain(LL)=SqrtField then
-     Error("need LA over SqrtField");
+   F:= LeftActingDomain(LL);
+   if not (IsSqrtField(F) or
+           IsQQBarField(F) or
+	   F=Cyclotomics ) then
+     Error("need LA over SqrtField, QQBarField, or Cyclotomics");
    fi;
 
    tmp   := VoganDiagram(LL);
@@ -1322,7 +1327,7 @@ local type, rank, pars,param, i,  res, kacs, L, LSF, form, new, dim,orb, neworb,
       n := Dimension(L);
       iso := IdentityMapping(L);
   else
-      L := RealFormById(param[1],param[2],IdRealForm(LL)[3],SqrtField); 
+      L := RealFormById(param[1],param[2],IdRealForm(LL)[3],F); 
       n := Dimension(L);
       VoganDiagram(L);
       Info(InfoCorelg,2,"  construct isomorphism...");
@@ -1336,9 +1341,9 @@ local type, rank, pars,param, i,  res, kacs, L, LSF, form, new, dim,orb, neworb,
   #writes compressed coef vector to coef vector
    makeVec := function(v)
    local vec,i;
-      vec := ListWithIdenticalEntries(n,Zero(SqrtField));
+      vec := ListWithIdenticalEntries(n,Zero(F));    
       for i in [1..Length(v)/2] do
-         vec[v[2*i-1]] := v[2*i]*One(SqrtField);
+         vec[v[2*i-1]] := SqrtFieldToF(F,v[2*i]*One(SqrtField));
       od;
       return vec;
    end;
