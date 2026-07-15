@@ -760,7 +760,7 @@ od;
     #roots are rationals
     if IsSqrtField(F0) then
        rts := List(rts, x-> List(x, SqrtFieldEltToCyclotomic));
-    elif IsQQBarField(F) then
+    elif IsQQBarField(F0) then
        rts:= List( rts, x -> List( x, corelg.QQBarRatToGap ) );
     fi;
  
