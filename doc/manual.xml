@@ -664,22 +664,25 @@ The real structure of the real form <A>L</A> is the (complex) conjugation with r
 <Section> <Heading>Maximal reductive subalgebras</Heading>
 
 <ManSection>
-<Oper Name="MaximalReductiveSubalgebras" Arg="type, rank, id"/>
+<Oper Name="MaximalReductiveSubalgebras" Arg="type, rank, id, F"/>
 <Description>
 Here the input parameters are as in <Ref Func="RealFormById"/>, and
 <A>rank</A> is between 1 and 8. These parameters correspond to a real simple
-Lie algebra <M>L</M>. This function returns a list of maximal reductive
+Lie algebra <M>L</M> defined over the field <A>F</A>. Here <A>F</A> can be one
+of three &GAP; fields: <A>SqrtField</A> (Chapter <Ref Chap="sqrt"/>),
+<A>Cyclotomics</A> or <A>QQBarField</A> (if &GAP; is started via OSCAR). 
+This function returns a list of maximal reductive
 subalgebras of <M>L</M>. More precisely, it returns a record with two fields,
 <A>liealg</A> and <A>subalgs</A>. The first field contains the Lie algebra
 <M>L</M>, and the second field contains a list of its maximal reductive
 subalgebras. Isomorphic copies of the regular semisimple Lie algebras can
 occur more than once. If that happens then those copies are not conjugate under
 the adjoint group of <M>L</M>. There are no isomorphisms between the
-non-reductive subalgebras. There can be non-conjugate copies of those
+non-regular subalgebras. There can be non-conjugate copies of those
 as well, but the database does not contain these.
 
 <Example><![CDATA[
-gap> r:= MaximalReductiveSubalgebras("F",4,3);;
+gap> r:= MaximalReductiveSubalgebras("F",4,3,SqrtField);;
 gap> NameRealForm( r.liealg );
 "F4(-20)"
 gap> for K in r.subalgs do Print( NameRealForm(K), "\n" ); od;
