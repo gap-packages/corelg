@@ -1350,7 +1350,7 @@ local type, rank, pars,param, i,  res, kacs, L, LSF, form, new, dim,orb, neworb,
     
    new.nilpotentOrbits := List(db.triples, x->
                        rec(rct   := List(x.rct,i->Image(iso,makeVec(i)*Basis(L))),
-                           rctcb := List(x.rctcb,makeVec),
+                           #rctcb := List(x.rctcb,makeVec),
                            cdims := x.cdims,
                            princ := x.princ,
                            wdd   := x.wdd));
