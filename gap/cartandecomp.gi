@@ -724,15 +724,16 @@ local csa, h, R, cb, sigma, hs, es, found, h0, vals, pr, posr, i, sums, base, B,
    decomposeCSA := function(H,cbH)
    local theta, ev, esp, HK, HP, h, ad;
       theta := List(cbH,x->Coefficients(cbH,-sigma(x)));
-      ev    := Eigenvalues(F,theta);
+      ev    := eigenvalues(F,theta);
       if ev = [1]*One(F) then
          return rec(basHK := cbH, basHP := Basis(SubspaceNC(H,[],"basis")));
       elif ev = [-1]*One(F) then
          return rec(basHP := cbH, basHK := Basis(SubspaceNC(H,[],"basis")));
       fi;
-      esp   := Eigenspaces(F,theta);
-      HK    := List(Basis(esp[Position(ev,1*One(F))]),x->x*cbH);
-      HP    := List(Basis(esp[Position(ev,-1*One(F))]),x->x*cbH);
+      
+      esp:= List( ev, x -> NullspaceMat( theta - x*theta^0 ) );
+      HK    := List(esp[Position(ev,1*One(F))],x->x*cbH);
+      HP    := List(esp[Position(ev,-1*One(F))],x->x*cbH);
       return rec(basHK := HK, basHP := HP);
    end;
 

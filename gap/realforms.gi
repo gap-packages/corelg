@@ -4967,6 +4967,7 @@ InstallMethod( CartanIndex,
 
 function( L, lam )
 
+    if lam <> HighestWeightOfConjugateModule(L,lam) then return fail; fi;
     return corelg.CartInd(L,lam);
 
 end );
