@@ -10,7 +10,57 @@
 #
 gap> START_TEST("corelg02.tst");
 
-# doc/manual.xml:436-457
+# doc/manual.xml:468-483
+gap> gl3:= FullMatrixLieAlgebra( CF(4), 3 );;
+gap> L:= LieDerivedSubalgebra(gl3);;
+gap> N:= DiagonalMat([1,1,-1]);;
+gap> tau:= function(a)
+> return LieObject(-N*TransposedMat( ComplexConjugate(a) )*N^-1);
+> end;
+function( a ) ... end
+gap> SetRealStructure( L, tau );
+gap> NameRealForm(L);
+"su(1,2)"
+gap> gl3:= FullMatrixLieAlgebra( CF(4), 3 );;
+gap> L:= LieDerivedSubalgebra(gl3);;
+gap> NameRealForm(L);
+"sl(3,R)"
+
+# doc/manual.xml:493-512
+gap> gl3:= FullMatrixLieAlgebra( CF(4), 3 );;
+gap> L:= LieDerivedSubalgebra(gl3);;
+gap> N:= DiagonalMat([1,1,-1]);;
+gap> tau:= function(a)
+> return LieObject(-N*TransposedMat( ComplexConjugate(a) )*N^-1);
+> end;
+function( a ) ... end
+gap> SetRealStructure( L, tau );
+gap> RealBasis( L );
+Basis( <Lie algebra of dimension 8 over GaussianRationals>, 
+[ LieObject( [ [ 0, 1, 0 ], [ -1, 0, 0 ], [ 0, 0, 0 ] ] ), 
+  LieObject( [ [ 0, E(4), 0 ], [ E(4), 0, 0 ], [ 0, 0, 0 ] ] ), 
+  LieObject( [ [ 0, 0, 1 ], [ 0, 0, 0 ], [ 1, 0, 0 ] ] ), 
+  LieObject( [ [ 0, 0, E(4) ], [ 0, 0, 0 ], [ -E(4), 0, 0 ] ] ), 
+  LieObject( [ [ 2*E(4), 0, 0 ], [ 0, -2*E(4), 0 ], [ 0, 0, 0 ] ] ), 
+  LieObject( [ [ 0, 0, 0 ], [ 0, 0, 1 ], [ 0, 1, 0 ] ] ), 
+  LieObject( [ [ 0, 0, 0 ], [ 0, 0, -E(4) ], [ 0, E(4), 0 ] ] ), 
+  LieObject( [ [ 0, 0, 0 ], [ 0, 2*E(4), 0 ], [ 0, 0, -2*E(4) ] ] ) ] )
+
+# doc/manual.xml:529-542
+gap> L:= RealFormById( "A", 5, 3 );
+<Lie algebra of dimension 35 over SqrtField>
+gap> H := CartanSubalgebra(L);;
+gap> K:= LieCentralizer( L, Subalgebra( L, [Basis( H )[1]] ) );
+<Lie algebra of dimension 17 over SqrtField>
+gap> DK:= LieDerivedSubalgebra( K );
+<Lie algebra of dimension 15 over SqrtField>
+gap> CartanDecomposition( DK );
+rec( CartanInv := function( v ) ... end, 
+  K := <Lie algebra of dimension 15 over SqrtField>, 
+  P := <vector space of dimension 0 over SqrtField> )
+gap> # We see that the semisimple subalgebra DK is compact. 
+
+# doc/manual.xml:566-587
 gap> RealFormsInformation( "A", 4 );
 
   There are 4 simple real forms with complexification A4
@@ -32,7 +82,7 @@ gap> RealFormsInformation( "E", 6 );
 gap> NumberRealForms("D",10);
 12
 
-# doc/manual.xml:490-497
+# doc/manual.xml:620-627
 gap> RealFormById( "A", 4, 2 );
 <Lie algebra of dimension 24 over SqrtField>
 gap> RealFormById( "A", 4, 2, CF(4) );
@@ -40,7 +90,7 @@ gap> RealFormById( "A", 4, 2, CF(4) );
 gap> RealFormById( [ ["A", 4, 2], ["D", 5, 2] ], SqrtField);
 <Lie algebra of dimension 69 over SqrtField>
 
-# doc/manual.xml:509-516
+# doc/manual.xml:639-646
 gap> L := RealFormById( [ ["A", 4, 2], ["D", 5, 2] ], SqrtField);;
 gap> IdRealForm( L );
 [ [ "A", 4, 2 ], [ "D", 5, 2 ] ]
@@ -48,26 +98,7 @@ gap> K := RealFormById("A",5,2);;
 gap> IdRealForm( K );
 [ "A", 5, 2 ]
 
-# doc/manual.xml:532-536
-gap> L := RealFormById( [ ["A", 4, 2], ["D", 5, 2] ], SqrtField);;
-gap> NameRealForm( L );
-"su(1,4)+so(2,8)"
-
-# doc/manual.xml:637-650
-gap> L:= RealFormById( "A", 5, 3 );
-<Lie algebra of dimension 35 over SqrtField>
-gap> H := CartanSubalgebra(L);;
-gap> K:= LieCentralizer( L, Subalgebra( L, [Basis( H )[1]] ) );
-<Lie algebra of dimension 17 over SqrtField>
-gap> DK:= LieDerivedSubalgebra( K );
-<Lie algebra of dimension 15 over SqrtField>
-gap> CartanDecomposition( DK );
-rec( CartanInv := function( v ) ... end, 
-  K := <Lie algebra of dimension 15 over SqrtField>, 
-  P := <vector space of dimension 0 over SqrtField> )
-gap> # We see that the semisimple subalgebra DK is compact. 
-
-# doc/manual.xml:684-694
+# doc/manual.xml:754-764
 gap> r:= MaximalReductiveSubalgebras("F",4,3,SqrtField);;
 gap> NameRealForm( r.liealg );
 "F4(-20)"
@@ -78,7 +109,7 @@ so(8,1)
 so(9)
 sl(2,R)+G2c
 
-# doc/manual.xml:711-723
+# doc/manual.xml:781-793
 gap> L:=RealFormById("E",6,3);;                            
 gap> H:=CartanSubalgebra(L);;
 gap> K:=LieCentralizer(L,Subalgebra(L,Basis(H){[1,2,4]}));;
@@ -91,7 +122,12 @@ gap> M:=RealFormById("A",2,2);
 gap> IsomorphismOfRealSemisimpleLieAlgebras(DK,M);
 <Lie algebra isomorphism between Lie algebras of dimension 8 over SqrtField>
 
-# doc/manual.xml:819-833
+# doc/manual.xml:808-812
+gap> L := RealFormById( [ ["A", 4, 2], ["D", 5, 2] ], SqrtField);;
+gap> NameRealForm( L );
+"su(1,4)+so(2,8)"
+
+# doc/manual.xml:909-923
 gap> L:= RealFormById( [["E", 6, 3],["A", 3, 2]] );;
 gap>  K:= LieCentralizer( L, Subalgebra( L, Basis( CartanSubalgebra(L) ){[1]} ) );
 <Lie algebra of dimension 51 over SqrtField>
@@ -106,7 +142,7 @@ Involution: ()
 Types of direct summands:
 [ [ "A", 3, 2 ], [ "A", 5, 3 ] ]
 
-# doc/manual.xml:842-854
+# doc/manual.xml:932-944
 gap> L:= RealFormById( [["E", 6, 3],["A", 3, 2]] );;
 gap> K:= LieCentralizer( L, Subalgebra( L, Basis( CartanSubalgebra(L) ){[1]} ) );
 <Lie algebra of dimension 51 over SqrtField>
@@ -118,6 +154,138 @@ gap> Display( sd );
 A5:  1---2---(3)---4---5
 A3:  6---(7)---8
 Involution:  (1,5)(2,4)(6,8)
+
+# doc/manual.xml:967-973
+gap> L:= RealFormById( "F", 4, 3 );;
+gap> no:= NilpotentOrbitsOfRealForm( L );;
+#I CoReLG: read database of real triples ... done
+gap> no[1];
+<nilpotent orbit in Lie algebra>
+
+# doc/manual.xml:983-997
+gap> L:= RealFormById( "F", 4, 2 );;
+gap> no:= NilpotentOrbitsOfRealForm( L );;
+gap> o:= no[10];
+<nilpotent orbit in Lie algebra>
+gap> t:=RealCayleyTriple(o);;
+gap> theta:= CartanDecomposition(L).CartanInv;
+function( v ) ... end
+gap> theta(t[1]) = -t[3];
+true
+gap> theta(t[2]) = -t[2];
+true
+gap> t[3]*t[1] = t[2];
+true
+
+# doc/manual.xml:1037-1055
+gap> L:= RealFormById("E",6,4,Cyclotomics);
+<Lie algebra of dimension 78 over Cyclotomics>
+gap> Hs:= CartanSubalgebrasOfRealForm( L );
+[ <Lie algebra of dimension 6 over Cyclotomics>, 
+  <Lie algebra over Cyclotomics, with 6 generators>, 
+  <Lie algebra over Cyclotomics, with 6 generators> ]
+gap> R:= RootsystemOfCartanSubalgebra( L, Hs[1] );;
+gap> W:= WeylGroupAsPermGroup( R );
+<permutation group with 6 generators>
+gap> RW:= RealWeylGroup( L, Hs[1] );
+<permutation group with 6 generators>
+gap> Size(W);
+51840
+gap> Size(RW);
+192
+gap> ForAll( GeneratorsOfGroup(RW), g -> g in W );
+true
+
+# doc/manual.xml:1194-1201
+gap> L:= RealFormById( "E", 7, 4, Cyclotomics );;
+gap> R:= SpecialRootSystem(L);;
+gap> DisplayDynkinDiagram( R );
+             2
+             |
+E7:  1---3---4---5---6---7
+
+# doc/manual.xml:1211-1220
+gap> L:= RealFormById( "E", 6, 3, Cyclotomics );;
+gap> R:= SpecialRootSystem(L);;
+gap> DisplayDynkinDiagram( R );
+             2
+             |
+E6:  1---3---4---5---6
+gap> HighestWeightOfConjugateModule( L, [1,0,0,0,0,0] );
+[ 0, 0, 0, 0, 0, 1 ]
+
+# doc/manual.xml:1231-1242
+gap> L:= RealFormById( "E", 7, 4, Cyclotomics );;
+gap> R:= SpecialRootSystem(L);;
+gap> DisplayDynkinDiagram( R );
+             2
+             |
+E7:  1---3---4---5---6---7
+gap> CartanIndex( L, [1,0,0,0,0,0,0] );
+1
+gap> CartanIndex( L, [0,0,0,0,0,0,1] );
+-1
+
+# doc/manual.xml:1253-1285
+gap> L:= RealFormById( "A", 3, 2, Cyclotomics );;
+gap> R:= SpecialRootSystem(L);;
+gap> DisplayDynkinDiagram( R );
+A3:  1---2---3
+gap> HighestWeightOfConjugateModule( L, [0,1,0] );
+[ 0, 1, 0 ]
+gap> CartanIndex( L, [0,1,0] );
+-1
+gap> V:= IrreducibleRealModule( L, [0,1,0] );
+<12-dimensional left-module over <Lie algebra of dimension 
+15 over Cyclotomics>>
+gap> MatrixOfAction( Basis(V), L.1 );
+[ [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+  [ 0, 0, 0, 0, 0, 0, 0, 0, -2, 0, 0, 0 ], 
+  [ 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0 ], 
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -2, 0 ], 
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0 ], 
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+  [ 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+  [ 0, -2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+  [ 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 ], 
+  [ 0, 0, 0, -2, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ]
+gap> HighestWeightOfConjugateModule( L, [1,0,1] );
+[ 1, 0, 1 ]
+gap> CartanIndex( L, [1,0,1] );
+1
+gap> V:= IrreducibleRealModule( L, [0,1,0] );
+<12-dimensional left-module over <Lie algebra of dimension 
+15 over Cyclotomics>>
+
+# doc/manual.xml:1297-1324
+gap> L:= RealFormById( "A", 3, 2, Cyclotomics );;
+gap> V1:= IrreducibleRealModule( L, [1,0,0] );
+<8-dimensional left-module over <Lie algebra of dimension 
+15 over Cyclotomics>>
+gap> V2:= IrreducibleRealModule( L, [0,0,1] );
+<8-dimensional left-module over <Lie algebra of dimension 
+15 over Cyclotomics>>
+gap> V:= TensorProductOfAlgebraModules( V1, V2 );
+<64-dimensional left-module over <Lie algebra of dimension 
+15 over Cyclotomics>>
+gap> dV:= DirectSumDecompositionOfRealModule(V);
+[ <20-dimensional left-module over <Lie algebra of dimension 
+    15 over Cyclotomics>>, 
+  <15-dimensional left-module over <Lie algebra of dimension 
+    15 over Cyclotomics>>, 
+  <15-dimensional left-module over <Lie algebra of dimension 
+    15 over Cyclotomics>>, 
+  <12-dimensional left-module over <Lie algebra of dimension 
+    15 over Cyclotomics>>, 
+  <1-dimensional left-module over <Lie algebra of dimension 
+    15 over Cyclotomics>>, 
+  <1-dimensional left-module over <Lie algebra of dimension 
+    15 over Cyclotomics>> ]
+gap> List( dV, HighestWeight );
+[ [ 2, 0, 0 ], [ 1, 0, 1 ], [ 1, 0, 1 ], [ 0, 1, 0 ], [ 0, 0, 0 ], 
+  [ 0, 0, 0 ] ]
 
 #
 gap> STOP_TEST("corelg02.tst", 1);

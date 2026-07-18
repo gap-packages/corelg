@@ -10,7 +10,7 @@
 #
 gap> START_TEST("corelg01.tst");
 
-# doc/manual.xml:226-245
+# doc/manual.xml:245-264
 gap> F := SqrtField;
 SqrtField
 gap> IsField( F ); LeftActingDomain( F ); Size( F ); Characteristic( F );
@@ -30,7 +30,7 @@ true
 false
 true
 
-# doc/manual.xml:274-285
+# doc/manual.xml:293-304
 gap> Sqroot(-(2*3*4)/(11*13)); Sqroot(245/15); Sqroot(16/9);
 2/143*E(4)*Sqroot(858)
 7/3*Sqroot(3)
@@ -42,7 +42,7 @@ gap> CoefficientsOfSqrtFieldElt(a);
 gap> SqrtFieldEltByCoefficients([[2,9],[1,7],[E(4),13]]);
 6 + Sqroot(7) + E(4)*Sqroot(13)
 
-# doc/manual.xml:301-312
+# doc/manual.xml:320-331
 gap> SqrtFieldEltToCyclotomic( Sqroot(2) );
 E(8)-E(8)^3
 gap> SqrtFieldEltToCyclotomic( Sqroot(2)+E(4)*Sqroot(7) );
@@ -54,7 +54,7 @@ Sqroot(2)
 gap> SqrtFieldEltByCyclotomic( 3*E(4)*Sqrt(11)-2/4*Sqrt(-13/7) );
 3*E(4)*Sqroot(11) + (-1/14*E(4))*Sqroot(91)
 
-# doc/manual.xml:320-341
+# doc/manual.xml:339-360
 gap> a := Sqroot( 2 ) + 3 * Sqroot( 3/7 ); b := Sqroot( 21 ) - Sqroot( 2 );
 Sqroot(2) + 3/7*Sqroot(21)
 (-1)*Sqroot(2) + Sqroot(21)
@@ -76,7 +76,7 @@ gap> ComplexConjugate(Sqroot(17)+Sqroot(-7));
 gap> Random( SqrtField );
 E(4) + (-7/6+1/4*E(4))*Sqroot(2) + (-3/2*E(4))*Sqroot(3)
 
-# doc/manual.xml:344-358
+# doc/manual.xml:363-377
 gap> m:=[[Sqroot(2),Sqroot(3)],[Sqroot(2),Sqroot(5)],[1,0]]*One(SqrtField);
 [ [ Sqroot(2), Sqroot(3) ], [ Sqroot(2), Sqroot(5) ], [ 1, 0 ] ]
 gap> NullspaceMat(m);
@@ -91,7 +91,7 @@ SqrtField
 gap> x := Indeterminate( SqrtField, "x" );; f := x^2+x+1;
 x^2+x+1
 
-# doc/manual.xml:388-400
+# doc/manual.xml:407-419
 gap> F := SqrtField;; one := One( SqrtField );;                 
 gap> x := Indeterminate( F, "x" );; f := x^5 + 4*x^3 + E(4)*one*x;
 x^5+4*x^3+E(4)*x
