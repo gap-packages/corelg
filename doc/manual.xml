@@ -29,7 +29,7 @@ theoretical tool that we use, as it determines the objects that we work with. In
 <Ref Sect="srl"/> we give a brief account of this classification. We refer to
 the standard works in the literature (e.g., <Cite Key="knapp"/>) for an in-depth discussion. The algorithms of this package are described in  <Cite Key="hdwdg12"/> and  <Cite Key="dfg12"/>.
 <P/>
-We remark that the package  still is under development, and its functionality is continuously extended. The package <Package>SLA</Package>, <Cite Key="sla"/>, is required.
+We remark that the package <Package>SLA</Package>, <Cite Key="SLA"/>, is required.
 
 
 
@@ -167,7 +167,7 @@ Every nilpotent orbit has a representative lying in a real Cayley triple.
 
 </Section>
 
-<Section> <Heading>On base fields</Heading>
+<Section Label="fields"> <Heading>On base fields</Heading>
 
 To define a Lie algebra by a multiplication table over the reals, it usually suffices
 to take a subfield of the real field as base field. However, the algorithms contained
@@ -175,16 +175,35 @@ in this package very often need a Chevalley basis of the Lie algebra at hand, wh
 only over the complex field. Computations with such a Chevalley basis take place behind
 the scenes, and the result is again defined over the reals. However, the computations would
 not be possible if the Lie algebra is just defined over (a subfield of) the reals. For this
-reason, we require that the base field contains the imaginary unit <A>E(4)</A>.
+reason we view a real Lie algebra as a pair <M>(\mathfrak{g}^c,\sigma)</M>,
+where <M>\mathfrak{g}^c</M> is a Lie algebra defined over a field containing
+the imaginary unit <A>E(4)</A> and <M>\sigma \mathfrak{g}^c\to \mathfrak{g}^c</M>
+is a conjugation, that is, it satisfies <M>\sigma([x,y]) = [\sigma(x),\sigma(y)]</M> 
+for all <M>x,y\in\mathfrak{g}^c</M> and <M> \sigma(\mu x) = \bar \mu \sigma(x)</M>
+for all <M>x\in\matfrak{g}^c</M> and <M>\mu</M> in the base field. The real
+Lie algebra corresponding to such a pair is the Lie algebras of fixed points
+of <M>\sigma</M>. 
 <P/>
 Furthermore, in many algorithms it is necessary to take square roots of elements of the
 base field. So the ideal base field would contain the imaginary unit, as well as being
 closed under taking square roots. However, such a field is difficult to construct and  to work
 with on a computer. For this reason we have provided the field <A>SqrtField</A>  containing the square roots of all rational numbers. Mathematically, this is the field <M>\mathbb{Q}^{\sqrt{}}(\imath)</M> with <M>\mathbb{Q}^{\sqrt{}}=\mathbb{Q}(\{\sqrt{p}\mid p\textrm{ a prime}\})</M> and <M>\imath=\sqrt{-1}\in\mathbb{C}</M>. Clearly,  <M>\mathbb{Q}^{\sqrt{}}(\imath)</M> is an infinite extension of the rationals  <M>\mathbb{Q}</M>, and every <M>f</M> in <M>\mathbb{Q}^{\sqrt{}}(\imath)</M> can be uniquely written as <M>f=\sum_{j=1}^m r_i \sqrt{k_j}</M> for Gaussian rationals <M>r_i\in\mathbb{Q}(\imath)</M> and pairwise distinct squarefree positive integers <M>k_1,\ldots,k_m</M>. Thus, <M>f</M> can be described efficiently by its coefficient vector <M>[[r_1,k_1],\ldots,[r_j,k_j]]</M>. We comment on our implementation of <M>\mathbb{Q}^{\sqrt{}}(\imath)</M> in  Chapter <Ref Chap="sqrt"/>.
 <P/>
-Although it is
-possible to try most functions of the package using the base field <A>CF(4)</A>, for example,
-it is likely that many computations will result in an error, because of the lack of square
+All functions contained in this package work when the base field is
+<A>SqrtField</A> or <A>Cyclotomics</A>. However, if square roots of somewhat
+larger integers are needed then the computations over <A>Cyclotomics</A> can
+get rather cumbersome. If &GAP; is loaded from the system OSCAR then it is also
+possible to work with the field <A>QQBarField</A> (which simulates an algebraically
+closed field. Over the latter field all functions of the package work for any
+real semisimple Lie algebra. One of the main reasons for this is that it is
+always possible to find the simutaneous root spaces of a Cartan subalgebra,
+which may not always be possible over the previous two fields. On the other
+hand, computation over <A>QQBarField</A> can be rather slow. 
+<P/>
+It is
+possible to try most functions of the package using fields other than the three
+listed above. For example, it is possible to use the field <A>CF(4)</A>.
+Over such a field it may happen that many computations will result in an error, because of the lack of square
 roots in that field. Many more computations are possible over <A>SqrtField</A>, but also in
 that case, of course, a computation may result in an error because we cannot construct a
 particular square root. Also, computations over <A>SqrtField</A> tend to be significantly slower
@@ -415,11 +434,122 @@ gap> f := x^2+1;; Factors(f);
 <!-------------------------------------------------------------------------->
 <Chapter> <Heading>Real Lie Algebras</Heading>
 
+This chapter contains the description of the main functionality of the package.
+A few functions print some information on what they are doing to the info class <A>InfoCorelg</A>.
+
+<Section> <Heading>The real structure and Cartan decomposition </Heading>
+
+<ManSection>  
+<Attr Name="RealStructure" Arg="L"
+      Comm="real forms"/>
+<Attr Name="RealStructure" Arg="L:basis:=B"
+      Comm="real forms"
+      Label="RealStructureBasis"/>
+<Description>
+As noted in Section <Ref Sect="fields"/> we view a real Lie algebra as a pair
+consisting of a Lie algebra defined over a field containing the imaginary unit
+and a conjugation. This function returns the conjugation of <A>L</A>. It is
+a &GAP; function that for an element of <A>L</A> returns its conjugate. 
+<P/>
+If the attribute <A>RealStructure( L )</A> is not set, then a function is
+returned that for an element of <A>L</A> does the following: write it as a
+linear combination of the basis of <A>L</A> (given by <A>Basis( L )</A>),
+replace each coefficient by its complex conjugate, and return the linear
+combination of the same basis.
+<P/>
+It is, however, also possible to use a particular conjugation by setting
+the real structure by the command <A>SetRealStructure( L, f )</A> where
+<A>f</A> is a &GAP; function that implements the desired conjugation. Note that
+this only works if the attribute <A>RealStructure</A> is not set. 
+<P/>
+If the optional argument <A>basis:=B</A> is given, then <A>B</A> has to be a basis whose span contains <A>L</A> (which is not checked by the code); in this case the linear combination is done with respect to <A>B</A>. The latter construction is important when one considers a subalgebra <A>M</A> of a real form <A>L</A>; here one could either do <A>Realstructure(M:basis:=Basis(L))</A> or <A>SetRealStructure(M,RealStructure(L))</A>.  
+</Description>
+</ManSection>
+<Example><![CDATA[
+gap> gl3:= FullMatrixLieAlgebra( CF(4), 3 );;
+gap> L:= LieDerivedSubalgebra(gl3);;
+gap> N:= DiagonalMat([1,1,-1]);;
+gap> tau:= function(a)
+> return LieObject(-N*TransposedMat( ComplexConjugate(a) )*N^-1);
+> end;
+function( a ) ... end
+gap> SetRealStructure( L, tau );
+gap> NameRealForm(L);
+"su(1,2)"
+gap> gl3:= FullMatrixLieAlgebra( CF(4), 3 );;
+gap> L:= LieDerivedSubalgebra(gl3);;
+gap> NameRealForm(L);
+"sl(3,R)"
+]]></Example>
+
+<ManSection>
+<Attr Name="RealBasis" Arg="L"/>
+<Description>
+This function returns a basis of the real Lie algebra <A>L</A> consisting of
+elements that are invariant under the real structure returned by
+<A>RealStructure( L )</A>. 
+</Description>
+</ManSection>
+<Example><![CDATA[
+gap> gl3:= FullMatrixLieAlgebra( CF(4), 3 );;
+gap> L:= LieDerivedSubalgebra(gl3);;
+gap> N:= DiagonalMat([1,1,-1]);;
+gap> tau:= function(a)
+> return LieObject(-N*TransposedMat( ComplexConjugate(a) )*N^-1);
+> end;
+function( a ) ... end
+gap> SetRealStructure( L, tau );
+gap> RealBasis( L );
+Basis( <Lie algebra of dimension 8 over GaussianRationals>, 
+[ LieObject( [ [ 0, 1, 0 ], [ -1, 0, 0 ], [ 0, 0, 0 ] ] ), 
+  LieObject( [ [ 0, E(4), 0 ], [ E(4), 0, 0 ], [ 0, 0, 0 ] ] ), 
+  LieObject( [ [ 0, 0, 1 ], [ 0, 0, 0 ], [ 1, 0, 0 ] ] ), 
+  LieObject( [ [ 0, 0, E(4) ], [ 0, 0, 0 ], [ -E(4), 0, 0 ] ] ), 
+  LieObject( [ [ 2*E(4), 0, 0 ], [ 0, -2*E(4), 0 ], [ 0, 0, 0 ] ] ), 
+  LieObject( [ [ 0, 0, 0 ], [ 0, 0, 1 ], [ 0, 1, 0 ] ] ), 
+  LieObject( [ [ 0, 0, 0 ], [ 0, 0, -E(4) ], [ 0, E(4), 0 ] ] ), 
+  LieObject( [ [ 0, 0, 0 ], [ 0, 2*E(4), 0 ], [ 0, 0, -2*E(4) ] ] ) ] )
+]]></Example>
+
+<ManSection>
+<Attr Name="CartanDecomposition" Arg="L"
+      Comm="real forms"/>
+<Description>
+The Cartan decomposition of <A>L</A> as a record with entries <A>K</A>, <A>P</A>, and 
+<A>CartanInv</A>, such that <M>L=K\oplus P</M> is the Cartan decomposition with corresponding 
+Cartan involution <A>CartanInv</A>, which is defined as a function on <A>L</A>.
+It commutes with <A>RealStructure( L )</A>.
+<P/>
+The Lie algebras constructed by <Ref Func="RealFormById"/> have this attribute stored.
+For other semisimple real Lie algebras it is computed. However, we do remark that the root system is computed with respect to a Cartan subalgebra.
+If the program does not succeed in splitting the Cartan subalgebra over the base field
+of <A>L</A>, then the computation will not succeed.
+</Description>
+</ManSection>
+<Example><![CDATA[
+gap> L:= RealFormById( "A", 5, 3 );
+<Lie algebra of dimension 35 over SqrtField>
+gap> H := CartanSubalgebra(L);;
+gap> K:= LieCentralizer( L, Subalgebra( L, [Basis( H )[1]] ) );
+<Lie algebra of dimension 17 over SqrtField>
+gap> DK:= LieDerivedSubalgebra( K );
+<Lie algebra of dimension 15 over SqrtField>
+gap> CartanDecomposition( DK );
+rec( CartanInv := function( v ) ... end, 
+  K := <Lie algebra of dimension 15 over SqrtField>, 
+  P := <vector space of dimension 0 over SqrtField> )
+gap> # We see that the semisimple subalgebra DK is compact. 
+]]></Example>
+
+
+</Section>
+
 
 
 <Section> <Heading> Construction of simple real Lie algebras </Heading>
 
-A few functions print some information on what they are doing to the info class <A>InfoCorelg</A>.
+This section contains the functions for constructing the real forms of the
+complex semisimple Lie algebras. 
 
 <ManSection>
 
@@ -519,27 +649,6 @@ gap> IdRealForm( K );
 
 
 <ManSection>
-<Attr Name="NameRealForm" Arg="L"/>
-<Description>
-Here <A>L</A> is a reductive real Lie algebra whose centre is stable under the
-Cartan involution of <A>L</A>. This function returns a string giving the
-names of the real forms of the simple components of the derived subalgebra
-of <A>L</A>, as well as the number of compact and non-compact dimensions of the
-centre of <A>L</A>. For the simple real Lie algebras we use the naming
-conventions as in <Cite Key="knapp"/>.
-
-
-<Example><![CDATA[
-gap> L := RealFormById( [ ["A", 4, 2], ["D", 5, 2] ], SqrtField);;
-gap> NameRealForm( L );
-"su(1,4)+so(2,8)"
-]]></Example>
-</Description>
-</ManSection>
-
-
-
-<ManSection>
 
 <Func Name="AllRealForms" Arg="type, rank"
       Comm="real forms"/>
@@ -619,45 +728,6 @@ Returns <A>true</A> if and only if the real form <A>L</A> is the realification o
 </Description>
 </ManSection>
 
-<ManSection>
-<Attr Name="CartanDecomposition" Arg="L"
-      Comm="real forms"/>
-<Description>
-The Cartan decomposition of <A>L</A> as a record with entries <A>K</A>, <A>P</A>, and 
-<A>CartanInv</A>, such that <M>L=K\oplus P</M> is the Cartan decomposition with corresponding 
-Cartan involution <A>CartanInv</A>, which is defined as a function on <A>L</A>.
-<P/>
-The Lie algebras constructed by <Ref Func="RealFormById"/> have this attribute stored.
-For other semisimple real Lie algebras it is computed. However, we do remark that the
-in the computation the root system is computed with respect to a Cartan subalgebra.
-If the program does not succeed in splitting the Cartan subalgebra over the base field
-of <A>L</A>, then the computation will not succeed.
-</Description>
-</ManSection>
-<Example><![CDATA[
-gap> L:= RealFormById( "A", 5, 3 );
-<Lie algebra of dimension 35 over SqrtField>
-gap> H := CartanSubalgebra(L);;
-gap> K:= LieCentralizer( L, Subalgebra( L, [Basis( H )[1]] ) );
-<Lie algebra of dimension 17 over SqrtField>
-gap> DK:= LieDerivedSubalgebra( K );
-<Lie algebra of dimension 15 over SqrtField>
-gap> CartanDecomposition( DK );
-rec( CartanInv := function( v ) ... end, 
-  K := <Lie algebra of dimension 15 over SqrtField>, 
-  P := <vector space of dimension 0 over SqrtField> )
-gap> # We see that the semisimple subalgebra DK is compact. 
-]]></Example>
-<ManSection>
-<Attr Name="RealStructure" Arg="L"
-      Comm="real forms"/>
-<Attr Name="RealStructure" Arg="L:basis:=B"
-      Comm="real forms"
-      Label="RealStructureBasis"/>
-<Description>
-The real structure of the real form <A>L</A> is the (complex) conjugation with respect to <A>L</A>, that is, the function which maps an element in <A>L</A> to the element constructed as follows: write it as a linear combination of the basis elements of <A>L</A> and replace each coefficient by its complex conjugate. If the optional argument <A>basis:=B</A> is given, then <A>B</A> has to be a basis whose span contains <A>L</A> (which is not checked by the code); in this case the linear combination is done with respect to <A>B</A>. The latter construction is important when one considers a subalgebra <A>M</A> of a real form <A>L</A>; here one could either do <A>Realstructure(M:basis:=Basis(L))</A> or <A>SetRealStructure(M,RealStructure(L))</A>.  
-</Description>
-</ManSection>
 
 </Section>
 
@@ -723,6 +793,26 @@ gap> IsomorphismOfRealSemisimpleLieAlgebras(DK,M);
 ]]></Example>
 </Description>
 </ManSection>
+
+<ManSection>
+<Attr Name="NameRealForm" Arg="L"/>
+<Description>
+Here <A>L</A> is a reductive real Lie algebra whose centre is stable under the
+Cartan involution of <A>L</A>. This function returns a string giving the
+names of the real forms of the simple components of the derived subalgebra
+of <A>L</A>, as well as the number of compact and non-compact dimensions of the
+centre of <A>L</A>. For the simple real Lie algebras we use the naming
+conventions as in <Cite Key="knapp"/>.
+
+
+<Example><![CDATA[
+gap> L := RealFormById( [ ["A", 4, 2], ["D", 5, 2] ], SqrtField);;
+gap> NameRealForm( L );
+"su(1,4)+so(2,8)"
+]]></Example>
+</Description>
+</ManSection>
+
 
 
 </Section>
@@ -858,12 +948,10 @@ Involution:  (1,5)(2,4)(6,8)
 
 
 </Section>
-</Chapter>
 
 
-<Chapter> <Heading>Real nilpotent orbits</Heading>
 
-<Section> <Heading>Nilpotent orbits in real Lie algebras</Heading>
+<Section> <Heading>Real nilpotent orbits</Heading>
 
 <Package>CoReLG</Package> has a database of the nilpotent orbits of the real forms of the 
 simple Lie algebras of ranks up to 8. When called the first time in a GAP session, <Package>CoReLG</Package> will first read the database of nilpotent orbits.
@@ -874,7 +962,8 @@ simple Lie algebras of ranks up to 8. When called the first time in a GAP sessio
 Here <A>L</A> is a real form of a complex simple Lie algebra of rank up to 8.
 This function returns the list of nilpotent orbits (under the action of the adjoint
 group) of <A>L</A>. For this function to work, <A>L</A> must be defined over 
-<A>SqrtField</A>.
+<A>SqrtField</A>, <A>Cyclotomics</A> or <A>QQBarField</A> (the latter only if
+&GAP; is started via OSCAR). 
 <Example><![CDATA[
 gap> L:= RealFormById( "F", 4, 3 );;
 gap> no:= NilpotentOrbitsOfRealForm( L );;
@@ -934,9 +1023,37 @@ Let <M>L=\bigoplus_{i\in \mathbb{Z}_m} L_i</M> be a real semisimple Lie algebra,
 <Func Name="RealWeylGroup" Arg="L"/>
 <Func Name="RealWeylGroup" Arg="L, H" Label="for real semisimple Lie algebra and Cartan subalgebra"/>
 <Description>
-Here <A>L</A> is a real semisimple Lie algebra with Cartan subalgebra <A>H</A>.  (If <A>H</A> is not given, then <A>CartanSubalgebra(L)</A> will be taken.) This function returns the real Weyl group <M>N_G(H)/C_G(H)</M> associated with  <A>H</A>, where <M>G</M> is the connected component of the group of real points of the complex adjoint group of <A>L</A>. The real Weyl group will be stored in the Cartan subalgebra, so that a new call to this function, with the same input, will return the real Weyl group  immediately.
+  Here <A>L</A> is a real semisimple Lie algebra with Cartan subalgebra <A>H</A>.  (If <A>H</A> is not given, then <A>CartanSubalgebra(L)</A> will be taken.) This function returns the real Weyl group <M>N_G(H)/C_G(H)</M> associated with  <A>H</A>, where <M>G</M> is the connected component of the group of real points of the complex adjoint group of <A>L</A>. Let <M>W</M> be the Weyl
+group of the root system of <A>L</A> with respect to <A>H</A>. The real Weyl
+group, returned by this function, is a subgroup of <M>W</M>. More precisely,
+it is given as a subgroup of <A>WeylGroupAsPermGroup( R )</A> where
+<A>R</A> is the mentioned root system.
+<P/>
+The real Weyl group will be stored in the Cartan subalgebra, so that a new call to this function, with the same input, will return the real Weyl group  immediately.
+<P/>
+The algorithm behind this function is described in <Cite Key="dg2"/>.
 </Description>
 </ManSection>
+<Example><![CDATA[
+gap> L:= RealFormById("E",6,4,Cyclotomics);
+<Lie algebra of dimension 78 over Cyclotomics>
+gap> Hs:= CartanSubalgebrasOfRealForm( L );
+[ <Lie algebra of dimension 6 over Cyclotomics>, 
+  <Lie algebra over Cyclotomics, with 6 generators>, 
+  <Lie algebra over Cyclotomics, with 6 generators> ]
+gap> R:= RootsystemOfCartanSubalgebra( L, Hs[1] );;
+gap> W:= WeylGroupAsPermGroup( R );
+<permutation group with 6 generators>
+gap> RW:= RealWeylGroup( L, Hs[1] );
+<permutation group with 6 generators>
+gap> Size(W);
+51840
+gap> Size(RW);
+192
+gap> ForAll( GeneratorsOfGroup(RW), g -> g in W );
+true
+]]></Example>
+
 
 
 <!---
@@ -1002,6 +1119,214 @@ cars := [
 
 </Section>
 
+<Section> <Heading>Representations of real semisimple Lie algebras</Heading>
+
+In this section we describe the functionality of the package regarding
+the representations of real semisimple Lie algebras.
+<P/>
+First we recall a bit of the theory; for more details we refer to the book
+by Onishchik (<Cite Key="onishchik"/>). 
+Let <M>\mathfrak{g}^c</M> be a real semisimple Lie algebra with real form
+<M>\mathfrak{g}</M>. Let <M>V</M> be a complex vector space and <M>\rho :
+\mathfrak{g} \to \mathfrak{gl}(V)</M> an irreducible representation. We fix a
+Cartan subalgebra <M>\mathfrak{h}</M> of <M>\mathfrak{g}</M>. Then
+the complex irreducible representation <M>\rho</M> is determined, up to
+equivalence, by its highest weight <M>\lambda</M> (which is an element
+in the space of linear functions <M>\mathfrak{h} \to \mathbb{C}</M>).
+We can also consider the complex conjugate space <M>\bar{V}</M> which coincides
+with <M>V</M> as an abelian group, but which has a scalar multiplication
+defined by <M>c\circ v = \bar{c}v</M> for <M>c\in \mathbb{C}</M> and
+<M>v\in \bar{V}</M>. As <M>V,\bar{V}</M> coincide as sets, <M>\rho</M> can also be
+viewed as a homomorphism from <M>\mathfrak{g}</M> to
+<M>\mathfrak{gl}(\bar{V})</M>. We denote this homomorphism by <M>\bar{\rho}</M>.
+It is called the complex conjugate representation of <M>\rho</M> and its
+highest weight is denoted by <M>\bar\lambda</M>. 
+<P/>
+With <M>\rho</M> as above we can construct the realification of <M>V</M>
+by considering <M>V</M> as a real vector space (of twice the dimension).
+We denote this vector space by <M>V_{\mathbb{R}}</M>. The tensor product
+of <M>V_{\mathbb{R}}</M> with <M>\mathbb{C}</M> is then a complex vector
+space denoted <M>(V_{\mathbb{R}})^{\mathbb{C}}</M>. So <M>\rho</M> induces a
+real representation <M>\rho_{\mathbb{R}} :
+\mathfrak{g}\to\mathfrak{gl}(V_{\mathbb{R}})</M> and a complex representation
+<M>(\rho_{\mathbb{R}})^{\mathbb{C}} :
+\mathfrak{g}\to\mathfrak{gl}((V_{\mathbb{R}})^{\mathbb{C}})</M>. It can be
+shown that <M>(V_{\mathbb{R}})^{\mathbb{C}}</M> splits as a direct sum of two
+irreducible representations of highest weights <M>\lambda</M> and
+<M>\bar\lambda</M>.
+<P/>
+Let <M>V</M> be as above. A real structure of <M>V</M> is a map
+<M>\sigma : V\to V</M> with <M>\sigma(\apha_1v_1+\alpha_2v_2) =
+\bar\alpha_1 \sigma(v_1) + \bar\alpha_2 \sigma(v_2)</M>. We say that
+this real structure is invariant if <M>\sigma(\rho(x)v) = \rho(x)\sigma(v)</M>
+for all <M>x\in\mathfrak{g},v\in V</M>. In that case the space of fixed points
+<M>V^\sigma</M> of <M>\sigma</M> is a real vector space and we get a real
+representation <M>\rho^\sigma : \mathfrak{g} \to \gl(V^\sigma)</M>.
+It can be shown that if an invariant real structure exists then <M>\lambda =
+\bar\lambda</M>. Now suppose that <M>\lambda=\bar\lambda</M>. If an invariant
+real structure exists then we say that <M>\lambda</M> has Cartan index 1.
+Otherwise we way that <M>\lambda</M> has Cartan index -1.
+<P/>
+The complex representation <M>\rho</M> defines an irreducible real
+representation in three possible ways. The first occurs when
+<M>\lambda =\bar\lambda</M> and the Cartan index of <M>\lambda</M> is 1.
+Then there exists an invariant real structure <M>\sigma</M> and
+we get a real irreducible representation <M>\rho^\sigma</M>. It can be shown
+that this representation does not depend on the choice of <M>\sigma</M> up to
+equivalence. The second case occurs when <M>\lambda =\bar\lambda</M> and the
+Cartan index of <M>\lambda</M> is -1. Then we get an irreducible real
+representation <M>\rho_{\mathbb{R}}</M>. The third case occurs when
+<M>\lambda \neq\bar\lambda</M>. Then we also have  an irreducible real
+representation <M>\rho_{\mathbb{R}}</M>. A theorem of Cartan states that
+all irreducible representations of <M>\mathfrak{g}</M> are obtained this way.
+
+
+<ManSection>
+<Attr Name="SpecialRootSystem" Arg="L"/>
+<Description>
+Here <A>L</A> is a real semisimple Lie algebra. This function returns the
+root systemof <A>L</A> with respect to the <A>MaximallyCompactCartanSubalgebra( L )</A>.
+The canonical generators of this root system are invariant under the
+Cartan involution of <A>L</A> (apart from permutation and sign changes).
+<P/>
+The weights of all representations of <A>L</A> are represented with respect
+to this root system.
+<Example><![CDATA[
+gap> L:= RealFormById( "E", 7, 4, Cyclotomics );;
+gap> R:= SpecialRootSystem(L);;
+gap> DisplayDynkinDiagram( R );
+             2
+             |
+E7:  1---3---4---5---6---7
+]]></Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="HighestWeightOfConjugateModule" Arg="L, w"/>
+<Description>
+Here <A>L</A> is a real semisimple Lie algebra and <A>w</A> is a dominant
+weight. This function returns the highest weight of the complex conjugate
+representation.
+<Example><![CDATA[
+gap> L:= RealFormById( "E", 6, 3, Cyclotomics );;
+gap> R:= SpecialRootSystem(L);;
+gap> DisplayDynkinDiagram( R );
+             2
+             |
+E6:  1---3---4---5---6
+gap> HighestWeightOfConjugateModule( L, [1,0,0,0,0,0] );
+[ 0, 0, 0, 0, 0, 1 ]
+]]></Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="CartanIndex" Arg="L, w"/>
+<Description>
+Here <A>L</A> is a real semisimple Lie algebra and <A>w</A> is a dominant
+weight. If <A>w</A> is equal to  <A>HighestWeightOfConjugateModule( L, w )</A>
+then the Cartan index of <A>w</A> is returned. Otherwise the function
+returns <A>fail</A>.
+<Example><![CDATA[
+gap> L:= RealFormById( "E", 7, 4, Cyclotomics );;
+gap> R:= SpecialRootSystem(L);;
+gap> DisplayDynkinDiagram( R );
+             2
+             |
+E7:  1---3---4---5---6---7
+gap> CartanIndex( L, [1,0,0,0,0,0,0] );
+1
+gap> CartanIndex( L, [0,0,0,0,0,0,1] );
+-1
+]]></Example>
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Attr Name="IrreducibleRealModule" Arg="L, w"/>
+<Description>
+Here <A>L</A> is a real semisimple Lie algebra and <A>w</A> is a dominant
+weight. This function returns the irreducible real module over <A>L</A>
+determined by <A>w</A> (in the way described above). 
+<Example><![CDATA[
+gap> L:= RealFormById( "A", 3, 2, Cyclotomics );;
+gap> R:= SpecialRootSystem(L);;
+gap> DisplayDynkinDiagram( R );
+A3:  1---2---3
+gap> HighestWeightOfConjugateModule( L, [0,1,0] );
+[ 0, 1, 0 ]
+gap> CartanIndex( L, [0,1,0] );
+-1
+gap> V:= IrreducibleRealModule( L, [0,1,0] );
+<12-dimensional left-module over <Lie algebra of dimension 
+15 over Cyclotomics>>
+gap> MatrixOfAction( Basis(V), L.1 );
+[ [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+  [ 0, 0, 0, 0, 0, 0, 0, 0, -2, 0, 0, 0 ], 
+  [ 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0 ], 
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -2, 0 ], 
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0 ], 
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+  [ 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+  [ 0, -2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+  [ 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 ], 
+  [ 0, 0, 0, -2, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ]
+gap> HighestWeightOfConjugateModule( L, [1,0,1] );
+[ 1, 0, 1 ]
+gap> CartanIndex( L, [1,0,1] );
+1
+gap> V:= IrreducibleRealModule( L, [0,1,0] );
+<12-dimensional left-module over <Lie algebra of dimension 
+15 over Cyclotomics>>
+]]></Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Attr Name="DirectSumDecompositionOfRealModule" Arg="V"/>
+<Description>
+Here <A>V</A> is a module over a real semisimple Lie algebra. This function
+computes its direct sum decomposition. Each direct summand corresponds
+to an irreducible complex module in the way described above. The highest weight
+of this module can be accessed by <A>HighestWeight( U )</A> (where <A>U</A> is
+a direct summand). The algorithm is described in <Cite Key="aabg"/>.
+<Example><![CDATA[
+gap> L:= RealFormById( "A", 3, 2, Cyclotomics );;
+gap> V1:= IrreducibleRealModule( L, [1,0,0] );
+<8-dimensional left-module over <Lie algebra of dimension 
+15 over Cyclotomics>>
+gap> V2:= IrreducibleRealModule( L, [0,0,1] );
+<8-dimensional left-module over <Lie algebra of dimension 
+15 over Cyclotomics>>
+gap> V:= TensorProductOfAlgebraModules( V1, V2 );
+<64-dimensional left-module over <Lie algebra of dimension 
+15 over Cyclotomics>>
+gap> dV:= DirectSumDecompositionOfRealModule(V);
+[ <20-dimensional left-module over <Lie algebra of dimension 
+    15 over Cyclotomics>>, 
+  <15-dimensional left-module over <Lie algebra of dimension 
+    15 over Cyclotomics>>, 
+  <15-dimensional left-module over <Lie algebra of dimension 
+    15 over Cyclotomics>>, 
+  <12-dimensional left-module over <Lie algebra of dimension 
+    15 over Cyclotomics>>, 
+  <1-dimensional left-module over <Lie algebra of dimension 
+    15 over Cyclotomics>>, 
+  <1-dimensional left-module over <Lie algebra of dimension 
+    15 over Cyclotomics>> ]
+gap> List( dV, HighestWeight );
+[ [ 2, 0, 0 ], [ 1, 0, 1 ], [ 1, 0, 1 ], [ 0, 1, 0 ], [ 0, 0, 0 ], 
+  [ 0, 0, 0 ] ]
+]]></Example>
+</Description>
+</ManSection>
+
+
+</Section>
 
 </Chapter>
 
