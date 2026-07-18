@@ -1161,7 +1161,7 @@ Let <M>V</M> be as above. A real structure of <M>V</M> is a map
 this real structure is invariant if <M>\sigma(\rho(x)v) = \rho(x)\sigma(v)</M>
 for all <M>x\in\mathfrak{g},v\in V</M>. In that case the space of fixed points
 <M>V^\sigma</M> of <M>\sigma</M> is a real vector space and we get a real
-representation <M>\rho^\sigma : \mathfrak{g} \to \gl(V^\sigma)</M>.
+representation <M>\rho^\sigma : \mathfrak{g} \to \mathfrak{gl}(V^\sigma)</M>.
 It can be shown that if an invariant real structure exists then <M>\lambda =
 \bar\lambda</M>. Now suppose that <M>\lambda=\bar\lambda</M>. If an invariant
 real structure exists then we say that <M>\lambda</M> has Cartan index 1.
