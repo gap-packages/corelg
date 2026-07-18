@@ -180,7 +180,7 @@ where <M>\mathfrak{g}^c</M> is a Lie algebra defined over a field containing
 the imaginary unit <A>E(4)</A> and <M>\sigma \mathfrak{g}^c\to \mathfrak{g}^c</M>
 is a conjugation, that is, it satisfies <M>\sigma([x,y]) = [\sigma(x),\sigma(y)]</M> 
 for all <M>x,y\in\mathfrak{g}^c</M> and <M> \sigma(\mu x) = \bar \mu \sigma(x)</M>
-for all <M>x\in\matfrak{g}^c</M> and <M>\mu</M> in the base field. The real
+for all <M>x\in\mathfrak{g}^c</M> and <M>\mu</M> in the base field. The real
 Lie algebra corresponding to such a pair is the Lie algebras of fixed points
 of <M>\sigma</M>. 
 <P/>
@@ -1156,7 +1156,7 @@ irreducible representations of highest weights <M>\lambda</M> and
 <M>\bar\lambda</M>.
 <P/>
 Let <M>V</M> be as above. A real structure of <M>V</M> is a map
-<M>\sigma : V\to V</M> with <M>\sigma(\apha_1v_1+\alpha_2v_2) =
+<M>\sigma : V\to V</M> with <M>\sigma(\alpha_1v_1+\alpha_2v_2) =
 \bar\alpha_1 \sigma(v_1) + \bar\alpha_2 \sigma(v_2)</M>. We say that
 this real structure is invariant if <M>\sigma(\rho(x)v) = \rho(x)\sigma(v)</M>
 for all <M>x\in\mathfrak{g},v\in V</M>. In that case the space of fixed points
